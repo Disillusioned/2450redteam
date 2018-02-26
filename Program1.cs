@@ -79,11 +79,11 @@ namespace UV_Simulator
 
         public bool InterpretOpcode(string code, string address)
         {
-            
+            int address_int = Int32.Parse(address);
             if (code == "10") 
             {
                 //call read, return read
-                Read_instruction(address);
+                Read_instruction(address_int);
             }
             else 
                 if (code == "11")
@@ -93,11 +93,13 @@ namespace UV_Simulator
             else
                 if (code == "20")
                 {
-                    //load from memory address into accumulator
+                //load from memory address into accumulator
+                Load_accumulator(address_int);
                 }
             else if(code == "30")
             {
                 //add
+                Add(address_int);
             }
             else if (code == "31")
             {
@@ -111,20 +113,34 @@ namespace UV_Simulator
             {
                 //multiply
             }
+            
 
 
             return true;
         }
 
-        public bool Read_instruction(string address)
+        public bool Read_instruction(int address)
         {
             //dont know how to get user input
-            int address_int = Int32.Parse(address);
             string user_input = "";
-            memory_locations[address_int] = user_input;
+            memory_locations[address] = user_input;
             return true;
         }
-        
+        public bool Load_accumulator(int address)
+        {
+            int number = 0;
+            number = Int32.Parse(memory_locations[address]);
+            accumulator = number;
+            return true;
+        }
+        public bool Add(int address)
+        {
+            int number = 0;
+            number = Int32.Parse(memory_locations[address]);
+            number += accumulator; 
+
+            return true;
+        }
 
 
     }
