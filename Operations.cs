@@ -19,6 +19,12 @@ namespace UV_Simulator
             accumulator = 0;
         }
 
+        public bool insert()
+        {
+            memory_locations[0] = "test";
+            return true;
+        }
+
 
     }
 }
