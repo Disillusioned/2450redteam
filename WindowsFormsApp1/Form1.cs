@@ -18,45 +18,53 @@ namespace WindowsFormsApp1
             InitializeComponent();
         }
 
+        //Load Button
         private void button1_Click(object sender, EventArgs e)
         {
-            Operation process = new Operation();
-            //get input from text field
+            /*Load instuctions into class*/
             int j = 0;
             string input = "";
-            int opcode = 0;
-            int location = 0;
-            //parse input to get opcode and location
-            while (dataGridView1[0,j].Value.ToString() != "")
+            int instruction = 0;
+            while ((dataGridView1.RowCount - 1) > j)
             {
-                //get input from line j
-                input = dataGridView1[0, j].Value.ToString();
-                //parse and cast input to int opcode and int location
-                opcode = Int32.Parse(input.Substring(0, 2));
-                location = Int32.Parse(input.Substring(2, 2));
-                //
-                switch (opcode)
-                {
-                    //READ OPCODE
-                    case 10:
-                        //ask user for input
-                        int user_input = 0;
-                        process.Read(user_input, location);
-                        break;
-                    //WRITE OPCODE
-                    case 11:
-                        process.Write(location);
-                        break;
-                    default:
-                        break;
-                }
+                input =  dataGridView1[0, j].Value.ToString();
+                instruction = Int32.Parse(input);
+                process.Insert(instruction);
                 ++j;
             }
-            
+
+            process.SetInstructionCtr(0);
+                        
         }
+
+       
 
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        //START BUTTON
+        private void button2_Click(object sender, EventArgs e)
+        {
+            
+            int j = 0;
+            int instruction = process.GetNextInstruction();
+            while (instruction != -1)
+            {
+                //create new row
+                DataGridViewRow row = (DataGridViewRow)dataGridView2.Rows[j].Clone();
+                instruction = process.GetNextInstruction();
+                process.IncrementInstructionCtr();
+                row.Cells[0].Value = instruction;          
+                dataGridView2.Rows.Add(row);
+                ++j;
+            }
+        }
+
+        //NEXT BUTTON
+        private void button3_Click(object sender, EventArgs e)
         {
 
         }

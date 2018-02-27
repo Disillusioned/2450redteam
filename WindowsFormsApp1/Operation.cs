@@ -13,6 +13,7 @@ namespace WindowsFormsApp1
         private int instruction_counter;
         private int accumulator;
         //CONSTANT VARIABLES
+
         public const int MEMORY = 100;
 
         //CONSTRUCTOR
@@ -21,11 +22,40 @@ namespace WindowsFormsApp1
             instruction_counter = 0;
             accumulator = 0;
         }
+        
+        //getters and setters
+        public void Insert(int instruction)
+        {
+            memory_locations[instruction_counter] = instruction;
+            instruction_counter++;
+        }
+
+        public void SetInstructionCtr(int position)
+        {
+            instruction_counter = position;
+        }
+
+        public int GetNextInstruction()
+        {
+            if (memory_locations[instruction_counter] != 0)
+            {
+                return memory_locations[instruction_counter];
+            }
+            else
+                return -1;
+        }
+
+        public void IncrementInstructionCtr()
+        {
+            ++instruction_counter;
+        }
 
         //I/O OPERATIONS
-        public bool Read(int _input, int _location)
+        public bool Read(int _location)
         {
-            memory_locations[_location] = _input;
+            string input = "";
+            Console.WriteLine("Hello??");
+            //memory_locations[_location] = input;
             return true;
         }
 
@@ -45,10 +75,7 @@ namespace WindowsFormsApp1
             return true;
         }
         //ALU
-        public bool Load(int _location)
-        {
-            return true;
-        }
+        
 
 
         //CONTROL
