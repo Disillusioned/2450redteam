@@ -29,10 +29,28 @@ namespace WindowsFormsApp1
             //parse input to get opcode and location
             while (dataGridView1[0,j].Value.ToString() != "")
             {
+                //get input from line j
                 input = dataGridView1[0, j].Value.ToString();
+                //parse and cast input to int opcode and int location
                 opcode = Int32.Parse(input.Substring(0, 2));
                 location = Int32.Parse(input.Substring(2, 2));
-                                
+                //
+                switch (opcode)
+                {
+                    //READ OPCODE
+                    case 10:
+                        //ask user for input
+                        int user_input = 0;
+                        process.Read(user_input, location);
+                        break;
+                    //WRITE OPCODE
+                    case 11:
+                        process.Write(location);
+                        break;
+                    default:
+                        break;
+                }
+                ++j;
             }
             
         }

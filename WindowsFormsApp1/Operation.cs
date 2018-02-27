@@ -35,8 +35,21 @@ namespace WindowsFormsApp1
         }
         
         //LOAD/STORE OPERATIONS
+        public bool Load(int _location)
+        {
+            return true;
+        }
 
+        public bool Store(int _location)
+        {
+            return true;
+        }
         //ALU
+        public bool Load(int _location)
+        {
+            return true;
+        }
+
 
         //CONTROL
     }
