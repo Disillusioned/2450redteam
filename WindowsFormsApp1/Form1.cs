@@ -23,16 +23,14 @@ namespace WindowsFormsApp1
         {
             /*Load instuctions into class*/
             int j = 0;
-            string input = "";
-            int instruction = 0;
+            string instruction = "";
             while ((dataGridView1.RowCount - 1) > j)
             {
-                input =  dataGridView1[0, j].Value.ToString();
-                instruction = Int32.Parse(input);
+                instruction = dataGridView1[0, j].Value.ToString();
                 process.Insert(instruction);
                 ++j;
             }
-
+            //set instruction counter to 0
             process.SetInstructionCtr(0);
                         
         }
@@ -50,23 +48,48 @@ namespace WindowsFormsApp1
         {
             
             int j = 0;
-            int instruction = process.GetNextInstruction();
-            while (instruction != -1)
+            string instruction = process.GetNextInstruction();
+            DataGridViewRow row;
+            while (instruction != "")
             {
                 //create new row
-                DataGridViewRow row = (DataGridViewRow)dataGridView2.Rows[j].Clone();
+                row = (DataGridViewRow)dataGridView2.Rows[j].Clone();
                 instruction = process.GetNextInstruction();
                 process.IncrementInstructionCtr();
                 row.Cells[0].Value = instruction;          
                 dataGridView2.Rows.Add(row);
                 ++j;
             }
+            process.SetInstructionCtr(0);
+            row = (DataGridViewRow)dataGridView2.Rows[process.GetInstructionCtr()];
+            row.DefaultCellStyle.BackColor = Color.Yellow;
+            process.SetInstructionCtr(0);
         }
 
-        //NEXT BUTTON
+        //NEXT button clicked
         private void button3_Click(object sender, EventArgs e)
         {
+            string instruction = process.GetNextInstruction();
+            int opcode = Int32.Parse(instruction.Substring(0, 2));
+            int location = Int32.Parse(instruction.Substring(2, 2));
+            switch (opcode)
+            {
+                //READ OPCODE
+                case 10:
+                    //ask user for input
+                    string user_input = dataGridView1[2, process.GetInstructionCtr()].Value.ToString();
+                    process.Read(user_input, location);
 
+                    break;
+                //WRITE OPCODE
+                case 11:
+                    process.Write(location);
+                    break;
+                default:
+                    break;
+            }
         }
+
     }
+        
 }

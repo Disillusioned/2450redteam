@@ -9,7 +9,7 @@ namespace WindowsFormsApp1
     class Operation
     {
         //DATA MEMBERS
-        private int[] memory_locations = new int[MEMORY];
+        private string[] memory_locations = new string[MEMORY];
         private int instruction_counter;
         private int accumulator;
         //CONSTANT VARIABLES
@@ -24,10 +24,20 @@ namespace WindowsFormsApp1
         }
         
         //getters and setters
-        public void Insert(int instruction)
+        public void Insert(string _instruction)
         {
-            memory_locations[instruction_counter] = instruction;
+            memory_locations[instruction_counter] = _instruction;
             instruction_counter++;
+        }
+
+        public string GetNextInstruction()
+        {
+            if (memory_locations[instruction_counter] != " ")
+            {
+                return memory_locations[instruction_counter];
+            }
+            else
+                return "END";
         }
 
         public void SetInstructionCtr(int position)
@@ -35,14 +45,9 @@ namespace WindowsFormsApp1
             instruction_counter = position;
         }
 
-        public int GetNextInstruction()
+        public int GetInstructionCtr()
         {
-            if (memory_locations[instruction_counter] != 0)
-            {
-                return memory_locations[instruction_counter];
-            }
-            else
-                return -1;
+            return instruction_counter;
         }
 
         public void IncrementInstructionCtr()
@@ -51,12 +56,9 @@ namespace WindowsFormsApp1
         }
 
         //I/O OPERATIONS
-        public bool Read(int _location)
+        public void Read(string _input, int _location)
         {
-            string input = "";
-            Console.WriteLine("Hello??");
-            //memory_locations[_location] = input;
-            return true;
+            memory_locations[_location] = _input; 
         }
 
         public bool Write(int _location)
