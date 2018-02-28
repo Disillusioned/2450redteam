@@ -6,130 +6,130 @@ using System.Threading.Tasks;
 
 namespace WindowsFormsApp1
 {
-    class Operation
-    {
-        //DATA MEMBERS
-        private string[] memory_locations = new string[MEMORY];
-        private int instruction_counter;
-        private int accumulator;
-        //CONSTANT VARIABLES
+	class Operation
+	{
+		//DATA MEMBERS
+		private string[] memory_locations = new string[MEMORY];
+		private int instruction_counter;
+		private int accumulator;
+		//CONSTANT VARIABLES
 
-        public const int MEMORY = 100;
+		public const int MEMORY = 100;
 
-        //CONSTRUCTOR
-        public Operation()
-        {
-            instruction_counter = 0;
-            accumulator = 0;
-        }
-        
-        //GETTERS & SETTERS
-        public void SetNextInstruction(string _instruction)
-        {
-            memory_locations[instruction_counter] = _instruction;
-            instruction_counter++;
-        }
+		//CONSTRUCTOR
+		public Operation()
+		{
+			instruction_counter = 0;
+			accumulator = 0;
+		}
 
-        public string GetNextInstruction()
-        {
-            if (memory_locations[instruction_counter] != " ")
-            {
-                return memory_locations[instruction_counter];
-            }
-            else
-                return "END";
-        }
+		//GETTERS & SETTERS
+		public void SetNextInstruction(string _instruction)
+		{
+			memory_locations[instruction_counter] = _instruction;
+			instruction_counter++;
+		}
 
-        public void SetInstructionCtr(int position)
-        {
-            instruction_counter = position;
-        }
+		public string GetNextInstruction()
+		{
+			if (memory_locations[instruction_counter] != " ")
+			{
+				return memory_locations[instruction_counter];
+			}
+			else
+				return "END";
+		}
 
-        public int GetInstructionCtr()
-        {
-            return instruction_counter;
-        }
+		public void SetInstructionCtr(int position)
+		{
+			instruction_counter = position;
+		}
 
-        public int getAccumulator()
-        {
-            return accumulator;
-        }
+		public int GetInstructionCtr()
+		{
+			return instruction_counter;
+		}
 
-        public string getValueAt(int _location)
-        {
-            return memory_locations[_location];
-        }
+		public int getAccumulator()
+		{
+			return accumulator;
+		}
 
-        //ITERATORS
+		public string getValueAt(int _location)
+		{
+			return memory_locations[_location];
+		}
 
-        public void IncrementInstructionCtr()
-        {
-            ++instruction_counter;
-        }
+		//ITERATORS
 
-        //I/O OPERATIONS
-        public void Read(string _input, int _location)
-        {
-            memory_locations[_location] = _input; 
-        }
+		public void IncrementInstructionCtr()
+		{
+			++instruction_counter;
+		}
 
-        public string Write(int _location)
-        {
-            return memory_locations[_location];
-        }
-        
-        //LOAD/STORE OPERATIONS
-        public void Load(int _location)
-        {
-            string str_number = memory_locations[_location];
-            accumulator = Int32.Parse(str_number);
-        }
+		//I/O OPERATIONS
+		public void Read(string _input, int _location)
+		{
+			memory_locations[_location] = _input;
+		}
 
-        public void Store(int _location)
-        {
-            string number = accumulator.ToString();
-            memory_locations[_location] = number;
-        }
+		public string Write(int _location)
+		{
+			return memory_locations[_location];
+		}
 
-        //ALU
-        public void ADD(int _location)
-        {
-            int addend = Int32.Parse(memory_locations[_location]);
-            accumulator += addend;
-        }
+		//LOAD/STORE OPERATIONS
+		public void Load(int _location)
+		{
+			string str_number = memory_locations[_location];
+			accumulator = Int32.Parse(str_number);
+		}
 
-        public void SUBTRACT(int _location)
-        {
-            int subtract = Int32.Parse(memory_locations[_location]);
-            accumulator -= subtract;
-        }
+		public void Store(int _location)
+		{
+			string number = accumulator.ToString();
+			memory_locations[_location] = number;
+		}
 
-        public void MULTIPLY(int _location)
-        {
-            int multiply = Int32.Parse(memory_locations[_location]);
-            accumulator *= multiply;
-        }
+		//ALU
+		public void ADD(int _location)
+		{
+			int addend = Int32.Parse(memory_locations[_location]);
+			accumulator += addend;
+		}
 
-        public void DIVIDE(int _location)
-        {
-            int dividend = Int32.Parse(memory_locations[_location]);
-            accumulator /= dividend;
-        }
+		public void SUBTRACT(int _location)
+		{
+			int subtract = Int32.Parse(memory_locations[_location]);
+			accumulator -= subtract;
+		}
 
-        //CONTROL
-        public void Branch_Positive(int _location)
-        {
-            instruction_counter = _location;
-        }
+		public void MULTIPLY(int _location)
+		{
+			int multiply = Int32.Parse(memory_locations[_location]);
+			accumulator *= multiply;
+		}
 
-        public void Branch_Negative(int _location)
-        {
-            instruction_counter = _location;
-        }
+		public void DIVIDE(int _location)
+		{
+			int dividend = Int32.Parse(memory_locations[_location]);
+			accumulator /= dividend;
+		}
 
-        public void Branch_Zero(int _location)
-        {
-            instruction_counter = _location;
-        }
-    }
+		//CONTROL
+		public void Branch_Positive(int _location)
+		{
+			instruction_counter = _location;
+		}
+
+		public void Branch_Negative(int _location)
+		{
+			instruction_counter = _location;
+		}
+
+		public void Branch_Zero(int _location)
+		{
+			instruction_counter = _location;
+		}
+	}
 }
