@@ -1,0 +1,30 @@
+Todo: Refactor code into at least 2 classes
+
+change all getter/setter pairs to properties?
+
+change operations class constructor to set all strings to "0000" at init
+
+classes:
+
+ALU class for mathematical operations
+Memory class for handling I/O and load store functions
+Control class for saving and executing user code
+Error class for handling and throwing errors
+
+
+
+ALU class: 
+
+
+
+
+
+Memory Class:
+
+
+
+Control Class:
+
+
+
+Error Class: //Not a huge priority but will be helpful
