@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO; 
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,21 +22,40 @@ namespace WindowsFormsApp1
         //Load Button
         private void button1_Click(object sender, EventArgs e)
         {
-            /*Load instuctions into class*/
-            int j = 0;
+            ///*GET INSTRUCTIONS FROM USER.*/
+            //int j = 0;
+            //string instruction = "";
+            //while ((dataGridView1.RowCount - 1) > j)
+            //{
+            //    instruction = dataGridView1[0, j].Value.ToString();
+            //    process.SetNextInstruction(instruction);
+            //    ++j;
+            //}
+            ////set instruction counter to 0
+            //process.SetInstructionCtr(0);
+
+            /*GET INSTRUCTIONS FROM A TEST FILE*/
+            StreamReader testData = new StreamReader("C:/Users/Chase Parks/Documents/Chase Parks/CS 2450/2450redteam/WindowsFormsApp1/instructions.txt");
+            string full_line = "";
             string instruction = "";
-            while ((dataGridView1.RowCount - 1) > j)
+            //get rid of header in test file
+            string header = testData.ReadLine();
+            //READ FROM FILE
+            full_line = testData.ReadLine();
+            while (full_line != null)
             {
-                instruction = dataGridView1[0, j].Value.ToString();
-                process.Insert(instruction);
-                ++j;
+                //parse line
+                instruction = full_line.Substring(0, 4);
+                //put into memory
+                process.SetNextInstruction(instruction);
+                //get next line
+                full_line = testData.ReadLine();
             }
             //set instruction counter to 0
-            process.SetInstructionCtr(0);
-                        
+            process.SetInstructionCtr(0);           
         }
 
-       
+
 
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -75,7 +95,20 @@ namespace WindowsFormsApp1
                     case 21:
                         row.Cells[1].Value = "STORE";
                         break;
-
+                    case 30:
+                        row.Cells[1].Value = "ADD";
+                        break;
+                    //STORE OPCODE
+                    case 31:
+                        row.Cells[1].Value = "SUBTRACT";
+                        break;
+                    case 32:
+                        row.Cells[1].Value = "DIVIDE";
+                        break;
+                    //STORE OPCODE
+                    case 33:
+                        row.Cells[1].Value = "MULTIPLY";
+                        break;
                     default:
                         break;
                 }
@@ -138,6 +171,7 @@ namespace WindowsFormsApp1
                 //LOAD OPCODE
                 case 20:
                     process.Load(location);
+                    dataGridView2[2, process.GetInstructionCtr()].Value = process.getValueAt(location) + " -> accumulator";
 
                     //unhighlight current instruction
                     row = (DataGridViewRow)dataGridView2.Rows[process.GetInstructionCtr()];
@@ -151,6 +185,8 @@ namespace WindowsFormsApp1
                 //STORE OPCODE
                 case 21:
                     process.Store(location);
+                    dataGridView2[2, process.GetInstructionCtr()].Value = "Stored " + process.getValueAt(location) + " from accumulator -> " + location;
+
 
                     //unhighlight current instruction
                     row = (DataGridViewRow)dataGridView2.Rows[process.GetInstructionCtr()];
@@ -164,6 +200,7 @@ namespace WindowsFormsApp1
                 //ADD OPCODE
                 case 30:
                     process.ADD(location);
+                    dataGridView2[2, process.GetInstructionCtr()].Value = process.getValueAt(location) + " added -> accumulator";
 
                     //unhighlight current instruction
                     row = (DataGridViewRow)dataGridView2.Rows[process.GetInstructionCtr()];
@@ -212,6 +249,32 @@ namespace WindowsFormsApp1
                     row = (DataGridViewRow)dataGridView2.Rows[process.GetInstructionCtr()];
                     row.DefaultCellStyle.BackColor = Color.Yellow;
                     break;
+
+                /*Control Opcodes*/
+                case 40:
+                    if (process.getAccumulator() > 0)
+                    {
+                        process.Branch_Positive(location);
+                        break;
+                    }
+                    else
+                        break;
+                case 41:
+                    if (process.getAccumulator() < 0)
+                    {
+                        process.Branch_Negative(location);
+                        break;
+                    }
+                    else
+                        break;
+                case 42:
+                    if (process.getAccumulator() == 0)
+                    {
+                        process.Branch_Zero(location);
+                        break;
+                    }
+                    else
+                        break;
                 default:
                     break;
             }

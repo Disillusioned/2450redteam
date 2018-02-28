@@ -23,8 +23,8 @@ namespace WindowsFormsApp1
             accumulator = 0;
         }
         
-        //getters and setters
-        public void Insert(string _instruction)
+        //GETTERS & SETTERS
+        public void SetNextInstruction(string _instruction)
         {
             memory_locations[instruction_counter] = _instruction;
             instruction_counter++;
@@ -49,6 +49,18 @@ namespace WindowsFormsApp1
         {
             return instruction_counter;
         }
+
+        public int getAccumulator()
+        {
+            return accumulator;
+        }
+
+        public string getValueAt(int _location)
+        {
+            return memory_locations[_location];
+        }
+
+        //ITERATORS
 
         public void IncrementInstructionCtr()
         {
@@ -105,5 +117,19 @@ namespace WindowsFormsApp1
         }
 
         //CONTROL
+        public void Branch_Positive(int _location)
+        {
+            instruction_counter = _location;
+        }
+
+        public void Branch_Negative(int _location)
+        {
+            instruction_counter = _location;
+        }
+
+        public void Branch_Zero(int _location)
+        {
+            instruction_counter = _location;
+        }
     }
 }
