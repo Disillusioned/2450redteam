@@ -96,6 +96,7 @@
             // 
             this.Column4.HeaderText = "Input /Output";
             this.Column4.Name = "Column4";
+            this.Column4.Width = 250;
             // 
             // Form1
             // 

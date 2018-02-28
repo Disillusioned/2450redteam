@@ -98,16 +98,26 @@ namespace WindowsFormsApp1
                     case 30:
                         row.Cells[1].Value = "ADD";
                         break;
-                    //STORE OPCODE
                     case 31:
                         row.Cells[1].Value = "SUBTRACT";
                         break;
                     case 32:
                         row.Cells[1].Value = "DIVIDE";
                         break;
-                    //STORE OPCODE
                     case 33:
                         row.Cells[1].Value = "MULTIPLY";
+                        break;
+                    case 40:
+                        row.Cells[1].Value = "BR_POSITIVE";
+                        break;
+                    case 41:
+                        row.Cells[1].Value = "BR_NEGATIVE";
+                        break;
+                    case 42:
+                        row.Cells[1].Value = "BR_ZERO";
+                        break;
+                    case 43:
+                        row.Cells[1].Value = "HALT";
                         break;
                     default:
                         break;
@@ -214,6 +224,7 @@ namespace WindowsFormsApp1
                 //SUBTRACT OPCODE
                 case 31:
                     process.SUBTRACT(location);
+                    dataGridView2[2, process.GetInstructionCtr()].Value = process.getValueAt(location) + " subtracted -> accumulator";
 
                     //unhighlight current instruction
                     row = (DataGridViewRow)dataGridView2.Rows[process.GetInstructionCtr()];
@@ -227,6 +238,8 @@ namespace WindowsFormsApp1
                 //DIVIDE OPCODE
                 case 32:
                     process.DIVIDE(location);
+                    dataGridView2[2, process.GetInstructionCtr()].Value = process.getValueAt(location) + " divided -> accumulator";
+
 
                     //unhighlight current instruction
                     row = (DataGridViewRow)dataGridView2.Rows[process.GetInstructionCtr()];
@@ -240,6 +253,7 @@ namespace WindowsFormsApp1
                 //MULTIPLY
                 case 33:
                     process.MULTIPLY(location);
+                    dataGridView2[2, process.GetInstructionCtr()].Value = process.getValueAt(location) + " multiply -> accumulator";
 
                     //unhighlight current instruction
                     row = (DataGridViewRow)dataGridView2.Rows[process.GetInstructionCtr()];
@@ -254,27 +268,78 @@ namespace WindowsFormsApp1
                 case 40:
                     if (process.getAccumulator() > 0)
                     {
+                        //unhighlight current instruction
+                        row = (DataGridViewRow)dataGridView2.Rows[process.GetInstructionCtr()];
+                        row.DefaultCellStyle.BackColor = Color.White;
+                        //Set increment instruction to branch location
                         process.Branch_Positive(location);
+                        //increment instr ctr and highlight next row
+                        row = (DataGridViewRow)dataGridView2.Rows[process.GetInstructionCtr()];
+                        row.DefaultCellStyle.BackColor = Color.Yellow;
                         break;
                     }
                     else
+                    {
+                        //unhighlight current instruction
+                        row = (DataGridViewRow)dataGridView2.Rows[process.GetInstructionCtr()];
+                        row.DefaultCellStyle.BackColor = Color.White;
+                        //increment counter
+                        process.IncrementInstructionCtr();
+                        //increment instr ctr and highlight next row
+                        row = (DataGridViewRow)dataGridView2.Rows[process.GetInstructionCtr()];
+                        row.DefaultCellStyle.BackColor = Color.Yellow;
                         break;
+                    }
                 case 41:
                     if (process.getAccumulator() < 0)
                     {
+                        //unhighlight current instruction
+                        row = (DataGridViewRow)dataGridView2.Rows[process.GetInstructionCtr()];
+                        row.DefaultCellStyle.BackColor = Color.White;
+                        //Set increment instruction to branch location
                         process.Branch_Negative(location);
+                        //increment instr ctr and highlight next row
+                        row = (DataGridViewRow)dataGridView2.Rows[process.GetInstructionCtr()];
+                        row.DefaultCellStyle.BackColor = Color.Yellow;
                         break;
                     }
                     else
+                    {
+                        //unhighlight current instruction
+                        row = (DataGridViewRow)dataGridView2.Rows[process.GetInstructionCtr()];
+                        row.DefaultCellStyle.BackColor = Color.White;
+                        //increment counter
+                        process.IncrementInstructionCtr();
+                        //increment instr ctr and highlight next row
+                        row = (DataGridViewRow)dataGridView2.Rows[process.GetInstructionCtr()];
+                        row.DefaultCellStyle.BackColor = Color.Yellow;
                         break;
+                    }
                 case 42:
                     if (process.getAccumulator() == 0)
                     {
+                        //unhighlight current instruction
+                        row = (DataGridViewRow)dataGridView2.Rows[process.GetInstructionCtr()];
+                        row.DefaultCellStyle.BackColor = Color.White;
+                        //Set increment instruction to branch location
                         process.Branch_Zero(location);
+                        //increment instr ctr and highlight next row
+                        row = (DataGridViewRow)dataGridView2.Rows[process.GetInstructionCtr()];
+                        row.DefaultCellStyle.BackColor = Color.Yellow;
                         break;
                     }
                     else
+                    {
+                        //unhighlight current instruction
+                        row = (DataGridViewRow)dataGridView2.Rows[process.GetInstructionCtr()];
+                        row.DefaultCellStyle.BackColor = Color.White;
+                        //increment counter
+                        process.IncrementInstructionCtr();
+                        //increment instr ctr and highlight next row
+                        row = (DataGridViewRow)dataGridView2.Rows[process.GetInstructionCtr()];
+                        row.DefaultCellStyle.BackColor = Color.Yellow;
                         break;
+                    }
                 default:
                     break;
             }
