@@ -13,7 +13,10 @@ namespace WindowsFormsApp1
 {
     public partial class Form1 : Form
     {
+        //GLOBAL VARIABLES
         Operation process = new Operation();
+        bool input_file_clicked = false;
+
         public Form1()
         {
             InitializeComponent();
@@ -22,60 +25,33 @@ namespace WindowsFormsApp1
         //Load Button
         private void button1_Click(object sender, EventArgs e)
         {
-            ///*GET INSTRUCTIONS FROM USER.*/
-            //int j = 0;
-            //string instruction = "";
-            //while ((dataGridView1.RowCount - 1) > j)
-            //{
-            //    instruction = dataGridView1[0, j].Value.ToString();
-            //    process.SetNextInstruction(instruction);
-            //    ++j;
-            //}
-            ////set instruction counter to 0
-            //process.SetInstructionCtr(0);
-
-            /*GET INSTRUCTIONS FROM A TEST FILE*/
-            StreamReader testData = new StreamReader("C:/Users/Chase Parks/Documents/Chase Parks/CS 2450/2450redteam/WindowsFormsApp1/instructions.txt");
-            string full_line = "";
             string instruction = "";
-            //get rid of header in test file
-            string header = testData.ReadLine();
-            //READ FROM FILE
-            full_line = testData.ReadLine();
-            while (full_line != null)
-            {
-                //parse line
-                instruction = full_line.Substring(0, 4);
-                //put into memory
-                process.SetNextInstruction(instruction);
-                //get next line
-                full_line = testData.ReadLine();
-            }
-            //set instruction counter to 0
-            process.SetInstructionCtr(0);           
-        }
-
-
-
-
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-        }
-
-        //START BUTTON
-        private void button2_Click(object sender, EventArgs e)
-        {
             int j = 0;
-            string instruction = process.GetNextInstruction();
+            if (input_file_clicked == false)
+            {
+                /*GET INSTRUCTIONS FROM USER.*/
+                while ((dataGridView1.RowCount - 1) > j)
+                {
+                    instruction = dataGridView1[0, j].Value.ToString();
+                    process.SetNextInstruction(instruction);
+                    ++j;
+                }
+                //set instruction counter to 0
+                process.SetInstructionCtr(0);
+            }
+
+            //POPULATE PROMPT
+            j = 0;
+            instruction = "";
+            instruction = process.GetNextInstruction();
             DataGridViewRow row;
             while (instruction != null)
             {
                 //create new row
                 row = (DataGridViewRow)dataGridView2.Rows[j].Clone();
+                row.Cells[0].Value = instruction;
                 int opcode = Int32.Parse(instruction.Substring(0, 2));
                 process.IncrementInstructionCtr();
-                row.Cells[0].Value = instruction;
                 switch (opcode)
                 {
                     //READ OPCODE
@@ -126,12 +102,26 @@ namespace WindowsFormsApp1
                 instruction = process.GetNextInstruction();
                 ++j;
             }
+            
 
+        }
+
+
+
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        //START BUTTON
+        private void button2_Click(object sender, EventArgs e)
+        {
             //highlight first instruction
+            DataGridViewRow row;
             process.SetInstructionCtr(0);
             row = (DataGridViewRow)dataGridView2.Rows[process.GetInstructionCtr()];
             row.DefaultCellStyle.BackColor = Color.Yellow;
-            
         }
 
         //NEXT button clicked
@@ -150,18 +140,26 @@ namespace WindowsFormsApp1
                 //READ OPCODE
                 case 10:
                     //ask user for input
-                    user_input = dataGridView2[2, process.GetInstructionCtr()].Value.ToString();
-                    //Put user input into the array
-                    process.Read(user_input, location);
+                    if (dataGridView2[2, process.GetInstructionCtr()].Value.ToString() == "")
+                    {
+                        dataGridView2[2, process.GetInstructionCtr()].Value = "ERROR";
+                        break;
+                    }
+                    else
+                    {
+                        user_input = dataGridView2[2, process.GetInstructionCtr()].Value.ToString();
+                        //Put user input into the array
+                        process.Read(user_input, location);
 
-                    //unhighlight current instruction
-                    row = (DataGridViewRow)dataGridView2.Rows[process.GetInstructionCtr()];
-                    row.DefaultCellStyle.BackColor = Color.White;
-                    //increment instr ctr and highlight next row
-                    process.IncrementInstructionCtr();
-                    row = (DataGridViewRow)dataGridView2.Rows[process.GetInstructionCtr()];
-                    row.DefaultCellStyle.BackColor = Color.Yellow;
-                    break;
+                        //unhighlight current instruction
+                        row = (DataGridViewRow)dataGridView2.Rows[process.GetInstructionCtr()];
+                        row.DefaultCellStyle.BackColor = Color.White;
+                        //increment instr ctr and highlight next row
+                        process.IncrementInstructionCtr();
+                        row = (DataGridViewRow)dataGridView2.Rows[process.GetInstructionCtr()];
+                        row.DefaultCellStyle.BackColor = Color.Yellow;
+                        break;
+                    }
 
                 //WRITE OPCODE
                 case 11:
@@ -345,6 +343,52 @@ namespace WindowsFormsApp1
             }
         }
 
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        //INPUT FILE
+        private void button4_Click(object sender, EventArgs e)
+        {
+            /*GET INSTRUCTIONS FROM A TEST FILE*/
+            StreamReader testData = new StreamReader("instructions2.txt");
+            DataGridViewRow row;
+            string full_line = "";
+            string instruction = "";
+            int j = 0;
+            //get rid of header in test file
+            string header = testData.ReadLine();
+            //READ FROM FILE
+            full_line = testData.ReadLine();
+            while (full_line != null)
+            {
+                //parse line
+                instruction = full_line.Substring(0, 4);
+                //put into memory
+                process.SetNextInstruction(instruction);
+                //Populate Edit form
+                row = (DataGridViewRow)dataGridView1.Rows[j].Clone();
+                row.Cells[0].Value = instruction;
+                dataGridView1.Rows.Add(row);
+                //get next line
+                full_line = testData.ReadLine();
+                ++j;
+            }
+            //set instruction counter to 0
+            process.SetInstructionCtr(0);
+            input_file_clicked = true;
+        }
+
+        private void richTextBox1_ReadOnlyChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void richTextBox2_ReadOnlyChanged(object sender, EventArgs e)
+        {
+
+        }
     }
         
 }

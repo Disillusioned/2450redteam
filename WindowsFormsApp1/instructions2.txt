@@ -1,0 +1,6 @@
+//Read value in store in accumulator display
+1080
+2080
+2181
+1181
+4300
