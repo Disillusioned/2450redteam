@@ -1,0 +1,17 @@
+//Display greatest of two numbers 
+0. 1080 //read into address 80  NUMBER A
+1. 1081 //read into address 81 NUMBER B
+2. 2080 //load address 80 into accumulator
+3. 3181 //subtract number in 81 to accumulator
+4. 2181 //store number from accumulator into address space 81 
+5. 1181 //write what's in address space 81
+6. 4009 //if accumulator is positive A is greater
+7. 4111 //if accumulator is negative B is greater
+8. 4213 //if accumulator is zero A == B
+9. 1180 //A is greater 
+10. 4300 //HALT
+11. 1181 //B is greater
+12. 4300 //HALT
+13. 1180 //A == B print A
+14. 1181 //A ==B print B
+15. 4300 //HALT
