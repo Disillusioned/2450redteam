@@ -12,8 +12,8 @@ namespace WindowsFormsApp1
 		private string[] memory_locations = new string[MEMORY];
 		private int instruction_counter;
 		private int accumulator;
-		//CONSTANT VARIABLES
 
+		//CONSTANT VARIABLES
 		public const int MEMORY = 100;
 
 		//CONSTRUCTOR
@@ -21,6 +21,7 @@ namespace WindowsFormsApp1
 		{
 			instruction_counter = 0;
 			accumulator = 0;
+            //test
 		}
 
 		//GETTERS & SETTERS
