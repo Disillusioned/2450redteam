@@ -61,24 +61,48 @@ namespace WindowsFormsApp1
             memory_locations[_location] = _input; 
         }
 
-        public bool Write(int _location)
+        public string Write(int _location)
         {
-            return true;
+            return memory_locations[_location];
         }
         
         //LOAD/STORE OPERATIONS
-        public bool Load(int _location)
+        public void Load(int _location)
         {
-            return true;
+            string str_number = memory_locations[_location];
+            accumulator = Int32.Parse(str_number);
         }
 
-        public bool Store(int _location)
+        public void Store(int _location)
         {
-            return true;
+            string number = accumulator.ToString();
+            memory_locations[_location] = number;
         }
+
         //ALU
-        
+        public void ADD(int _location)
+        {
+            int addend = Int32.Parse(memory_locations[_location]);
+            accumulator += addend;
+        }
 
+        public void SUBTRACT(int _location)
+        {
+            int subtract = Int32.Parse(memory_locations[_location]);
+            accumulator -= subtract;
+        }
+
+        public void MULTIPLY(int _location)
+        {
+            int multiply = Int32.Parse(memory_locations[_location]);
+            accumulator *= multiply;
+        }
+
+        public void DIVIDE(int _location)
+        {
+            int dividend = Int32.Parse(memory_locations[_location]);
+            accumulator /= dividend;
+        }
 
         //CONTROL
     }
