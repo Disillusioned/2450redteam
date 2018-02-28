@@ -21,7 +21,6 @@ namespace WindowsFormsApp1
 		{
 			instruction_counter = 0;
 			accumulator = 0;
-            //test
 		}
 
 		//GETTERS & SETTERS
@@ -61,8 +60,7 @@ namespace WindowsFormsApp1
 			return memory_locations[_location];
 		}
 
-		//ITERATORS
-
+		//INCREMENTORS
 		public void IncrementInstructionCtr()
 		{
 			++instruction_counter;
