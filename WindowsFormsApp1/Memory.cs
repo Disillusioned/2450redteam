@@ -10,13 +10,13 @@ namespace WindowsFormsApp1
         BasicMachineLanguage bml;
         public Memory(BasicMachineLanguage _bml)
         {
-            bml = _bml;    
+            bml = _bml;
         }
 
         //I/O OPERATIONS
         public void Read(string _input)
         {
-           bml.SetNextInstruction(_input);
+            bml.SetNextInstruction(_input);
         }
 
         public string Write(int _location)
@@ -34,7 +34,7 @@ namespace WindowsFormsApp1
         public void Store(int _location)
         {
             string number = bml.GetAccumulator().ToString();
-            bml.SetInstructionAt(number);
+            bml.SetInstructionAt(_location, number);
         }
     }
 }

@@ -51,57 +51,71 @@ namespace WindowsFormsApp1
             //Read in the first line get rid of the header in test file
             string header = testData.ReadLine();
 
-            //READ INSTRUCTIONS FROM FILE
+            //READ INSTRUCTIONS FROM FILE && Populate Edit form
             full_line = testData.ReadLine();
             while (full_line != null)
             {
                 //parse line
                 instruction = full_line.Substring(0, 4);
                 //put into memory
-                process.SetNextInstruction(instruction);
-                //Populate Edit form
+                bml.SetNextInstruction(instruction);
+                
+                //PUT into edit form (data grid view)
+                //get next row
                 row = (DataGridViewRow)InputFile_DataGridView.Rows[j].Clone();
+                //put 
                 row.Cells[0].Value = instruction;
+                //add row
                 InputFile_DataGridView.Rows.Add(row);
+                
+                
                 //get next line
                 full_line = testData.ReadLine();
+                //increment data grid row counter
                 ++j;
             }
+
             //set instruction counter to 0
-            process.SetInstructionCtr(0);
+            bml.SetProgramCtr(0);
             input_file_clicked = true;
         }
 
-        //Load instructions entered by user into memory and display in GUI
+        //Load instructions entered by user into memory and display in step through
         private void Load_Button_Click(object sender, EventArgs e)
         {
+            //Declare variables
             string instruction = "";
             int j = 0;
+            ////if user hasn't inputed from a file allow user to enter manually
             if (input_file_clicked == false)
             {
                 /*GET INSTRUCTIONS FROM USER.*/
                 while ((InputFile_DataGridView.RowCount - 1) > j)
                 {
+                    //get instruction from next row in edit form (data grid view 1)
                     instruction = InputFile_DataGridView[0, j].Value.ToString();
-                    process.SetNextInstruction(instruction);
+                    //load instruction into bml memory 
+                    bml.SetNextInstruction(instruction);
+                    //increment row counter
                     ++j;
                 }
                 //set instruction counter to 0
-                process.SetInstructionCtr(0);
+                bml.SetProgramCtr(0);
             }
 
-            //POPULATE PROMPT
+            //POPULATE Debugger "Pain"
             j = 0;
             instruction = "";
-            instruction = process.GetNextInstruction();
+            instruction = bml.GetNextInstruction();
             DataGridViewRow row;
             while (instruction != null)
             {
                 //create new row
                 row = (DataGridViewRow)Start_DataGridView.Rows[j].Clone();
                 row.Cells[0].Value = instruction;
+                //parse opcode from instruction
                 int opcode = Int32.Parse(instruction.Substring(0, 2));
-                process.IncrementInstructionCtr();
+                bml.IncrementProgramCtr();
                 switch (opcode)
                 {
                     //READ OPCODE
@@ -148,8 +162,11 @@ namespace WindowsFormsApp1
                     default:
                         break;
                 }
+
+                //add row to debugger pane
                 Start_DataGridView.Rows.Add(row);
-                instruction = process.GetNextInstruction();
+                //read next instruction from BML memory
+                instruction = bml.GetNextInstruction();
                 ++j;
             }
 

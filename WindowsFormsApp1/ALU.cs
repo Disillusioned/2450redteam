@@ -5,7 +5,7 @@ using System.Text;
 
 namespace WindowsFormsApp1
 {
-    class ALU 
+    class ALU
     {
         //MEMBER VARIABLES
         private BasicMachineLanguage bml;
@@ -13,7 +13,7 @@ namespace WindowsFormsApp1
         //CONSTRUCTOR
         public ALU(BasicMachineLanguage _bml)
         {
-            bml = _bml; 
+            bml = _bml;
         }
 
         //MEMBER FUNCTIONS

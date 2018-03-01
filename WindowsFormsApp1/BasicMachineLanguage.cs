@@ -6,39 +6,39 @@ using System.Threading.Tasks;
 
 namespace WindowsFormsApp1
 {
-	class BasicMachineLanguage
-	{
-		//DATA MEMBERS
-		private string[] memory_locations = new string[MEMORY];
-		private int instruction_counter;
-		private int accumulator;
-        
-		//CONSTANT VARIABLES
-		public const int MEMORY = 100;
+    class BasicMachineLanguage
+    {
+        //DATA MEMBERS
+        private string[] memory_locations = new string[MEMORY];
+        private int instruction_counter;
+        private int accumulator;
 
-		//CONSTRUCTOR
-		public BasicMachineLanguage()
-		{
-			instruction_counter = 0;
-			accumulator = 0;
-		}
+        //CONSTANT VARIABLES
+        public const int MEMORY = 100;
 
-		//GETTERS & SETTERS
-		public void SetNextInstruction(string _instruction)
-		{
-			memory_locations[instruction_counter] = _instruction;
-			instruction_counter++;
-		}
+        //CONSTRUCTOR
+        public BasicMachineLanguage()
+        {
+            instruction_counter = 0;
+            accumulator = 0;
+        }
 
-		public string GetNextInstruction()
-		{
-			if (memory_locations[instruction_counter] != " ")
-			{
-				return memory_locations[instruction_counter];
-			}
-			else
-				return "END";
-		}
+        //GETTERS & SETTERS
+        public void SetNextInstruction(string _instruction)
+        {
+            memory_locations[instruction_counter] = _instruction;
+            instruction_counter++;
+        }
+
+        public string GetNextInstruction()
+        {
+            if (memory_locations[instruction_counter] != " ")
+            {
+                return memory_locations[instruction_counter];
+            }
+            else
+                return "END";
+        }
 
         public int GetProgramCtr()
         {
@@ -46,36 +46,36 @@ namespace WindowsFormsApp1
         }
 
         public void SetProgramCtr(int position)
-		{
-			instruction_counter = position;
-		}
+        {
+            instruction_counter = position;
+        }
 
-		public int GetAccumulator()
-		{
-			return accumulator;
-		}
+        public int GetAccumulator()
+        {
+            return accumulator;
+        }
 
         public void SetAccumulator(int _value)
         {
             accumulator = _value;
         }
 
-		public string GetInstructionAt(int _location)
-		{
-			return memory_locations[_location];
-		}
+        public string GetInstructionAt(int _location)
+        {
+            return memory_locations[_location];
+        }
 
         public void SetInstructionAt(int _location, string _instruction)
         {
             memory_locations[_location] = _instruction;
         }
 
-		//ITERATOR
-		public void IncrementInstructionCtr()
-		{
-			++instruction_counter;
-		}
-        
-		
-	}
+        //ITERATOR
+        public void IncrementProgramCtr()
+        {
+            ++instruction_counter;
+        }
+
+
+    }
 }
