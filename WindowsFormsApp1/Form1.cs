@@ -177,8 +177,8 @@ namespace WindowsFormsApp1
         {
             //highlight first instruction
             DataGridViewRow row;
-            process.SetInstructionCtr(0);
-            row = (DataGridViewRow)Start_DataGridView.Rows[process.GetInstructionCtr()];
+            bml.SetProgramCtr(0);
+            row = (DataGridViewRow)Start_DataGridView.Rows[bml.GetNextInstruction()];
             row.DefaultCellStyle.BackColor = Color.Yellow;
         }
 
@@ -188,7 +188,7 @@ namespace WindowsFormsApp1
             //declare variables
             DataGridViewRow row;
             string user_input = "";
-            string instruction = process.GetNextInstruction();
+            string instruction = bml.GetNextInstruction();
             int opcode = Int32.Parse(instruction.Substring(0, 2));
             int location = Int32.Parse(instruction.Substring(2, 2));
 
@@ -198,14 +198,14 @@ namespace WindowsFormsApp1
                 //READ OPCODE
                 case 10:
                     //ask user for input
-                    if (Start_DataGridView[2, process.GetInstructionCtr()].Value.ToString() == "")
+                    if (Start_DataGridView[2, bml.GetProgramCtr()].Value.ToString() == "")
                     {
-                        Start_DataGridView[2, process.GetInstructionCtr()].Value = "ERROR";
+                        Start_DataGridView[2, bml.GetProgramCtr()].Value = "ERROR";
                         break;
                     }
                     else
                     {
-                        user_input = Start_DataGridView[2, process.GetInstructionCtr()].Value.ToString();
+                        user_input = Start_DataGridView[2, bml.GetProgramCtr()].Value.ToString();
                         //Put user input into the array
                         memory.Read(user_input, location);
 
