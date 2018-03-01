@@ -11,379 +11,400 @@ using System.Windows.Forms;
 
 namespace WindowsFormsApp1
 {
-	public partial class Form1 : Form
-	{
-		//GLOBAL VARIABLES
-		Operation process = new Operation();
-		bool input_file_clicked = false;
+    public partial class Form1 : Form
+    {
+        //GLOBAL VARIABLES
+        BasicMachineLanguage bml;
+        ALU logic_unit;
+        Memory memory_unit;
+        Control control_unit;
+        bool input_file_clicked;
 
-		public Form1()
-		{
-			InitializeComponent();
-		}
+        //CONSTRUCTOR for form class
+        public Form1()
+        {
+            //instantiate variables;
+            bml = new BasicMachineLanguage();
+            logic_unit = new ALU(bml);
+            memory_unit = new Memory(bml);
+            control_unit = new Control(bml);
 
-		private void InputFile_DataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
-		{
+            input_file_clicked = false;
 
-		}
+            InitializeComponent();
+        }
 
-		private void Start_DataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
-		{
+        //Input a file that holds instructions for the basic machine language program. File should be save
+        // in the same folder as Form1.cs
+        private void InputFile_Button_Click(object sender, EventArgs e)
+        {
+            /*GET INSTRUCTIONS FROM A TEST FILE*/
 
-		}
+            //create variables used throughout function
+            StreamReader testData = new StreamReader("instructions2.txt");
+            DataGridViewRow row;
+            string full_line = "";
+            string instruction = "";
+            int j = 0;
 
-		//Input File
-		private void InputFile_Button_Click(object sender, EventArgs e)
-		{
-			/*GET INSTRUCTIONS FROM A TEST FILE*/
-			StreamReader testData = new StreamReader("instructions2.txt");
-			DataGridViewRow row;
-			string full_line = "";
-			string instruction = "";
-			int j = 0;
-			//get rid of header in test file
-			string header = testData.ReadLine();
-			//READ FROM FILE
-			full_line = testData.ReadLine();
-			while (full_line != null)
-			{
-				//parse line
-				instruction = full_line.Substring(0, 4);
-				//put into memory
-				process.SetNextInstruction(instruction);
-				//Populate Edit form
-				row = (DataGridViewRow)InputFile_DataGridView.Rows[j].Clone();
-				row.Cells[0].Value = instruction;
-				InputFile_DataGridView.Rows.Add(row);
-				//get next line
-				full_line = testData.ReadLine();
-				++j;
-			}
-			//set instruction counter to 0
-			process.SetInstructionCtr(0);
-			input_file_clicked = true;
-		}
+            //first line of test file is a header
+            //Read in the first line get rid of the header in test file
+            string header = testData.ReadLine();
 
-		//Load Button
-		private void Load_Button_Click(object sender, EventArgs e)
-		{
-			string instruction = "";
-			int j = 0;
-			if (input_file_clicked == false)
-			{
-				/*GET INSTRUCTIONS FROM USER.*/
-				while ((InputFile_DataGridView.RowCount - 1) > j)
-				{
-					instruction = InputFile_DataGridView[0, j].Value.ToString();
-					process.SetNextInstruction(instruction);
-					++j;
-				}
-				//set instruction counter to 0
-				process.SetInstructionCtr(0);
-			}
+            //READ INSTRUCTIONS FROM FILE
+            full_line = testData.ReadLine();
+            while (full_line != null)
+            {
+                //parse line
+                instruction = full_line.Substring(0, 4);
+                //put into memory
+                process.SetNextInstruction(instruction);
+                //Populate Edit form
+                row = (DataGridViewRow)InputFile_DataGridView.Rows[j].Clone();
+                row.Cells[0].Value = instruction;
+                InputFile_DataGridView.Rows.Add(row);
+                //get next line
+                full_line = testData.ReadLine();
+                ++j;
+            }
+            //set instruction counter to 0
+            process.SetInstructionCtr(0);
+            input_file_clicked = true;
+        }
 
-			//POPULATE PROMPT
-			j = 0;
-			instruction = "";
-			instruction = process.GetNextInstruction();
-			DataGridViewRow row;
-			while (instruction != null)
-			{
-				//create new row
-				row = (DataGridViewRow)Start_DataGridView.Rows[j].Clone();
-				row.Cells[0].Value = instruction;
-				int opcode = Int32.Parse(instruction.Substring(0, 2));
-				process.IncrementInstructionCtr();
-				switch (opcode)
-				{
-					//READ OPCODE
-					case 10:
-						//ask user for input
-						row.Cells[1].Value = "READ";
-						break;
-					//WRITE OPCODE
-					case 11:
-						row.Cells[1].Value = "WRITE";
-						break;
-					//LOAD OPCODE
-					case 20:
-						row.Cells[1].Value = "LOAD";
-						break;
-					//STORE OPCODE
-					case 21:
-						row.Cells[1].Value = "STORE";
-						break;
-					case 30:
-						row.Cells[1].Value = "ADD";
-						break;
-					case 31:
-						row.Cells[1].Value = "SUBTRACT";
-						break;
-					case 32:
-						row.Cells[1].Value = "DIVIDE";
-						break;
-					case 33:
-						row.Cells[1].Value = "MULTIPLY";
-						break;
-					case 40:
-						row.Cells[1].Value = "BR_POSITIVE";
-						break;
-					case 41:
-						row.Cells[1].Value = "BR_NEGATIVE";
-						break;
-					case 42:
-						row.Cells[1].Value = "BR_ZERO";
-						break;
-					case 43:
-						row.Cells[1].Value = "HALT";
-						break;
-					default:
-						break;
-				}
-				Start_DataGridView.Rows.Add(row);
-				instruction = process.GetNextInstruction();
-				++j;
-			}
+        //Load instructions entered by user into memory and display in GUI
+        private void Load_Button_Click(object sender, EventArgs e)
+        {
+            string instruction = "";
+            int j = 0;
+            if (input_file_clicked == false)
+            {
+                /*GET INSTRUCTIONS FROM USER.*/
+                while ((InputFile_DataGridView.RowCount - 1) > j)
+                {
+                    instruction = InputFile_DataGridView[0, j].Value.ToString();
+                    process.SetNextInstruction(instruction);
+                    ++j;
+                }
+                //set instruction counter to 0
+                process.SetInstructionCtr(0);
+            }
 
-		}
+            //POPULATE PROMPT
+            j = 0;
+            instruction = "";
+            instruction = process.GetNextInstruction();
+            DataGridViewRow row;
+            while (instruction != null)
+            {
+                //create new row
+                row = (DataGridViewRow)Start_DataGridView.Rows[j].Clone();
+                row.Cells[0].Value = instruction;
+                int opcode = Int32.Parse(instruction.Substring(0, 2));
+                process.IncrementInstructionCtr();
+                switch (opcode)
+                {
+                    //READ OPCODE
+                    case 10:
+                        //ask user for input
+                        row.Cells[1].Value = "READ";
+                        break;
+                    //WRITE OPCODE
+                    case 11:
+                        row.Cells[1].Value = "WRITE";
+                        break;
+                    //LOAD OPCODE
+                    case 20:
+                        row.Cells[1].Value = "LOAD";
+                        break;
+                    //STORE OPCODE
+                    case 21:
+                        row.Cells[1].Value = "STORE";
+                        break;
+                    case 30:
+                        row.Cells[1].Value = "ADD";
+                        break;
+                    case 31:
+                        row.Cells[1].Value = "SUBTRACT";
+                        break;
+                    case 32:
+                        row.Cells[1].Value = "DIVIDE";
+                        break;
+                    case 33:
+                        row.Cells[1].Value = "MULTIPLY";
+                        break;
+                    case 40:
+                        row.Cells[1].Value = "BR_POSITIVE";
+                        break;
+                    case 41:
+                        row.Cells[1].Value = "BR_NEGATIVE";
+                        break;
+                    case 42:
+                        row.Cells[1].Value = "BR_ZERO";
+                        break;
+                    case 43:
+                        row.Cells[1].Value = "HALT";
+                        break;
+                    default:
+                        break;
+                }
+                Start_DataGridView.Rows.Add(row);
+                instruction = process.GetNextInstruction();
+                ++j;
+            }
 
-		//Start Button
-		private void Start_Button_Click(object sender, EventArgs e)
-		{
-			//highlight first instruction
-			DataGridViewRow row;
-			process.SetInstructionCtr(0);
-			row = (DataGridViewRow)Start_DataGridView.Rows[process.GetInstructionCtr()];
-			row.DefaultCellStyle.BackColor = Color.Yellow;
-		}
+        }
 
-		//Next Button
-		private void Next_Button_Click(object sender, EventArgs e)
-		{
-			//declare variables
-			DataGridViewRow row;
-			string user_input = "";
-			string instruction = process.GetNextInstruction();
-			int opcode = Int32.Parse(instruction.Substring(0, 2));
-			int location = Int32.Parse(instruction.Substring(2, 2));
+        //Begin program by initializing program ctr to the first location in memory
+        private void Start_Button_Click(object sender, EventArgs e)
+        {
+            //highlight first instruction
+            DataGridViewRow row;
+            process.SetInstructionCtr(0);
+            row = (DataGridViewRow)Start_DataGridView.Rows[process.GetInstructionCtr()];
+            row.DefaultCellStyle.BackColor = Color.Yellow;
+        }
 
-			//interpret opcode
-			switch (opcode)
-			{
-				//READ OPCODE
-				case 10:
-					//ask user for input
-					if (Start_DataGridView[2, process.GetInstructionCtr()].Value.ToString() == "")
-					{
-						Start_DataGridView[2, process.GetInstructionCtr()].Value = "ERROR";
-						break;
-					}
-					else
-					{
-						user_input = Start_DataGridView[2, process.GetInstructionCtr()].Value.ToString();
-						//Put user input into the array
-						process.Read(user_input, location);
+        //Move to the next instruction
+        private void Next_Button_Click(object sender, EventArgs e)
+        {
+            //declare variables
+            DataGridViewRow row;
+            string user_input = "";
+            string instruction = process.GetNextInstruction();
+            int opcode = Int32.Parse(instruction.Substring(0, 2));
+            int location = Int32.Parse(instruction.Substring(2, 2));
 
-						//unhighlight current instruction
-						row = (DataGridViewRow)Start_DataGridView.Rows[process.GetInstructionCtr()];
-						row.DefaultCellStyle.BackColor = Color.White;
-						//increment instr ctr and highlight next row
-						process.IncrementInstructionCtr();
-						row = (DataGridViewRow)Start_DataGridView.Rows[process.GetInstructionCtr()];
-						row.DefaultCellStyle.BackColor = Color.Yellow;
-						break;
-					}
+            //interpret opcode
+            switch (opcode)
+            {
+                //READ OPCODE
+                case 10:
+                    //ask user for input
+                    if (Start_DataGridView[2, process.GetInstructionCtr()].Value.ToString() == "")
+                    {
+                        Start_DataGridView[2, process.GetInstructionCtr()].Value = "ERROR";
+                        break;
+                    }
+                    else
+                    {
+                        user_input = Start_DataGridView[2, process.GetInstructionCtr()].Value.ToString();
+                        //Put user input into the array
+                        memory.Read(user_input, location);
 
-				//WRITE OPCODE
-				case 11:
-					string number_in_address = "";
-					number_in_address = process.Write(location);
-					Start_DataGridView[2, process.GetInstructionCtr()].Value = number_in_address;
+                        //unhighlight current instruction
+                        row = (DataGridViewRow)Start_DataGridView.Rows[process.GetInstructionCtr()];
+                        row.DefaultCellStyle.BackColor = Color.White;
+                        //increment instr ctr and highlight next row
+                        process.IncrementInstructionCtr();
+                        row = (DataGridViewRow)Start_DataGridView.Rows[process.GetInstructionCtr()];
+                        row.DefaultCellStyle.BackColor = Color.Yellow;
+                        break;
+                    }
 
-					//unhighlight current instruction
-					row = (DataGridViewRow)Start_DataGridView.Rows[process.GetInstructionCtr()];
-					row.DefaultCellStyle.BackColor = Color.White;
-					//increment instr ctr and highlight next row
-					process.IncrementInstructionCtr();
-					row = (DataGridViewRow)Start_DataGridView.Rows[process.GetInstructionCtr()];
-					row.DefaultCellStyle.BackColor = Color.Yellow;
-					break;
+                //WRITE OPCODE
+                case 11:
+                    string number_in_address = "";
+                    number_in_address = process.Write(location);
+                    Start_DataGridView[2, process.GetInstructionCtr()].Value = number_in_address;
 
-				//LOAD OPCODE
-				case 20:
-					process.Load(location);
-					Start_DataGridView[2, process.GetInstructionCtr()].Value = process.getValueAt(location) + " -> accumulator";
+                    //unhighlight current instruction
+                    row = (DataGridViewRow)Start_DataGridView.Rows[process.GetInstructionCtr()];
+                    row.DefaultCellStyle.BackColor = Color.White;
+                    //increment instr ctr and highlight next row
+                    process.IncrementInstructionCtr();
+                    row = (DataGridViewRow)Start_DataGridView.Rows[process.GetInstructionCtr()];
+                    row.DefaultCellStyle.BackColor = Color.Yellow;
+                    break;
 
-					//unhighlight current instruction
-					row = (DataGridViewRow)Start_DataGridView.Rows[process.GetInstructionCtr()];
-					row.DefaultCellStyle.BackColor = Color.White;
-					//increment instr ctr and highlight next row
-					process.IncrementInstructionCtr();
-					row = (DataGridViewRow)Start_DataGridView.Rows[process.GetInstructionCtr()];
-					row.DefaultCellStyle.BackColor = Color.Yellow;
-					break;
+                //LOAD OPCODE
+                case 20:
+                    process.Load(location);
+                    Start_DataGridView[2, process.GetInstructionCtr()].Value = process.getValueAt(location) + " -> accumulator";
 
-				//STORE OPCODE
-				case 21:
-					process.Store(location);
-					Start_DataGridView[2, process.GetInstructionCtr()].Value = "Stored " + process.getValueAt(location) + " from accumulator -> " + location;
+                    //unhighlight current instruction
+                    row = (DataGridViewRow)Start_DataGridView.Rows[process.GetInstructionCtr()];
+                    row.DefaultCellStyle.BackColor = Color.White;
+                    //increment instr ctr and highlight next row
+                    process.IncrementInstructionCtr();
+                    row = (DataGridViewRow)Start_DataGridView.Rows[process.GetInstructionCtr()];
+                    row.DefaultCellStyle.BackColor = Color.Yellow;
+                    break;
 
-
-					//unhighlight current instruction
-					row = (DataGridViewRow)Start_DataGridView.Rows[process.GetInstructionCtr()];
-					row.DefaultCellStyle.BackColor = Color.White;
-					//increment instr ctr and highlight next row
-					process.IncrementInstructionCtr();
-					row = (DataGridViewRow)Start_DataGridView.Rows[process.GetInstructionCtr()];
-					row.DefaultCellStyle.BackColor = Color.Yellow;
-					break;
-
-				//ADD OPCODE
-				case 30:
-					process.ADD(location);
-					Start_DataGridView[2, process.GetInstructionCtr()].Value = process.getValueAt(location) + " added -> accumulator";
-
-					//unhighlight current instruction
-					row = (DataGridViewRow)Start_DataGridView.Rows[process.GetInstructionCtr()];
-					row.DefaultCellStyle.BackColor = Color.White;
-					//increment instr ctr and highlight next row
-					process.IncrementInstructionCtr();
-					row = (DataGridViewRow)Start_DataGridView.Rows[process.GetInstructionCtr()];
-					row.DefaultCellStyle.BackColor = Color.Yellow;
-					break;
-
-				//SUBTRACT OPCODE
-				case 31:
-					process.SUBTRACT(location);
-					Start_DataGridView[2, process.GetInstructionCtr()].Value = process.getValueAt(location) + " subtracted -> accumulator";
-
-					//unhighlight current instruction
-					row = (DataGridViewRow)Start_DataGridView.Rows[process.GetInstructionCtr()];
-					row.DefaultCellStyle.BackColor = Color.White;
-					//increment instr ctr and highlight next row
-					process.IncrementInstructionCtr();
-					row = (DataGridViewRow)Start_DataGridView.Rows[process.GetInstructionCtr()];
-					row.DefaultCellStyle.BackColor = Color.Yellow;
-					break;
-
-				//DIVIDE OPCODE
-				case 32:
-					process.DIVIDE(location);
-					Start_DataGridView[2, process.GetInstructionCtr()].Value = process.getValueAt(location) + " divided -> accumulator";
+                //STORE OPCODE
+                case 21:
+                    process.Store(location);
+                    Start_DataGridView[2, process.GetInstructionCtr()].Value = "Stored " + process.getValueAt(location) + " from accumulator -> " + location;
 
 
-					//unhighlight current instruction
-					row = (DataGridViewRow)Start_DataGridView.Rows[process.GetInstructionCtr()];
-					row.DefaultCellStyle.BackColor = Color.White;
-					//increment instr ctr and highlight next row
-					process.IncrementInstructionCtr();
-					row = (DataGridViewRow)Start_DataGridView.Rows[process.GetInstructionCtr()];
-					row.DefaultCellStyle.BackColor = Color.Yellow;
-					break;
+                    //unhighlight current instruction
+                    row = (DataGridViewRow)Start_DataGridView.Rows[process.GetInstructionCtr()];
+                    row.DefaultCellStyle.BackColor = Color.White;
+                    //increment instr ctr and highlight next row
+                    process.IncrementInstructionCtr();
+                    row = (DataGridViewRow)Start_DataGridView.Rows[process.GetInstructionCtr()];
+                    row.DefaultCellStyle.BackColor = Color.Yellow;
+                    break;
 
-				//MULTIPLY
-				case 33:
-					process.MULTIPLY(location);
-					Start_DataGridView[2, process.GetInstructionCtr()].Value = process.getValueAt(location) + " multiply -> accumulator";
+                //ADD OPCODE
+                case 30:
+                    process.ADD(location);
+                    Start_DataGridView[2, process.GetInstructionCtr()].Value = process.getValueAt(location) + " added -> accumulator";
 
-					//unhighlight current instruction
-					row = (DataGridViewRow)Start_DataGridView.Rows[process.GetInstructionCtr()];
-					row.DefaultCellStyle.BackColor = Color.White;
-					//increment instr ctr and highlight next row
-					process.IncrementInstructionCtr();
-					row = (DataGridViewRow)Start_DataGridView.Rows[process.GetInstructionCtr()];
-					row.DefaultCellStyle.BackColor = Color.Yellow;
-					break;
+                    //unhighlight current instruction
+                    row = (DataGridViewRow)Start_DataGridView.Rows[process.GetInstructionCtr()];
+                    row.DefaultCellStyle.BackColor = Color.White;
+                    //increment instr ctr and highlight next row
+                    process.IncrementInstructionCtr();
+                    row = (DataGridViewRow)Start_DataGridView.Rows[process.GetInstructionCtr()];
+                    row.DefaultCellStyle.BackColor = Color.Yellow;
+                    break;
 
-				/*Control Opcodes*/
-				case 40:
-					if (process.getAccumulator() > 0)
-					{
-						//unhighlight current instruction
-						row = (DataGridViewRow)Start_DataGridView.Rows[process.GetInstructionCtr()];
-						row.DefaultCellStyle.BackColor = Color.White;
-						//Set increment instruction to branch location
-						process.Branch_Positive(location);
-						//increment instr ctr and highlight next row
-						row = (DataGridViewRow)Start_DataGridView.Rows[process.GetInstructionCtr()];
-						row.DefaultCellStyle.BackColor = Color.Yellow;
-						break;
-					}
-					else
-					{
-						//unhighlight current instruction
-						row = (DataGridViewRow)Start_DataGridView.Rows[process.GetInstructionCtr()];
-						row.DefaultCellStyle.BackColor = Color.White;
-						//increment counter
-						process.IncrementInstructionCtr();
-						//increment instr ctr and highlight next row
-						row = (DataGridViewRow)Start_DataGridView.Rows[process.GetInstructionCtr()];
-						row.DefaultCellStyle.BackColor = Color.Yellow;
-						break;
-					}
-				case 41:
-					if (process.getAccumulator() < 0)
-					{
-						//unhighlight current instruction
-						row = (DataGridViewRow)Start_DataGridView.Rows[process.GetInstructionCtr()];
-						row.DefaultCellStyle.BackColor = Color.White;
-						//Set increment instruction to branch location
-						process.Branch_Negative(location);
-						//increment instr ctr and highlight next row
-						row = (DataGridViewRow)Start_DataGridView.Rows[process.GetInstructionCtr()];
-						row.DefaultCellStyle.BackColor = Color.Yellow;
-						break;
-					}
-					else
-					{
-						//unhighlight current instruction
-						row = (DataGridViewRow)Start_DataGridView.Rows[process.GetInstructionCtr()];
-						row.DefaultCellStyle.BackColor = Color.White;
-						//increment counter
-						process.IncrementInstructionCtr();
-						//increment instr ctr and highlight next row
-						row = (DataGridViewRow)Start_DataGridView.Rows[process.GetInstructionCtr()];
-						row.DefaultCellStyle.BackColor = Color.Yellow;
-						break;
-					}
-				case 42:
-					if (process.getAccumulator() == 0)
-					{
-						//unhighlight current instruction
-						row = (DataGridViewRow)Start_DataGridView.Rows[process.GetInstructionCtr()];
-						row.DefaultCellStyle.BackColor = Color.White;
-						//Set increment instruction to branch location
-						process.Branch_Zero(location);
-						//increment instr ctr and highlight next row
-						row = (DataGridViewRow)Start_DataGridView.Rows[process.GetInstructionCtr()];
-						row.DefaultCellStyle.BackColor = Color.Yellow;
-						break;
-					}
-					else
-					{
-						//unhighlight current instruction
-						row = (DataGridViewRow)Start_DataGridView.Rows[process.GetInstructionCtr()];
-						row.DefaultCellStyle.BackColor = Color.White;
-						//increment counter
-						process.IncrementInstructionCtr();
-						//increment instr ctr and highlight next row
-						row = (DataGridViewRow)Start_DataGridView.Rows[process.GetInstructionCtr()];
-						row.DefaultCellStyle.BackColor = Color.Yellow;
-						break;
-					}
-				default:
-					break;
-			}
-		}
+                //SUBTRACT OPCODE
+                case 31:
+                    process.SUBTRACT(location);
+                    Start_DataGridView[2, process.GetInstructionCtr()].Value = process.getValueAt(location) + " subtracted -> accumulator";
 
-		private void InputFile_TextBox_TextChanged(object sender, EventArgs e)
-		{
+                    //unhighlight current instruction
+                    row = (DataGridViewRow)Start_DataGridView.Rows[process.GetInstructionCtr()];
+                    row.DefaultCellStyle.BackColor = Color.White;
+                    //increment instr ctr and highlight next row
+                    process.IncrementInstructionCtr();
+                    row = (DataGridViewRow)Start_DataGridView.Rows[process.GetInstructionCtr()];
+                    row.DefaultCellStyle.BackColor = Color.Yellow;
+                    break;
 
-		}
+                //DIVIDE OPCODE
+                case 32:
+                    process.DIVIDE(location);
+                    Start_DataGridView[2, process.GetInstructionCtr()].Value = process.getValueAt(location) + " divided -> accumulator";
 
-		private void Start_TextBox_TextChanged(object sender, EventArgs e)
-		{
 
-		}
-	}
+                    //unhighlight current instruction
+                    row = (DataGridViewRow)Start_DataGridView.Rows[process.GetInstructionCtr()];
+                    row.DefaultCellStyle.BackColor = Color.White;
+                    //increment instr ctr and highlight next row
+                    process.IncrementInstructionCtr();
+                    row = (DataGridViewRow)Start_DataGridView.Rows[process.GetInstructionCtr()];
+                    row.DefaultCellStyle.BackColor = Color.Yellow;
+                    break;
+
+                //MULTIPLY
+                case 33:
+                    process.MULTIPLY(location);
+                    Start_DataGridView[2, process.GetInstructionCtr()].Value = process.getValueAt(location) + " multiply -> accumulator";
+
+                    //unhighlight current instruction
+                    row = (DataGridViewRow)Start_DataGridView.Rows[process.GetInstructionCtr()];
+                    row.DefaultCellStyle.BackColor = Color.White;
+                    //increment instr ctr and highlight next row
+                    process.IncrementInstructionCtr();
+                    row = (DataGridViewRow)Start_DataGridView.Rows[process.GetInstructionCtr()];
+                    row.DefaultCellStyle.BackColor = Color.Yellow;
+                    break;
+
+                /*Control Opcodes*/
+                case 40:
+                    if (process.getAccumulator() > 0)
+                    {
+                        //unhighlight current instruction
+                        row = (DataGridViewRow)Start_DataGridView.Rows[process.GetInstructionCtr()];
+                        row.DefaultCellStyle.BackColor = Color.White;
+                        //Set increment instruction to branch location
+                        process.Branch_Positive(location);
+                        //increment instr ctr and highlight next row
+                        row = (DataGridViewRow)Start_DataGridView.Rows[process.GetInstructionCtr()];
+                        row.DefaultCellStyle.BackColor = Color.Yellow;
+                        break;
+                    }
+                    else
+                    {
+                        //unhighlight current instruction
+                        row = (DataGridViewRow)Start_DataGridView.Rows[process.GetInstructionCtr()];
+                        row.DefaultCellStyle.BackColor = Color.White;
+                        //increment counter
+                        process.IncrementInstructionCtr();
+                        //increment instr ctr and highlight next row
+                        row = (DataGridViewRow)Start_DataGridView.Rows[process.GetInstructionCtr()];
+                        row.DefaultCellStyle.BackColor = Color.Yellow;
+                        break;
+                    }
+                case 41:
+                    if (process.getAccumulator() < 0)
+                    {
+                        //unhighlight current instruction
+                        row = (DataGridViewRow)Start_DataGridView.Rows[process.GetInstructionCtr()];
+                        row.DefaultCellStyle.BackColor = Color.White;
+                        //Set increment instruction to branch location
+                        process.Branch_Negative(location);
+                        //increment instr ctr and highlight next row
+                        row = (DataGridViewRow)Start_DataGridView.Rows[process.GetInstructionCtr()];
+                        row.DefaultCellStyle.BackColor = Color.Yellow;
+                        break;
+                    }
+                    else
+                    {
+                        //unhighlight current instruction
+                        row = (DataGridViewRow)Start_DataGridView.Rows[process.GetInstructionCtr()];
+                        row.DefaultCellStyle.BackColor = Color.White;
+                        //increment counter
+                        process.IncrementInstructionCtr();
+                        //increment instr ctr and highlight next row
+                        row = (DataGridViewRow)Start_DataGridView.Rows[process.GetInstructionCtr()];
+                        row.DefaultCellStyle.BackColor = Color.Yellow;
+                        break;
+                    }
+                case 42:
+                    if (process.getAccumulator() == 0)
+                    {
+                        //unhighlight current instruction
+                        row = (DataGridViewRow)Start_DataGridView.Rows[process.GetInstructionCtr()];
+                        row.DefaultCellStyle.BackColor = Color.White;
+                        //Set increment instruction to branch location
+                        process.Branch_Zero(location);
+                        //increment instr ctr and highlight next row
+                        row = (DataGridViewRow)Start_DataGridView.Rows[process.GetInstructionCtr()];
+                        row.DefaultCellStyle.BackColor = Color.Yellow;
+                        break;
+                    }
+                    else
+                    {
+                        //unhighlight current instruction
+                        row = (DataGridViewRow)Start_DataGridView.Rows[process.GetInstructionCtr()];
+                        row.DefaultCellStyle.BackColor = Color.White;
+                        //increment counter
+                        process.IncrementInstructionCtr();
+                        //increment instr ctr and highlight next row
+                        row = (DataGridViewRow)Start_DataGridView.Rows[process.GetInstructionCtr()];
+                        row.DefaultCellStyle.BackColor = Color.Yellow;
+                        break;
+                    }
+                default:
+                    break;
+            }
+        }
+
+
+        //GUI Component Behaviors not need. Cannot delete or Form1.cs[Design] throws error
+
+        private void InputFile_DataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void Start_DataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void InputFile_TextBox_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Start_TextBox_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+    }
 }
