@@ -266,7 +266,7 @@ namespace WindowsFormsApp1
                 //ADD OPCODE
                 case 30:
                     logic_unit.ADD(location);
-                    Start_DataGridView[2, bml.GetProgramCtr()].Value = bml.GetInstructionAt(location); + " added -> accumulator";
+                    Start_DataGridView[2, bml.GetProgramCtr()].Value = bml.GetInstructionAt(location) + " added -> accumulator";
 
                     //unhighlight current instruction
                     row = (DataGridViewRow)Start_DataGridView.Rows[bml.GetProgramCtr()];
@@ -280,7 +280,7 @@ namespace WindowsFormsApp1
                 //SUBTRACT OPCODE
                 case 31:
                     logic_unit.SUBTRACT(location);
-                    Start_DataGridView[2, bml.GetProgramCtr()].Value = bml.GetInstructionAt(location); + " subtracted -> accumulator";
+                    Start_DataGridView[2, bml.GetProgramCtr()].Value = bml.GetInstructionAt(location) + " subtracted -> accumulator";
 
                     //unhighlight current instruction
                     row = (DataGridViewRow)Start_DataGridView.Rows[bml.GetProgramCtr()];
@@ -294,7 +294,7 @@ namespace WindowsFormsApp1
                 //DIVIDE OPCODE
                 case 32:
                     logic_unit.DIVIDE(location);
-                    Start_DataGridView[2, bml.GetProgramCtr()].Value = bml.GetInstructionAt(location); + " divided -> accumulator";
+                    Start_DataGridView[2, bml.GetProgramCtr()].Value = bml.GetInstructionAt(location) + " divided -> accumulator";
 
 
                     //unhighlight current instruction
@@ -309,7 +309,7 @@ namespace WindowsFormsApp1
                 //MULTIPLY
                 case 33:
                     logic_unit.MULTIPLY(location);
-                    Start_DataGridView[2, bml.GetProgramCtr()].Value = bml.GetInstructionAt(location); + " multiply -> accumulator";
+                    Start_DataGridView[2, bml.GetProgramCtr()].Value = bml.GetInstructionAt(location) + " multiply -> accumulator";
 
                     //unhighlight current instruction
                     row = (DataGridViewRow)Start_DataGridView.Rows[bml.GetProgramCtr()];
