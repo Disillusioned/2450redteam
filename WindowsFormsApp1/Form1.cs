@@ -398,6 +398,10 @@ namespace WindowsFormsApp1
         private void resetToolStripMenuItem_Click(object sender, EventArgs e)
         {
             bml.ResetMachine();
+            Start_DataGridView.Rows.Clear();
+            InputFile_DataGridView.Rows.Clear();
+            Start_DataGridView.Refresh();
+            InputFile_DataGridView.Refresh();
         }
 
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
