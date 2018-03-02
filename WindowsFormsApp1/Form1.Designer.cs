@@ -28,6 +28,7 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
             this.InputFile_DataGridView = new System.Windows.Forms.DataGridView();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Start_DataGridView = new System.Windows.Forms.DataGridView();
@@ -160,10 +161,9 @@
             this.InputFile_TextBox.Location = new System.Drawing.Point(11, 210);
             this.InputFile_TextBox.Margin = new System.Windows.Forms.Padding(2);
             this.InputFile_TextBox.Name = "InputFile_TextBox";
-            this.InputFile_TextBox.Size = new System.Drawing.Size(167, 83);
+            this.InputFile_TextBox.Size = new System.Drawing.Size(167, 162);
             this.InputFile_TextBox.TabIndex = 14;
-            this.InputFile_TextBox.Text = "Please press input file to input instructions from a text file then press LOAD. \n" +
-    "Or enter instructions manually and press LOAD when finished. \n";
+            this.InputFile_TextBox.Text = resources.GetString("InputFile_TextBox.Text");
             // 
             // txtAccumulator
             // 
@@ -205,21 +205,21 @@
             // resetToolStripMenuItem
             // 
             this.resetToolStripMenuItem.Name = "resetToolStripMenuItem";
-            this.resetToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
+            this.resetToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.resetToolStripMenuItem.Text = "Reset";
             this.resetToolStripMenuItem.Click += new System.EventHandler(this.resetToolStripMenuItem_Click);
             // 
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.aboutToolStripMenuItem.Text = "About";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 

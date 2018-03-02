@@ -1,7 +1,7 @@
 ﻿// CS 2450 Milestone One
 // Prototype for UVSimulator or Basic ML Simulator
 // Last update: 03/01/18
-// <Chase Parks> <001> <2/28/2018>
+// <Chase Parks> <Benny Yamagata> <Brielle Hyemas> <Sam Solomon> <001> <2/28/2018>
 // <Windows 10 with Visual Studio 2017 Community>
 //
 // Usage: Simulator of the Basic Machine language. Input a file with BML instructions
@@ -13,10 +13,10 @@
 // This program is coded in conventional C# programming style, with the 
 // exception of the C++-style comments.
 //
-// I declare that the following source code was written by me, or provided
-// by the instructor for this project. I understand that copying
-// source code from any other source constitutes cheating, and that I will
-// receive a zero grade on this project if I am found in violation of
+// We declare that the following source code was written by us, or provided
+// by the instructor for this project. We understand that copying
+// source code from any other source constitutes cheating, and that we will
+// receive a zero grade on this project if we am found in violation of
 // this policy.
 // ----------------------------------------------------------------------------
 
@@ -43,6 +43,7 @@ namespace WindowsFormsApp1
         bool input_file_clicked;
         WindowsFormsApp.MemDumpFrm dump;
         string print; //used for passing info to second form
+        StreamReader testData;//test for load function
 
         //CONSTRUCTOR for form class
         public frmMain()
@@ -98,10 +99,15 @@ namespace WindowsFormsApp1
         // in the same folder as Form1.cs
         private void InputFile_Button_Click(object sender, EventArgs e)
         {
-            /*GET INSTRUCTIONS FROM A TEST FILE*/
+            //START BENNY CODE
+            OpenFileDialog file = new OpenFileDialog();
+            if(file.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                testData = new StreamReader(file.FileName);
+            }
+            //End Benny Code
 
             //create variables used throughout function
-            StreamReader testData = new StreamReader("instructions.txt");
             DataGridViewRow row;
             string full_line = "";
             string instruction = "";
@@ -418,6 +424,7 @@ namespace WindowsFormsApp1
                         break;
                     }
                 //halt command
+                //Start of Benny code
                 case 43:
                     const int MAX_INSTR = 100;
                     print = "\t0\t1\t2\t3\t4\t5\t6\t7\t8\t9\r\n";
@@ -468,5 +475,6 @@ namespace WindowsFormsApp1
         {
             Application.Exit();
         }
+        //End of Benny Code
     }
 }
