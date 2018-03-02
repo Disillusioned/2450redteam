@@ -41,6 +41,8 @@ namespace WindowsFormsApp1
         Memory memory_unit;
         Control control_unit;
         bool input_file_clicked;
+        WindowsFormsApp.MemDumpFrm dump;
+        string print; //used for passing info to second form
 
         //CONSTRUCTOR for form class
         public frmMain()
@@ -266,8 +268,8 @@ namespace WindowsFormsApp1
             DataGridViewRow row;
             string user_input = "";
             string instruction = bml.GetNextInstruction();
-            int opcode = Int32.Parse(instruction.Substring(0, 2));
-            int location = Int32.Parse(instruction.Substring(2, 2));
+            int opcode = int.Parse(instruction.Substring(0, 2));
+            int location = int.Parse(instruction.Substring(2, 2));
 
             //initialize row
             row = (DataGridViewRow)Start_DataGridView.Rows[0];
@@ -300,6 +302,9 @@ namespace WindowsFormsApp1
                     string number_in_address = "";
                     number_in_address = memory_unit.Write(location);
                     Start_DataGridView[2, bml.GetProgramCtr()].Value = number_in_address;
+
+                    //Write to Output box
+                    txtOutput.Text += number_in_address + "\n";
 
                     //highlight next instruction
                     bml.IncrementProgramCtr();
@@ -412,6 +417,32 @@ namespace WindowsFormsApp1
                         UnhighlightRow(row, bml.GetProgramCtr(), false);
                         break;
                     }
+                //halt command
+                case 43:
+                    const int MAX_INSTR = 100;
+                    print = "\t0\t1\t2\t3\t4\t5\t6\t7\t8\t9\r\n";
+                    for (int i = 0; i < MAX_INSTR; i++)
+                    {
+                        if (0 == i % 10)
+                        {
+                            print += i + "\t";
+                        }
+                        if(9 == i % 10)
+                        {
+                            print += bml.GetInstructionAt(i) + "\r\n";
+                        }
+                        else
+                        {
+                            print += bml.GetInstructionAt(i) + "\t";
+                        }
+                    }
+                    //string caption = "Memory Dump";
+                    dump = new WindowsFormsApp.MemDumpFrm();
+                    dump.dumpHere = print;
+                    dump.accumValue = bml.GetAccumulator();
+                    dump.Show();
+                    //MessageBox.Show(print, caption, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    break;
                 default:
                     break;
             }
@@ -424,6 +455,8 @@ namespace WindowsFormsApp1
             InputFile_DataGridView.Rows.Clear();
             Start_DataGridView.Refresh();
             InputFile_DataGridView.Refresh();
+            txtAccumulator.Text = "";
+            txtOutput.Text = "";
         }
 
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
