@@ -14,9 +14,9 @@ namespace WindowsFormsApp1
         }
 
         //I/O OPERATIONS
-        public void Read(string _input)
+        public void Read(string _input, int _location)
         {
-            bml.SetNextInstruction(_input);
+            bml.SetInstructionAt(_location, _input);
         }
 
         public string Write(int _location)

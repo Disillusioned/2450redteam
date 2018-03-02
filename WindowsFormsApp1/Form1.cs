@@ -34,6 +34,30 @@ namespace WindowsFormsApp1
             InitializeComponent();
         }
 
+        /*/////////////////STYLE FUNCTION///////////////////////////////*/
+
+        //Style function to highlight next instruction
+        private void UnhighlightRow(DataGridViewRow row, int location)
+        {
+            //unhighlight current instruction
+            row = (DataGridViewRow)Start_DataGridView.Rows[bml.GetProgramCtr()];
+            row.DefaultCellStyle.BackColor = Color.White;
+
+            //increment counter
+            bml.SetProgramCtr(location);
+
+            //increment instr ctr and highlight next row
+            row = (DataGridViewRow)Start_DataGridView.Rows[bml.GetProgramCtr()];
+            row.DefaultCellStyle.BackColor = Color.Yellow;
+        }
+
+
+                         /*/////////////////BUTTONS///////////////////////////////*/
+
+
+
+                        /*/////INPUT FILE BUTTON/////////*/
+
         //Input a file that holds instructions for the basic machine language program. File should be save
         // in the same folder as Form1.cs
         private void InputFile_Button_Click(object sender, EventArgs e)
@@ -79,6 +103,10 @@ namespace WindowsFormsApp1
             bml.SetProgramCtr(0);
             input_file_clicked = true;
         }
+
+
+
+                    /*/////LOAD BUTTON/////////*/
 
         //Load instructions entered by user into memory and display in step through
         private void Load_Button_Click(object sender, EventArgs e)
@@ -170,17 +198,29 @@ namespace WindowsFormsApp1
                 ++j;
             }
 
+
         }
+
+
+
+                            /*/////START BUTTON/////////*/
 
         //Begin program by initializing program ctr to the first location in memory
         private void Start_Button_Click(object sender, EventArgs e)
         {
             //highlight first instruction
             DataGridViewRow row;
-            bml.SetProgramCtr(0);
-            row = (DataGridViewRow)Start_DataGridView.Rows[bml.GetNextInstruction()];
+            row = (DataGridViewRow)Start_DataGridView.Rows[0];
             row.DefaultCellStyle.BackColor = Color.Yellow;
+            //set program ctr to 0
+            bml.SetProgramCtr(0);
         }
+
+
+
+
+                                 /*/////NEXT BUTTON/////////*/
+
 
         //Move to the next instruction
         private void Next_Button_Click(object sender, EventArgs e)
@@ -191,6 +231,9 @@ namespace WindowsFormsApp1
             string instruction = bml.GetNextInstruction();
             int opcode = Int32.Parse(instruction.Substring(0, 2));
             int location = Int32.Parse(instruction.Substring(2, 2));
+
+            //initialize row
+            row = (DataGridViewRow)Start_DataGridView.Rows[0];
 
             //interpret opcode
             switch (opcode)
@@ -209,13 +252,9 @@ namespace WindowsFormsApp1
                         //Put user input into the array
                         memory_unit.Read(user_input, location);
 
-                        //unhighlight current instruction
-                        row = (DataGridViewRow)Start_DataGridView.Rows[bml.GetProgramCtr()];
-                        row.DefaultCellStyle.BackColor = Color.White;
-                        //increment instr ctr and highlight next row
+                        //highlight next instruction
                         bml.IncrementProgramCtr();
-                        row = (DataGridViewRow)Start_DataGridView.Rows[bml.GetProgramCtr()];
-                        row.DefaultCellStyle.BackColor = Color.Yellow;
+                        UnhighlightRow(row, bml.GetProgramCtr());
                         break;
                     }
 
@@ -225,13 +264,9 @@ namespace WindowsFormsApp1
                     number_in_address = memory_unit.Write(location);
                     Start_DataGridView[2, bml.GetProgramCtr()].Value = number_in_address;
 
-                    //unhighlight current instruction
-                    row = (DataGridViewRow)Start_DataGridView.Rows[bml.GetProgramCtr()];
-                    row.DefaultCellStyle.BackColor = Color.White;
-                    //increment instr ctr and highlight next row
+                    //highlight next instruction
                     bml.IncrementProgramCtr();
-                    row = (DataGridViewRow)Start_DataGridView.Rows[bml.GetProgramCtr()];
-                    row.DefaultCellStyle.BackColor = Color.Yellow;
+                    UnhighlightRow(row, bml.GetProgramCtr());
                     break;
 
                 //LOAD OPCODE
@@ -239,28 +274,20 @@ namespace WindowsFormsApp1
                     memory_unit.Load(location);
                     Start_DataGridView[2, bml.GetProgramCtr()].Value = bml.GetInstructionAt(location) + " -> accumulator";
 
-                    //unhighlight current instruction
-                    row = (DataGridViewRow)Start_DataGridView.Rows[bml.GetProgramCtr()];
-                    row.DefaultCellStyle.BackColor = Color.White;
-                    //increment instr ctr and highlight next row
+                    //highlight next instruction
                     bml.IncrementProgramCtr();
-                    row = (DataGridViewRow)Start_DataGridView.Rows[bml.GetProgramCtr()];
-                    row.DefaultCellStyle.BackColor = Color.Yellow;
+                    UnhighlightRow(row, bml.GetProgramCtr());
                     break;
-                    
+
                 //STORE OPCODE
                 case 21:
                     memory_unit.Store(location);
                     Start_DataGridView[2, bml.GetProgramCtr()].Value = "Stored " + bml.GetInstructionAt(location) + " from accumulator -> " + location;
 
 
-                    //unhighlight current instruction
-                    row = (DataGridViewRow)Start_DataGridView.Rows[bml.GetProgramCtr()];
-                    row.DefaultCellStyle.BackColor = Color.White;
-                    //increment instr ctr and highlight next row
-                    bml.IncrementProgramCtr();;
-                    row = (DataGridViewRow)Start_DataGridView.Rows[bml.GetProgramCtr()];
-                    row.DefaultCellStyle.BackColor = Color.Yellow;
+                    //highlight next instruction
+                    bml.IncrementProgramCtr();
+                    UnhighlightRow(row, bml.GetProgramCtr());
                     break;
 
                 //ADD OPCODE
@@ -268,27 +295,19 @@ namespace WindowsFormsApp1
                     logic_unit.ADD(location);
                     Start_DataGridView[2, bml.GetProgramCtr()].Value = bml.GetInstructionAt(location) + " added -> accumulator";
 
-                    //unhighlight current instruction
-                    row = (DataGridViewRow)Start_DataGridView.Rows[bml.GetProgramCtr()];
-                    row.DefaultCellStyle.BackColor = Color.White;
-                    //increment instr ctr and highlight next row
-                    bml.IncrementProgramCtr();;
-                    row = (DataGridViewRow)Start_DataGridView.Rows[bml.GetProgramCtr()];
-                    row.DefaultCellStyle.BackColor = Color.Yellow;
+                    //highlight next instruction
+                    bml.IncrementProgramCtr();
+                    UnhighlightRow(row, bml.GetProgramCtr());
                     break;
-                    
+
                 //SUBTRACT OPCODE
                 case 31:
                     logic_unit.SUBTRACT(location);
                     Start_DataGridView[2, bml.GetProgramCtr()].Value = bml.GetInstructionAt(location) + " subtracted -> accumulator";
 
-                    //unhighlight current instruction
-                    row = (DataGridViewRow)Start_DataGridView.Rows[bml.GetProgramCtr()];
-                    row.DefaultCellStyle.BackColor = Color.White;
-                    //increment instr ctr and highlight next row
-                    bml.IncrementProgramCtr();;
-                    row = (DataGridViewRow)Start_DataGridView.Rows[bml.GetProgramCtr()];
-                    row.DefaultCellStyle.BackColor = Color.Yellow;
+                    //highlight next instruction
+                    bml.IncrementProgramCtr();
+                    UnhighlightRow(row, bml.GetProgramCtr());
                     break;
 
                 //DIVIDE OPCODE
@@ -296,14 +315,9 @@ namespace WindowsFormsApp1
                     logic_unit.DIVIDE(location);
                     Start_DataGridView[2, bml.GetProgramCtr()].Value = bml.GetInstructionAt(location) + " divided -> accumulator";
 
-
-                    //unhighlight current instruction
-                    row = (DataGridViewRow)Start_DataGridView.Rows[bml.GetProgramCtr()];
-                    row.DefaultCellStyle.BackColor = Color.White;
-                    //increment instr ctr and highlight next row
-                    bml.IncrementProgramCtr();;
-                    row = (DataGridViewRow)Start_DataGridView.Rows[bml.GetProgramCtr()];
-                    row.DefaultCellStyle.BackColor = Color.Yellow;
+                    //highlight next instruction
+                    bml.IncrementProgramCtr();
+                    UnhighlightRow(row, bml.GetProgramCtr());
                     break;
 
                 //MULTIPLY
@@ -311,95 +325,53 @@ namespace WindowsFormsApp1
                     logic_unit.MULTIPLY(location);
                     Start_DataGridView[2, bml.GetProgramCtr()].Value = bml.GetInstructionAt(location) + " multiply -> accumulator";
 
-                    //unhighlight current instruction
-                    row = (DataGridViewRow)Start_DataGridView.Rows[bml.GetProgramCtr()];
-                    row.DefaultCellStyle.BackColor = Color.White;
-                    //increment instr ctr and highlight next row
-                    bml.IncrementProgramCtr();;
-                    row = (DataGridViewRow)Start_DataGridView.Rows[bml.GetProgramCtr()];
-                    row.DefaultCellStyle.BackColor = Color.Yellow;
+                    bml.IncrementProgramCtr();
+                    UnhighlightRow(row, bml.GetProgramCtr());
                     break;
 
                 /*Control Opcodes*/
                 case 40:
                     if (bml.GetAccumulator() > 0)
                     {
-                        //unhighlight current instruction
-                        row = (DataGridViewRow)Start_DataGridView.Rows[bml.GetProgramCtr()];
-                        row.DefaultCellStyle.BackColor = Color.White;
-                        //Set increment instruction to branch location
-                        control_unit.Branch_Positive(location);
-                        //increment instr ctr and highlight next row
-                        row = (DataGridViewRow)Start_DataGridView.Rows[bml.GetProgramCtr()];
-                        row.DefaultCellStyle.BackColor = Color.Yellow;
+                        UnhighlightRow(row, bml.GetProgramCtr());
                         break;
                     }
                     else
                     {
-                        //unhighlight current instruction
-                        row = (DataGridViewRow)Start_DataGridView.Rows[bml.GetProgramCtr()];
-                        row.DefaultCellStyle.BackColor = Color.White;
-                        //increment counter
-                        bml.IncrementProgramCtr();;
-                        //increment instr ctr and highlight next row
-                        row = (DataGridViewRow)Start_DataGridView.Rows[bml.GetProgramCtr()];
-                        row.DefaultCellStyle.BackColor = Color.Yellow;
+                        bml.IncrementProgramCtr();
+                        UnhighlightRow(row, bml.GetProgramCtr());
                         break;
                     }
                 case 41:
                     if (bml.GetAccumulator() < 0)
                     {
-                        //unhighlight current instruction
-                        row = (DataGridViewRow)Start_DataGridView.Rows[bml.GetProgramCtr()];
-                        row.DefaultCellStyle.BackColor = Color.White;
-                        //Set increment instruction to branch location
-                        control_unit.Branch_Negative(location);
-                        //increment instr ctr and highlight next row
-                        row = (DataGridViewRow)Start_DataGridView.Rows[bml.GetProgramCtr()];
-                        row.DefaultCellStyle.BackColor = Color.Yellow;
+                        UnhighlightRow(row, bml.GetProgramCtr());
                         break;
                     }
                     else
                     {
-                        //unhighlight current instruction
-                        row = (DataGridViewRow)Start_DataGridView.Rows[bml.GetProgramCtr()];
-                        row.DefaultCellStyle.BackColor = Color.White;
-                        //increment counter
-                        bml.IncrementProgramCtr();;
-                        //increment instr ctr and highlight next row
-                        row = (DataGridViewRow)Start_DataGridView.Rows[bml.GetProgramCtr()];
-                        row.DefaultCellStyle.BackColor = Color.Yellow;
+                        bml.IncrementProgramCtr();
+                        UnhighlightRow(row, bml.GetProgramCtr());
                         break;
                     }
                 case 42:
                     if (bml.GetAccumulator() == 0)
                     {
-                        //unhighlight current instruction
-                        row = (DataGridViewRow)Start_DataGridView.Rows[bml.GetProgramCtr()];
-                        row.DefaultCellStyle.BackColor = Color.White;
-                        //Set increment instruction to branch location
-                        control_unit.Branch_Zero(location);
-                        //increment instr ctr and highlight next row
-                        row = (DataGridViewRow)Start_DataGridView.Rows[bml.GetProgramCtr()];
-                        row.DefaultCellStyle.BackColor = Color.Yellow;
+                        UnhighlightRow(row, bml.GetProgramCtr());
                         break;
                     }
                     else
                     {
-                        //unhighlight current instruction
-                        row = (DataGridViewRow)Start_DataGridView.Rows[bml.GetProgramCtr()];
-                        row.DefaultCellStyle.BackColor = Color.White;
-                        //increment counter
-                        bml.IncrementProgramCtr();;
-                        //increment instr ctr and highlight next row
-                        row = (DataGridViewRow)Start_DataGridView.Rows[bml.GetProgramCtr()];
-                        row.DefaultCellStyle.BackColor = Color.Yellow;
+                        bml.IncrementProgramCtr();
+                        UnhighlightRow(row, bml.GetProgramCtr());                      
                         break;
                     }
                 default:
                     break;
             }
         }
+
+
 
 
         //GUI Component Behaviors not need. Cannot delete or Form1.cs[Design] throws error
