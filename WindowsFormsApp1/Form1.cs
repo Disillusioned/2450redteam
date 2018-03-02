@@ -48,6 +48,8 @@ namespace WindowsFormsApp1
         //CONSTRUCTOR for form class
         public frmMain()
         {
+            /*Begin Chase's Code*/
+
             //instantiate variables;
             bml = new BasicMachineLanguage();
             logic_unit = new ALU(bml);
@@ -57,9 +59,14 @@ namespace WindowsFormsApp1
             input_file_clicked = false;
 
             InitializeComponent();
+
+            /*End Chase's Code*/
         }
 
-        /*/////////////////STYLE FUNCTION///////////////////////////////*/
+        /*/////////////////STYLE FUNCTIONS///////////////////////////////*/
+
+        
+        /*Begin Chase's Code*/
 
         //Style function to highlight next instruction
         private void UnhighlightRow(DataGridViewRow row, int location, bool branch)
@@ -88,12 +95,16 @@ namespace WindowsFormsApp1
             }
         }
 
-
-                         /*/////////////////BUTTONS///////////////////////////////*/
-
+        /*End Chase's Code*/
 
 
-                        /*/////INPUT FILE BUTTON/////////*/
+        /*/////////////////BUTTONS///////////////////////////////*/
+
+
+
+        /*/////INPUT FILE BUTTON/////////*/
+
+        /*Begin Chase's Code*/
 
         //Input a file that holds instructions for the basic machine language program. File should be save
         // in the same folder as Form1.cs
@@ -146,9 +157,11 @@ namespace WindowsFormsApp1
             input_file_clicked = true;
         }
 
+        /*End Chase's Code*/
 
+        /*/////LOAD BUTTON/////////*/
 
-                    /*/////LOAD BUTTON/////////*/
+        /*Begin Chase's Code*/
 
         //Load instructions entered by user into memory and display in step through
         private void Load_Button_Click(object sender, EventArgs e)
@@ -173,7 +186,7 @@ namespace WindowsFormsApp1
                 bml.SetProgramCtr(0);
             }
 
-            //POPULATE Debugger "Pain"
+            //POPULATE Debugger Pane
             j = 0;
             instruction = "";
             instruction = bml.GetNextInstruction();
@@ -240,13 +253,14 @@ namespace WindowsFormsApp1
                 if("0000" == instruction) { break; } // dont need to add all the "0000" to the debugger portion
                 ++j;
             }
-
-
         }
 
+        /*End Chase's Code*/
 
 
-                            /*/////START BUTTON/////////*/
+        /*/////START BUTTON/////////*/
+
+        /*Begin Chase's Code*/
 
         //Begin program by initializing program ctr to the first location in memory
         private void Start_Button_Click(object sender, EventArgs e)
@@ -260,11 +274,12 @@ namespace WindowsFormsApp1
             bml.SetProgramCtr(0);
         }
 
+        /*End Chase's Code*/
 
 
+        /*/////NEXT BUTTON/////////*/
 
-                                 /*/////NEXT BUTTON/////////*/
-
+        /*Begin Chase's Code*/
 
         //Move to the next instruction
         private void Next_Button_Click(object sender, EventArgs e)
@@ -423,6 +438,9 @@ namespace WindowsFormsApp1
                         UnhighlightRow(row, bml.GetProgramCtr(), false);
                         break;
                     }
+
+        /*Begin Chase's Code*/
+
                 //halt command
                 //Start of Benny code
                 case 43:
