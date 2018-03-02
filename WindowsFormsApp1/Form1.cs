@@ -402,7 +402,7 @@ namespace WindowsFormsApp1
 
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("BasicML Prototype created by:\n Brielle Hyemas\n Benny Yamagata\n Chase Parks\n Sam");
+            MessageBox.Show("BasicML Prototype created by:\n Brielle Hyemas\n Benny Yamagata\n Chase Parks\n Sam Solomon");
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
