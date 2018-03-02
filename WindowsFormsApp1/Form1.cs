@@ -37,18 +37,30 @@ namespace WindowsFormsApp1
         /*/////////////////STYLE FUNCTION///////////////////////////////*/
 
         //Style function to highlight next instruction
-        private void UnhighlightRow(DataGridViewRow row, int location)
+        private void UnhighlightRow(DataGridViewRow row, int location, bool branch)
         {
-            //unhighlight current instruction
-            row = (DataGridViewRow)Start_DataGridView.Rows[bml.GetProgramCtr()];
-            row.DefaultCellStyle.BackColor = Color.White;
+            
 
-            //increment counter
-            bml.SetProgramCtr(location);
-
-            //increment instr ctr and highlight next row
-            row = (DataGridViewRow)Start_DataGridView.Rows[bml.GetProgramCtr()];
-            row.DefaultCellStyle.BackColor = Color.Yellow;
+            //if not a branch statment
+            if (!branch)
+            {
+                //unhighlight current instruction
+                row = (DataGridViewRow)Start_DataGridView.Rows[(bml.GetProgramCtr() - 1)];
+                row.DefaultCellStyle.BackColor = Color.White;
+                //increment instr ctr and highlight next row
+                row = (DataGridViewRow)Start_DataGridView.Rows[bml.GetProgramCtr()];
+                row.DefaultCellStyle.BackColor = Color.Yellow;
+            }
+            //in a branch statement
+            else
+            {
+                //unhighlight current instruction
+                row = (DataGridViewRow)Start_DataGridView.Rows[bml.GetProgramCtr()];
+                row.DefaultCellStyle.BackColor = Color.White;
+                //highlight next instruction
+                row = (DataGridViewRow)Start_DataGridView.Rows[location];
+                row.DefaultCellStyle.BackColor = Color.Yellow;
+            }
         }
 
 
@@ -65,7 +77,7 @@ namespace WindowsFormsApp1
             /*GET INSTRUCTIONS FROM A TEST FILE*/
 
             //create variables used throughout function
-            StreamReader testData = new StreamReader("instructions2.txt");
+            StreamReader testData = new StreamReader("instructions.txt");
             DataGridViewRow row;
             string full_line = "";
             string instruction = "";
@@ -254,7 +266,7 @@ namespace WindowsFormsApp1
 
                         //highlight next instruction
                         bml.IncrementProgramCtr();
-                        UnhighlightRow(row, bml.GetProgramCtr());
+                        UnhighlightRow(row, bml.GetProgramCtr(), false);
                         break;
                     }
 
@@ -266,7 +278,7 @@ namespace WindowsFormsApp1
 
                     //highlight next instruction
                     bml.IncrementProgramCtr();
-                    UnhighlightRow(row, bml.GetProgramCtr());
+                    UnhighlightRow(row, bml.GetProgramCtr(), false);
                     break;
 
                 //LOAD OPCODE
@@ -276,7 +288,7 @@ namespace WindowsFormsApp1
 
                     //highlight next instruction
                     bml.IncrementProgramCtr();
-                    UnhighlightRow(row, bml.GetProgramCtr());
+                    UnhighlightRow(row, bml.GetProgramCtr(), false);
                     break;
 
                 //STORE OPCODE
@@ -287,7 +299,7 @@ namespace WindowsFormsApp1
 
                     //highlight next instruction
                     bml.IncrementProgramCtr();
-                    UnhighlightRow(row, bml.GetProgramCtr());
+                    UnhighlightRow(row, bml.GetProgramCtr(), false);
                     break;
 
                 //ADD OPCODE
@@ -297,7 +309,7 @@ namespace WindowsFormsApp1
 
                     //highlight next instruction
                     bml.IncrementProgramCtr();
-                    UnhighlightRow(row, bml.GetProgramCtr());
+                    UnhighlightRow(row, bml.GetProgramCtr(), false);
                     break;
 
                 //SUBTRACT OPCODE
@@ -307,7 +319,7 @@ namespace WindowsFormsApp1
 
                     //highlight next instruction
                     bml.IncrementProgramCtr();
-                    UnhighlightRow(row, bml.GetProgramCtr());
+                    UnhighlightRow(row, bml.GetProgramCtr(), false);
                     break;
 
                 //DIVIDE OPCODE
@@ -317,7 +329,7 @@ namespace WindowsFormsApp1
 
                     //highlight next instruction
                     bml.IncrementProgramCtr();
-                    UnhighlightRow(row, bml.GetProgramCtr());
+                    UnhighlightRow(row, bml.GetProgramCtr(), false);
                     break;
 
                 //MULTIPLY
@@ -326,44 +338,53 @@ namespace WindowsFormsApp1
                     Start_DataGridView[2, bml.GetProgramCtr()].Value = bml.GetInstructionAt(location) + " multiply -> accumulator";
 
                     bml.IncrementProgramCtr();
-                    UnhighlightRow(row, bml.GetProgramCtr());
+                    UnhighlightRow(row, bml.GetProgramCtr(), false);
                     break;
 
                 /*Control Opcodes*/
+                
+                
+                //branch positive
                 case 40:
                     if (bml.GetAccumulator() > 0)
                     {
-                        UnhighlightRow(row, bml.GetProgramCtr());
+                        UnhighlightRow(row, location, true);
+                        control_unit.Branch_Positive(location);
                         break;
                     }
                     else
                     {
                         bml.IncrementProgramCtr();
-                        UnhighlightRow(row, bml.GetProgramCtr());
+                        UnhighlightRow(row, bml.GetProgramCtr(), false);
                         break;
                     }
+                //branch negative
                 case 41:
                     if (bml.GetAccumulator() < 0)
                     {
-                        UnhighlightRow(row, bml.GetProgramCtr());
+                        UnhighlightRow(row, location, true);
+                        control_unit.Branch_Positive(location);
                         break;
                     }
                     else
                     {
                         bml.IncrementProgramCtr();
-                        UnhighlightRow(row, bml.GetProgramCtr());
+                        UnhighlightRow(row, bml.GetProgramCtr(), false);
                         break;
                     }
+
+                //branch zero
                 case 42:
                     if (bml.GetAccumulator() == 0)
                     {
-                        UnhighlightRow(row, bml.GetProgramCtr());
+                        UnhighlightRow(row, location, true);
+                        control_unit.Branch_Positive(location);
                         break;
                     }
                     else
                     {
                         bml.IncrementProgramCtr();
-                        UnhighlightRow(row, bml.GetProgramCtr());                      
+                        UnhighlightRow(row, bml.GetProgramCtr(), false);
                         break;
                     }
                 default:
