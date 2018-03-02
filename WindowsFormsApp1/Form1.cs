@@ -1,4 +1,26 @@
-﻿using System;
+﻿// CS 2450 Milestone One
+// Prototype for UVSimulator or Basic ML Simulator
+// Last update: 03/01/18
+// <Chase Parks> <001> <2/28/2018>
+// <Windows 10 with Visual Studio 2017 Community>
+//
+// Usage: Simulator of the Basic Machine language. Input a file with BML instructions
+//or write your own all in the left pane. Hit load to load instructions into the debugging
+//pane. THen press start and hit next to step thorugh the code. Make sure to enter numbers
+//into the Input/output column when the prompt column displays READ and the row is 
+//highlighted yellow. Then hit next. All in the debugger pane on the left
+//
+// This program is coded in conventional C# programming style, with the 
+// exception of the C++-style comments.
+//
+// I declare that the following source code was written by me, or provided
+// by the instructor for this project. I understand that copying
+// source code from any other source constitutes cheating, and that I will
+// receive a zero grade on this project if I am found in violation of
+// this policy.
+// ----------------------------------------------------------------------------
+
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
