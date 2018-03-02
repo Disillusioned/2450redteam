@@ -19,8 +19,22 @@ namespace WindowsFormsApp1
         //CONSTRUCTOR
         public BasicMachineLanguage()
         {
-            instruction_counter = 0;
             accumulator = 0;
+            for (int i = 0; i < memory_locations.Length; i++)
+            {
+                memory_locations[i] = "0000";
+            }
+            instruction_counter = 0;
+        }
+
+        public void ResetMachine()
+        {
+            accumulator = 0;
+            for (int i = 0; i < memory_locations.Length; i++)
+            {
+                memory_locations[i] = "0000";
+            }
+            instruction_counter = 0;
         }
 
         //GETTERS & SETTERS

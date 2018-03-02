@@ -11,7 +11,7 @@ using System.Windows.Forms;
 
 namespace WindowsFormsApp1
 {
-    public partial class Form1 : Form
+    public partial class frmMain : Form
     {
         //GLOBAL VARIABLES
         BasicMachineLanguage bml;
@@ -21,7 +21,7 @@ namespace WindowsFormsApp1
         bool input_file_clicked;
 
         //CONSTRUCTOR for form class
-        public Form1()
+        public frmMain()
         {
             //instantiate variables;
             bml = new BasicMachineLanguage();
@@ -148,13 +148,13 @@ namespace WindowsFormsApp1
             instruction = "";
             instruction = bml.GetNextInstruction();
             DataGridViewRow row;
-            while (instruction != null)
+            while (instruction != "")
             {
                 //create new row
                 row = (DataGridViewRow)Start_DataGridView.Rows[j].Clone();
                 row.Cells[0].Value = instruction;
                 //parse opcode from instruction
-                int opcode = Int32.Parse(instruction.Substring(0, 2));
+                int opcode = int.Parse(instruction.Substring(0, 2));
                 bml.IncrementProgramCtr();
                 switch (opcode)
                 {
@@ -207,6 +207,7 @@ namespace WindowsFormsApp1
                 Start_DataGridView.Rows.Add(row);
                 //read next instruction from BML memory
                 instruction = bml.GetNextInstruction();
+                if("0000" == instruction) { break; } // dont need to add all the "0000" to the debugger portion
                 ++j;
             }
 
@@ -220,6 +221,7 @@ namespace WindowsFormsApp1
         //Begin program by initializing program ctr to the first location in memory
         private void Start_Button_Click(object sender, EventArgs e)
         {
+            txtAccumulator.Text = bml.GetAccumulator().ToString();
             //highlight first instruction
             DataGridViewRow row;
             row = (DataGridViewRow)Start_DataGridView.Rows[0];
@@ -237,6 +239,7 @@ namespace WindowsFormsApp1
         //Move to the next instruction
         private void Next_Button_Click(object sender, EventArgs e)
         {
+            txtAccumulator.Text = bml.GetAccumulator().ToString();
             //declare variables
             DataGridViewRow row;
             string user_input = "";
@@ -392,29 +395,19 @@ namespace WindowsFormsApp1
             }
         }
 
-
-
-
-        //GUI Component Behaviors not need. Cannot delete or Form1.cs[Design] throws error
-
-        private void InputFile_DataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        private void resetToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            bml.ResetMachine();
         }
 
-        private void Start_DataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            MessageBox.Show("BasicML Prototype created by:\n Brielle Hyemas\n Benny Yamagata\n Chase Parks\n Sam");
         }
 
-        private void InputFile_TextBox_TextChanged(object sender, EventArgs e)
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
-        }
-
-        private void Start_TextBox_TextChanged(object sender, EventArgs e)
-        {
-
+            Application.Exit();
         }
     }
 }

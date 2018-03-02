@@ -23,5 +23,17 @@ C:\Users\Chase Parks\Documents\Chase Parks\CS 2450\Refactor\2450redteam\WindowsF
 C:\Users\Chase Parks\Documents\Chase Parks\CS 2450\Refactor\2450redteam\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.csproj.CoreCompileInputs.cache
 C:\Users\Chase Parks\Documents\Chase Parks\CS 2450\Refactor\2450redteam\WindowsFormsApp1\obj\Debug\WindowsFormsApp.exe
 C:\Users\Chase Parks\Documents\Chase Parks\CS 2450\Refactor\2450redteam\WindowsFormsApp1\obj\Debug\WindowsFormsApp.pdb
+<<<<<<< Updated upstream
 C:\Users\Chase Parks\Documents\Chase Parks\CS 2450\Refactor\2450redteam\WindowsFormsApp1\bin\Debug\WindowsFormsApp.exe
 C:\Users\Chase Parks\Documents\Chase Parks\CS 2450\Refactor\2450redteam\WindowsFormsApp1\bin\Debug\WindowsFormsApp.pdb
+=======
+C:\Users\benny\Documents\CS2450\2450redteam\WindowsFormsApp1\bin\Debug\WindowsFormsApp.exe
+C:\Users\benny\Documents\CS2450\2450redteam\WindowsFormsApp1\bin\Debug\WindowsFormsApp.pdb
+C:\Users\benny\Documents\CS2450\2450redteam\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.csprojResolveAssemblyReference.cache
+C:\Users\benny\Documents\CS2450\2450redteam\WindowsFormsApp1\obj\Debug\WindowsFormsApp.Properties.Resources.resources
+C:\Users\benny\Documents\CS2450\2450redteam\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.csproj.GenerateResource.Cache
+C:\Users\benny\Documents\CS2450\2450redteam\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.csproj.CoreCompileInputs.cache
+C:\Users\benny\Documents\CS2450\2450redteam\WindowsFormsApp1\obj\Debug\WindowsFormsApp.exe
+C:\Users\benny\Documents\CS2450\2450redteam\WindowsFormsApp1\obj\Debug\WindowsFormsApp.pdb
+C:\Users\benny\Documents\CS2450\2450redteam\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.frmMain.resources
+>>>>>>> Stashed changes
