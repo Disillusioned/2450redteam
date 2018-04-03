@@ -26,9 +26,22 @@ namespace WindowsFormsApp1
         //MEMBER FUNCTIONS
         public void ADD(int _location)
         {
+            //int addend = int.Parse(bml.GetInstructionAt(_location));
+            //int accumulator = bml.GetAccumulator();
+            //accumulator += addend;
+            //bml.SetAccumulator(accumulator);
+
+            //New Bitwise way:
             int addend = int.Parse(bml.GetInstructionAt(_location));
             int accumulator = bml.GetAccumulator();
-            accumulator += addend;
+            int carry;
+            while(addend != 0)
+            {
+                carry = accumulator & addend;
+                accumulator = accumulator ^ addend;
+                addend = carry << 1;
+            }
+
             bml.SetAccumulator(accumulator);
         }
 
