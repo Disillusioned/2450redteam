@@ -1,12 +1,8 @@
 ﻿// CS 2450 Milestone One
 // Prototype for UVSimulator or Basic ML Simulator
 // Last update: 03/01/18
-<<<<<<< Updated upstream
 // <Benny Yamagata> <Chase Parks> <001> <2/28/2018>
-=======
-// <Chase Parks> <001> <2/28/2018>
 // Slight refactor by Benny Yamagata
->>>>>>> Stashed changes
 // <Windows 10 with Visual Studio 2017 Community>
 
 
