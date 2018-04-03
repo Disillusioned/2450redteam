@@ -52,6 +52,7 @@ namespace WindowsFormsApp1
             //accumulator -= subtract;
             //bml.SetAccumulator(accumulator);
 
+            //New bitwise way:
             int subtract = int.Parse(bml.GetInstructionAt(_location));
             subtract = ~subtract;
             subtract += 1; //twos compliment
