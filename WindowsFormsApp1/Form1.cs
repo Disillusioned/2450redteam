@@ -2,6 +2,7 @@
 // Prototype for UVSimulator or Basic ML Simulator
 // Last update: 03/01/18
 // <Chase Parks> <Benny Yamagata> <Brielle Hyemas> <Sam Solomon> <001> <2/28/2018>
+//Mostly Written by Brielle Hyemas
 // <Windows 10 with Visual Studio 2017 Community>
 //
 // Usage: Simulator of the Basic Machine language. Input a file with BML instructions

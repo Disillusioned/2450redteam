@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
+//WRITTEN BY BENNY YAMAGATA
+
 namespace WindowsFormsApp
 {
     public partial class MemDumpFrm : Form
