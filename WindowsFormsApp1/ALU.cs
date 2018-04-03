@@ -47,9 +47,22 @@ namespace WindowsFormsApp1
 
         public void SUBTRACT(int _location)
         {
+            //int subtract = int.Parse(bml.GetInstructionAt(_location));
+            //int accumulator = bml.GetAccumulator();
+            //accumulator -= subtract;
+            //bml.SetAccumulator(accumulator);
+
             int subtract = int.Parse(bml.GetInstructionAt(_location));
+            subtract = ~subtract;
+            subtract += 1; //twos compliment
             int accumulator = bml.GetAccumulator();
-            accumulator -= subtract;
+            int carry;
+            while(subtract != 0)
+            {
+                carry = accumulator & subtract;
+                accumulator = accumulator ^ subtract;
+                subtract = carry << 1;
+            }
             bml.SetAccumulator(accumulator);
         }
 
