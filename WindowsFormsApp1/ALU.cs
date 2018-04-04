@@ -24,13 +24,10 @@ namespace WindowsFormsApp1
         }
 
         //MEMBER FUNCTIONS
+        //START BENNY CODE
         public void ADD(int _location)
         {
-            //int addend = int.Parse(bml.GetInstructionAt(_location));
-            //int accumulator = bml.GetAccumulator();
-            //accumulator += addend;
-            //bml.SetAccumulator(accumulator);
-
+            
             //New Bitwise way:
             int addend = int.Parse(bml.GetInstructionAt(_location));
             int accumulator = bml.GetAccumulator();
@@ -47,10 +44,6 @@ namespace WindowsFormsApp1
 
         public void SUBTRACT(int _location)
         {
-            //int subtract = int.Parse(bml.GetInstructionAt(_location));
-            //int accumulator = bml.GetAccumulator();
-            //accumulator -= subtract;
-            //bml.SetAccumulator(accumulator);
 
             //New bitwise way:
             int subtract = int.Parse(bml.GetInstructionAt(_location));
@@ -69,10 +62,25 @@ namespace WindowsFormsApp1
 
         public void MULTIPLY(int _location)
         {
+            //int multiply = int.Parse(bml.GetInstructionAt(_location));
+            //int accumulator = bml.GetAccumulator();
+            //accumulator *= multiply;
+            //bml.SetAccumulator(accumulator);
+
             int multiply = int.Parse(bml.GetInstructionAt(_location));
             int accumulator = bml.GetAccumulator();
-            accumulator *= multiply;
-            bml.SetAccumulator(accumulator);
+            int count = multiply;
+            int carry;
+            while(count != 0)
+            {
+                while(multiply != 0)
+                {
+                    carry = accumulator & multiply;
+                    accumulator = accumulator ^ multiply;
+                    multiply = carry << 1;
+                }
+                --count;
+            }
         }
 
         public void DIVIDE(int _location)
