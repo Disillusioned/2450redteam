@@ -62,17 +62,13 @@ namespace WindowsFormsApp1
 
         public void MULTIPLY(int _location)
         {
-            //int multiply = int.Parse(bml.GetInstructionAt(_location));
-            //int accumulator = bml.GetAccumulator();
-            //accumulator *= multiply;
-            //bml.SetAccumulator(accumulator);
-
             int multiply = int.Parse(bml.GetInstructionAt(_location));
             int accumulator = bml.GetAccumulator();
-            int count = multiply;
+            int count = multiply - 1;
             int carry;
             while(count != 0)
             {
+                multiply = int.Parse(bml.GetInstructionAt(_location));
                 while(multiply != 0)
                 {
                     carry = accumulator & multiply;
@@ -81,6 +77,7 @@ namespace WindowsFormsApp1
                 }
                 --count;
             }
+            bml.SetAccumulator(accumulator);
         }
 
         public void DIVIDE(int _location)
