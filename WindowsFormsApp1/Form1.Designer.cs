@@ -83,7 +83,7 @@
             this.Start_DataGridView.Margin = new System.Windows.Forms.Padding(2);
             this.Start_DataGridView.Name = "Start_DataGridView";
             this.Start_DataGridView.RowTemplate.Height = 28;
-            this.Start_DataGridView.Size = new System.Drawing.Size(438, 120);
+            this.Start_DataGridView.Size = new System.Drawing.Size(480, 120);
             this.Start_DataGridView.TabIndex = 8;
             // 
             // Column2
@@ -115,7 +115,7 @@
             // 
             // Next_Button
             // 
-            this.Next_Button.Location = new System.Drawing.Point(603, 150);
+            this.Next_Button.Location = new System.Drawing.Point(645, 150);
             this.Next_Button.Margin = new System.Windows.Forms.Padding(2);
             this.Next_Button.Name = "Next_Button";
             this.Next_Button.Size = new System.Drawing.Size(71, 21);
@@ -167,7 +167,7 @@
             // 
             // txtAccumulator
             // 
-            this.txtAccumulator.Location = new System.Drawing.Point(679, 41);
+            this.txtAccumulator.Location = new System.Drawing.Point(724, 47);
             this.txtAccumulator.Name = "txtAccumulator";
             this.txtAccumulator.ReadOnly = true;
             this.txtAccumulator.Size = new System.Drawing.Size(100, 20);
@@ -176,7 +176,7 @@
             // lblAccum
             // 
             this.lblAccum.AutoSize = true;
-            this.lblAccum.Location = new System.Drawing.Point(679, 25);
+            this.lblAccum.Location = new System.Drawing.Point(721, 26);
             this.lblAccum.Name = "lblAccum";
             this.lblAccum.Size = new System.Drawing.Size(66, 13);
             this.lblAccum.TabIndex = 16;
@@ -205,27 +205,27 @@
             // resetToolStripMenuItem
             // 
             this.resetToolStripMenuItem.Name = "resetToolStripMenuItem";
-            this.resetToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.resetToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
             this.resetToolStripMenuItem.Text = "Reset";
             this.resetToolStripMenuItem.Click += new System.EventHandler(this.resetToolStripMenuItem_Click);
             // 
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
             this.aboutToolStripMenuItem.Text = "About";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
             // txtOutput
             // 
-            this.txtOutput.Location = new System.Drawing.Point(679, 89);
+            this.txtOutput.Location = new System.Drawing.Point(724, 86);
             this.txtOutput.Name = "txtOutput";
             this.txtOutput.Size = new System.Drawing.Size(100, 96);
             this.txtOutput.TabIndex = 18;
@@ -234,7 +234,7 @@
             // lblOutput
             // 
             this.lblOutput.AutoSize = true;
-            this.lblOutput.Location = new System.Drawing.Point(679, 73);
+            this.lblOutput.Location = new System.Drawing.Point(721, 70);
             this.lblOutput.Name = "lblOutput";
             this.lblOutput.Size = new System.Drawing.Size(39, 13);
             this.lblOutput.TabIndex = 19;

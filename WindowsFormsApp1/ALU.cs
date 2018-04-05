@@ -25,85 +25,59 @@ namespace WindowsFormsApp1
 
         //MEMBER FUNCTIONS
         //START BENNY CODE
-        public void ADD(int _location)
+        public void ADD(int _location) //DONE
         {
-            
-            //New Bitwise way:
             int addend = int.Parse(bml.GetInstructionAt(_location));
             int accumulator = bml.GetAccumulator();
-            int carry;
-            while(addend != 0)
-            {
-                carry = accumulator & addend;
-                accumulator = accumulator ^ addend;
-                addend = carry << 1;
-            }
 
-            bml.SetAccumulator(accumulator);
+            int sum = ADDhelper(accumulator, addend);
+
+            bml.SetAccumulator(sum);
         }
 
-        public void SUBTRACT(int _location)
+        public int ADDhelper(int param1, int param2) //DONE
         {
+            int carry;
 
-            //New bitwise way:
+            while(param2 != 0)
+            {
+                carry = param1 & param2;
+                param1 = param1 ^ param2;
+                param2 = carry << 1;
+            }
+
+            return param1;
+        }
+
+        public void SUBTRACT(int _location) //DONE
+        {
             int subtract = int.Parse(bml.GetInstructionAt(_location));
             subtract = ~subtract;
             subtract += 1; //twos compliment
             int accumulator = bml.GetAccumulator();
-            int carry;
-            while(subtract != 0)
-            {
-                carry = accumulator & subtract;
-                accumulator = accumulator ^ subtract;
-                subtract = carry << 1;
-            }
-            bml.SetAccumulator(accumulator);
+
+            int difference = ADDhelper(accumulator, subtract);
+            bml.SetAccumulator(difference);
         }
 
-        public void MULTIPLY(int _location) //handles negative and positive
+        public void MULTIPLY(int _location) //Sometimes handles larger numbers, spacey, definitely needs work.
         {
             int multiply = int.Parse(bml.GetInstructionAt(_location));
             int accumulator = bml.GetAccumulator();
             if(multiply == 0 || accumulator == 0)
             {
                 bml.SetAccumulator(0);
+                return;
             }
             int count = multiply - 1;
-            int carry;
 
-            if (multiply < 0 || accumulator < 0)
+            int product = accumulator;
+            while(count != 0)
             {
-                multiply = Math.Abs(multiply);
-                accumulator = Math.Abs(accumulator);
-
-                while (count != 0)
-                {
-                    multiply = int.Parse(bml.GetInstructionAt(_location));
-                    while (multiply != 0)
-                    {
-                        carry = accumulator & multiply;
-                        accumulator = accumulator ^ multiply;
-                        multiply = carry << 1;
-                    }
-                    --count;
-                }
-                bml.SetAccumulator(-accumulator);
+                product = ADDhelper(product, multiply);
+                --count;
             }
-            else
-            {
-                while (count != 0)
-                {
-                    multiply = int.Parse(bml.GetInstructionAt(_location));
-                    while (multiply != 0)
-                    {
-                        carry = accumulator & multiply;
-                        accumulator = accumulator ^ multiply;
-                        multiply = carry << 1;
-                    }
-                    --count;
-                }
-                bml.SetAccumulator(accumulator);
-            }
+            bml.SetAccumulator(product);
         }
 
         public void DIVIDE(int _location) //handles negative and postiive division
