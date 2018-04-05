@@ -57,14 +57,15 @@
             // 
             // InputFile_DataGridView
             // 
+            this.InputFile_DataGridView.BackgroundColor = System.Drawing.SystemColors.ControlDark;
             this.InputFile_DataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.InputFile_DataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Column1});
-            this.InputFile_DataGridView.Location = new System.Drawing.Point(11, 26);
-            this.InputFile_DataGridView.Margin = new System.Windows.Forms.Padding(2);
+            this.InputFile_DataGridView.Location = new System.Drawing.Point(21, 44);
+            this.InputFile_DataGridView.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.InputFile_DataGridView.Name = "InputFile_DataGridView";
             this.InputFile_DataGridView.RowTemplate.Height = 28;
-            this.InputFile_DataGridView.Size = new System.Drawing.Size(166, 120);
+            this.InputFile_DataGridView.Size = new System.Drawing.Size(304, 204);
             this.InputFile_DataGridView.TabIndex = 7;
             // 
             // Column1
@@ -74,16 +75,18 @@
             // 
             // Start_DataGridView
             // 
+            this.Start_DataGridView.BackgroundColor = System.Drawing.Color.Lavender;
             this.Start_DataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.Start_DataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Column2,
             this.Column3,
             this.Column4});
-            this.Start_DataGridView.Location = new System.Drawing.Point(236, 26);
-            this.Start_DataGridView.Margin = new System.Windows.Forms.Padding(2);
+            this.Start_DataGridView.GridColor = System.Drawing.SystemColors.ActiveCaption;
+            this.Start_DataGridView.Location = new System.Drawing.Point(433, 44);
+            this.Start_DataGridView.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Start_DataGridView.Name = "Start_DataGridView";
             this.Start_DataGridView.RowTemplate.Height = 28;
-            this.Start_DataGridView.Size = new System.Drawing.Size(480, 120);
+            this.Start_DataGridView.Size = new System.Drawing.Size(880, 204);
             this.Start_DataGridView.TabIndex = 8;
             // 
             // Column2
@@ -104,91 +107,99 @@
             // 
             // Start_Button
             // 
-            this.Start_Button.Location = new System.Drawing.Point(236, 150);
-            this.Start_Button.Margin = new System.Windows.Forms.Padding(2);
+            this.Start_Button.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.Start_Button.Location = new System.Drawing.Point(433, 254);
+            this.Start_Button.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Start_Button.Name = "Start_Button";
-            this.Start_Button.Size = new System.Drawing.Size(82, 21);
+            this.Start_Button.Size = new System.Drawing.Size(150, 36);
             this.Start_Button.TabIndex = 9;
             this.Start_Button.Text = "START ";
-            this.Start_Button.UseVisualStyleBackColor = true;
+            this.Start_Button.UseVisualStyleBackColor = false;
             this.Start_Button.Click += new System.EventHandler(this.Start_Button_Click);
             // 
             // Next_Button
             // 
-            this.Next_Button.Location = new System.Drawing.Point(645, 150);
-            this.Next_Button.Margin = new System.Windows.Forms.Padding(2);
+            this.Next_Button.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.Next_Button.Location = new System.Drawing.Point(1182, 254);
+            this.Next_Button.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Next_Button.Name = "Next_Button";
-            this.Next_Button.Size = new System.Drawing.Size(71, 21);
+            this.Next_Button.Size = new System.Drawing.Size(131, 36);
             this.Next_Button.TabIndex = 10;
             this.Next_Button.Text = "NEXT";
-            this.Next_Button.UseVisualStyleBackColor = true;
+            this.Next_Button.UseVisualStyleBackColor = false;
             this.Next_Button.Click += new System.EventHandler(this.Next_Button_Click);
             // 
             // Start_TextBox
             // 
-            this.Start_TextBox.Location = new System.Drawing.Point(236, 210);
-            this.Start_TextBox.Margin = new System.Windows.Forms.Padding(2);
+            this.Start_TextBox.Location = new System.Drawing.Point(433, 355);
+            this.Start_TextBox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Start_TextBox.Name = "Start_TextBox";
-            this.Start_TextBox.Size = new System.Drawing.Size(371, 83);
+            this.Start_TextBox.Size = new System.Drawing.Size(880, 271);
             this.Start_TextBox.TabIndex = 11;
             this.Start_TextBox.Text = "Press START to begin. If row is highlighted and Prompt says READ, enter a number " +
     "in the input/output column. ";
             // 
             // InputFile_Button
             // 
-            this.InputFile_Button.Location = new System.Drawing.Point(11, 150);
-            this.InputFile_Button.Margin = new System.Windows.Forms.Padding(2);
+            this.InputFile_Button.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.InputFile_Button.Location = new System.Drawing.Point(21, 254);
+            this.InputFile_Button.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.InputFile_Button.Name = "InputFile_Button";
-            this.InputFile_Button.Size = new System.Drawing.Size(83, 21);
+            this.InputFile_Button.Size = new System.Drawing.Size(153, 36);
             this.InputFile_Button.TabIndex = 12;
             this.InputFile_Button.Text = "INPUT FILE";
-            this.InputFile_Button.UseVisualStyleBackColor = true;
+            this.InputFile_Button.UseVisualStyleBackColor = false;
             this.InputFile_Button.Click += new System.EventHandler(this.InputFile_Button_Click);
             // 
             // Load_Button
             // 
-            this.Load_Button.Location = new System.Drawing.Point(11, 175);
-            this.Load_Button.Margin = new System.Windows.Forms.Padding(2);
+            this.Load_Button.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.Load_Button.Location = new System.Drawing.Point(21, 296);
+            this.Load_Button.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Load_Button.Name = "Load_Button";
-            this.Load_Button.Size = new System.Drawing.Size(58, 21);
+            this.Load_Button.Size = new System.Drawing.Size(106, 36);
             this.Load_Button.TabIndex = 13;
             this.Load_Button.Text = "LOAD";
-            this.Load_Button.UseVisualStyleBackColor = true;
+            this.Load_Button.UseVisualStyleBackColor = false;
             this.Load_Button.Click += new System.EventHandler(this.Load_Button_Click);
             // 
             // InputFile_TextBox
             // 
-            this.InputFile_TextBox.Location = new System.Drawing.Point(11, 210);
-            this.InputFile_TextBox.Margin = new System.Windows.Forms.Padding(2);
+            this.InputFile_TextBox.Location = new System.Drawing.Point(21, 355);
+            this.InputFile_TextBox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.InputFile_TextBox.Name = "InputFile_TextBox";
-            this.InputFile_TextBox.Size = new System.Drawing.Size(167, 162);
+            this.InputFile_TextBox.Size = new System.Drawing.Size(302, 271);
             this.InputFile_TextBox.TabIndex = 14;
             this.InputFile_TextBox.Text = resources.GetString("InputFile_TextBox.Text");
             // 
             // txtAccumulator
             // 
-            this.txtAccumulator.Location = new System.Drawing.Point(724, 47);
+            this.txtAccumulator.Location = new System.Drawing.Point(1327, 80);
+            this.txtAccumulator.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.txtAccumulator.Name = "txtAccumulator";
             this.txtAccumulator.ReadOnly = true;
-            this.txtAccumulator.Size = new System.Drawing.Size(100, 20);
+            this.txtAccumulator.Size = new System.Drawing.Size(180, 30);
             this.txtAccumulator.TabIndex = 15;
             // 
             // lblAccum
             // 
             this.lblAccum.AutoSize = true;
-            this.lblAccum.Location = new System.Drawing.Point(721, 26);
+            this.lblAccum.Location = new System.Drawing.Point(1321, 44);
+            this.lblAccum.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.lblAccum.Name = "lblAccum";
-            this.lblAccum.Size = new System.Drawing.Size(66, 13);
+            this.lblAccum.Size = new System.Drawing.Size(111, 22);
             this.lblAccum.TabIndex = 16;
             this.lblAccum.Text = "Accumulator";
             // 
             // menuStrip1
             // 
+            this.menuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(865, 24);
+            this.menuStrip1.Padding = new System.Windows.Forms.Padding(11, 3, 0, 3);
+            this.menuStrip1.Size = new System.Drawing.Size(1585, 30);
             this.menuStrip1.TabIndex = 17;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -199,52 +210,54 @@
             this.aboutToolStripMenuItem,
             this.exitToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(44, 24);
             this.fileToolStripMenuItem.Text = "File";
             // 
             // resetToolStripMenuItem
             // 
             this.resetToolStripMenuItem.Name = "resetToolStripMenuItem";
-            this.resetToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
+            this.resetToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
             this.resetToolStripMenuItem.Text = "Reset";
             this.resetToolStripMenuItem.Click += new System.EventHandler(this.resetToolStripMenuItem_Click);
             // 
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
             this.aboutToolStripMenuItem.Text = "About";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
             // txtOutput
             // 
-            this.txtOutput.Location = new System.Drawing.Point(724, 86);
+            this.txtOutput.Location = new System.Drawing.Point(1327, 146);
+            this.txtOutput.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.txtOutput.Name = "txtOutput";
-            this.txtOutput.Size = new System.Drawing.Size(100, 96);
+            this.txtOutput.Size = new System.Drawing.Size(180, 159);
             this.txtOutput.TabIndex = 18;
             this.txtOutput.Text = "";
             // 
             // lblOutput
             // 
             this.lblOutput.AutoSize = true;
-            this.lblOutput.Location = new System.Drawing.Point(721, 70);
+            this.lblOutput.Location = new System.Drawing.Point(1321, 118);
+            this.lblOutput.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.lblOutput.Name = "lblOutput";
-            this.lblOutput.Size = new System.Drawing.Size(39, 13);
+            this.lblOutput.Size = new System.Drawing.Size(62, 22);
             this.lblOutput.TabIndex = 19;
             this.lblOutput.Text = "Output";
             // 
             // frmMain
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 22F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(865, 440);
+            this.ClientSize = new System.Drawing.Size(1585, 745);
             this.Controls.Add(this.lblOutput);
             this.Controls.Add(this.txtOutput);
             this.Controls.Add(this.lblAccum);
@@ -258,7 +271,10 @@
             this.Controls.Add(this.Start_DataGridView);
             this.Controls.Add(this.InputFile_DataGridView);
             this.Controls.Add(this.menuStrip1);
+            this.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.MainMenuStrip = this.menuStrip1;
+            this.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Name = "frmMain";
             this.Text = "BasicML Assembler";
             ((System.ComponentModel.ISupportInitialize)(this.InputFile_DataGridView)).EndInit();
