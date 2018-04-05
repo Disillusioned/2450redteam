@@ -69,12 +69,12 @@ namespace WindowsFormsApp1
                 bml.SetAccumulator(0);
                 return;
             }
-            int count = multiply - 1;
+            int count = Math.Abs(multiply - 1);
 
             int product = accumulator;
             while(count != 0)
             {
-                product = ADDhelper(product, multiply);
+                product = ADDhelper(product, accumulator);
                 --count;
             }
             bml.SetAccumulator(product);
