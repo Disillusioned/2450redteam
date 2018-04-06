@@ -25,14 +25,11 @@ namespace WindowsFormsApp1
 
         //MEMBER FUNCTIONS
         //START BENNY CODE
-        public void ADD(int _location) //DONE
+        public int ADD(int lho, int rho) //DONE
         {
-            int addend = int.Parse(bml.GetInstructionAt(_location));
-            int accumulator = bml.GetAccumulator();
+            int sum = ADDhelper(lho, rho);
 
-            int sum = ADDhelper(accumulator, addend);
-
-            bml.SetAccumulator(sum);
+            return sum;
         }
 
         public int ADDhelper(int param1, int param2) //DONE
@@ -49,15 +46,13 @@ namespace WindowsFormsApp1
             return param1;
         }
 
-        public void SUBTRACT(int _location) //DONE
+        public int SUBTRACT(int lho, int rho) //DONE
         {
-            int subtract = int.Parse(bml.GetInstructionAt(_location));
-            subtract = ~subtract;
-            subtract += 1; //twos compliment
-            int accumulator = bml.GetAccumulator();
+            rho = ~rho;
+            rho += 1; //twos compliment
 
-            int difference = ADDhelper(accumulator, subtract);
-            bml.SetAccumulator(difference);
+            int difference = ADDhelper(lho, rho);
+            return difference;
         }
 
         public void MULTIPLY(int _location) //Sometimes handles larger numbers, spacey, definitely needs work.
@@ -83,8 +78,8 @@ namespace WindowsFormsApp1
         public void DIVIDE(int _location) //handles negative and postiive division
         {
             int remain = 0;
-            int dividend = bml.GetAccumulator();
-            int divisor = int.Parse(bml.GetInstructionAt(_location));
+            int dividend = bml.GetAccumulator(); //top
+            int divisor = int.Parse(bml.GetInstructionAt(_location)); //bottom
             int quotient;
             if(dividend < 0 || divisor < 0)
             {
@@ -98,6 +93,15 @@ namespace WindowsFormsApp1
                 quotient = DivisonHelp(dividend, divisor, divisor, ref remain);
                 bml.SetAccumulator(quotient);
             }
+
+
+            //while(dividend >= 0)
+            //{
+            //    dividend = ADDhelper(dividend, (~divisor + 1));
+            //}
+
+
+
         }
 
         public int DivisonHelp(int dividend, int divisor, int origdiv, ref int remain)

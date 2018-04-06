@@ -20,6 +20,7 @@ namespace WindowsFormsApp1
         private string[] memory_locations = new string[MEMORY];
         private int instruction_counter;
         private int accumulator;
+        private int overflow;
 
         //CONSTANT VARIABLES
         public const int MEMORY = 100;
@@ -90,6 +91,16 @@ namespace WindowsFormsApp1
         public void SetInstructionAt(int _location, string _instruction)
         {
             memory_locations[_location] = _instruction;
+        }
+
+        public void SetOverflow(int _value)
+        {
+            overflow = _value;
+        }
+
+        public int GetOverflow()
+        {
+            return overflow;
         }
 
         //ITERATOR

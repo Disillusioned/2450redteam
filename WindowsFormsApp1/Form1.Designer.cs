@@ -28,6 +28,7 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
             this.InputFile_DataGridView = new System.Windows.Forms.DataGridView();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -50,6 +51,9 @@
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.txtOutput = new System.Windows.Forms.RichTextBox();
             this.lblOutput = new System.Windows.Forms.Label();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.overflowlbl = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.InputFile_DataGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Start_DataGridView)).BeginInit();
             this.menuStrip1.SuspendLayout();
@@ -175,10 +179,10 @@
             // txtAccumulator
             // 
             this.txtAccumulator.Location = new System.Drawing.Point(1327, 80);
-            this.txtAccumulator.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.txtAccumulator.Margin = new System.Windows.Forms.Padding(6);
             this.txtAccumulator.Name = "txtAccumulator";
             this.txtAccumulator.ReadOnly = true;
-            this.txtAccumulator.Size = new System.Drawing.Size(180, 30);
+            this.txtAccumulator.Size = new System.Drawing.Size(180, 26);
             this.txtAccumulator.TabIndex = 15;
             // 
             // lblAccum
@@ -187,7 +191,7 @@
             this.lblAccum.Location = new System.Drawing.Point(1321, 44);
             this.lblAccum.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.lblAccum.Name = "lblAccum";
-            this.lblAccum.Size = new System.Drawing.Size(111, 22);
+            this.lblAccum.Size = new System.Drawing.Size(86, 19);
             this.lblAccum.TabIndex = 16;
             this.lblAccum.Text = "Accumulator";
             // 
@@ -199,7 +203,7 @@
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Padding = new System.Windows.Forms.Padding(11, 3, 0, 3);
-            this.menuStrip1.Size = new System.Drawing.Size(1585, 30);
+            this.menuStrip1.Size = new System.Drawing.Size(1585, 25);
             this.menuStrip1.TabIndex = 17;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -210,34 +214,34 @@
             this.aboutToolStripMenuItem,
             this.exitToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(44, 24);
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 19);
             this.fileToolStripMenuItem.Text = "File";
             // 
             // resetToolStripMenuItem
             // 
             this.resetToolStripMenuItem.Name = "resetToolStripMenuItem";
-            this.resetToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
+            this.resetToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
             this.resetToolStripMenuItem.Text = "Reset";
             this.resetToolStripMenuItem.Click += new System.EventHandler(this.resetToolStripMenuItem_Click);
             // 
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
             this.aboutToolStripMenuItem.Text = "About";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
             // txtOutput
             // 
-            this.txtOutput.Location = new System.Drawing.Point(1327, 146);
-            this.txtOutput.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.txtOutput.Location = new System.Drawing.Point(1327, 434);
+            this.txtOutput.Margin = new System.Windows.Forms.Padding(6);
             this.txtOutput.Name = "txtOutput";
             this.txtOutput.Size = new System.Drawing.Size(180, 159);
             this.txtOutput.TabIndex = 18;
@@ -246,18 +250,41 @@
             // lblOutput
             // 
             this.lblOutput.AutoSize = true;
-            this.lblOutput.Location = new System.Drawing.Point(1321, 118);
+            this.lblOutput.Location = new System.Drawing.Point(1323, 409);
             this.lblOutput.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.lblOutput.Name = "lblOutput";
-            this.lblOutput.Size = new System.Drawing.Size(62, 22);
+            this.lblOutput.Size = new System.Drawing.Size(51, 19);
             this.lblOutput.TabIndex = 19;
             this.lblOutput.Text = "Output";
             // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(1327, 151);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(100, 26);
+            this.textBox1.TabIndex = 20;
+            // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
+            // 
+            // overflowlbl
+            // 
+            this.overflowlbl.AutoSize = true;
+            this.overflowlbl.Location = new System.Drawing.Point(1323, 129);
+            this.overflowlbl.Name = "overflowlbl";
+            this.overflowlbl.Size = new System.Drawing.Size(66, 19);
+            this.overflowlbl.TabIndex = 22;
+            this.overflowlbl.Text = "Overflow";
+            // 
             // frmMain
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 22F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 19F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1585, 745);
+            this.Controls.Add(this.overflowlbl);
+            this.Controls.Add(this.textBox1);
             this.Controls.Add(this.lblOutput);
             this.Controls.Add(this.txtOutput);
             this.Controls.Add(this.lblAccum);
@@ -274,7 +301,7 @@
             this.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.MainMenuStrip = this.menuStrip1;
-            this.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.Margin = new System.Windows.Forms.Padding(6);
             this.Name = "frmMain";
             this.Text = "BasicML Assembler";
             ((System.ComponentModel.ISupportInitialize)(this.InputFile_DataGridView)).EndInit();
@@ -309,6 +336,9 @@
         private System.Windows.Forms.ToolStripMenuItem resetToolStripMenuItem;
         private System.Windows.Forms.RichTextBox txtOutput;
         private System.Windows.Forms.Label lblOutput;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+        private System.Windows.Forms.Label overflowlbl;
     }
 }
 
