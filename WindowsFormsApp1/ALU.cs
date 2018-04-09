@@ -55,43 +55,34 @@ namespace WindowsFormsApp1
             return difference;
         }
 
-        public void MULTIPLY(int _location) //Sometimes handles larger numbers, spacey, definitely needs work.
+        public int MULTIPLY(int lho, int rho) //Sometimes handles larger numbers, spacey, definitely needs work.
         {
-            int multiply = int.Parse(bml.GetInstructionAt(_location));
-            int accumulator = bml.GetAccumulator();
-            if(multiply == 0 || accumulator == 0)
-            {
-                bml.SetAccumulator(0);
-                return;
-            }
-            int count = Math.Abs(multiply - 1);
+            int count = Math.Abs(rho - 1);
 
-            int product = accumulator;
+            int product = lho;
             while(count != 0)
             {
-                product = ADDhelper(product, accumulator);
+                product = ADDhelper(product, rho);
                 --count;
             }
-            bml.SetAccumulator(product);
+            return product;
         }
 
-        public void DIVIDE(int _location) //handles negative and postiive division
+        public int DIVIDE(int lho, int rho, ref int remainder) //handles negative and postiive division
         {
             int remain = 0;
-            int dividend = bml.GetAccumulator(); //top
-            int divisor = int.Parse(bml.GetInstructionAt(_location)); //bottom
             int quotient;
-            if(dividend < 0 || divisor < 0)
+            if(lho < 0 || rho < 0)
             {
-                dividend = Math.Abs(dividend);
-                divisor = Math.Abs(divisor);
-                quotient = DivisonHelp(dividend, divisor, divisor, ref remain);
-                bml.SetAccumulator(-quotient);
+                lho = Math.Abs(lho);
+                rho = Math.Abs(rho);
+                quotient = DivisonHelp(lho, rho, rho, ref remain);
+                return quotient;
             }
             else
             {
-                quotient = DivisonHelp(dividend, divisor, divisor, ref remain);
-                bml.SetAccumulator(quotient);
+                quotient = DivisonHelp(lho, rho, rho, ref remain);
+                return quotient;
             }
 
 
