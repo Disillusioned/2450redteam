@@ -24,8 +24,10 @@ namespace WindowsFormsApp1
         }
 
         //MEMBER FUNCTIONS
-        public void ADD(int _location)
+        //START BENNY CODE
+        public int ADD(int lho, int rho) //DONE
         {
+<<<<<<< HEAD
             //int addend = int.Parse(bml.GetInstructionAt(_location));
             //int accumulator = bml.GetAccumulator();
             //accumulator += addend;
@@ -43,30 +45,106 @@ namespace WindowsFormsApp1
             }
 
             bml.SetAccumulator(accumulator);
+=======
+            int sum = ADDhelper(lho, rho);
+
+            return sum;
+>>>>>>> master
         }
 
-        public void SUBTRACT(int _location)
+        public int ADDhelper(int param1, int param2) //DONE
         {
-            int subtract = int.Parse(bml.GetInstructionAt(_location));
-            int accumulator = bml.GetAccumulator();
-            accumulator -= subtract;
-            bml.SetAccumulator(accumulator);
+            int carry;
+
+            while(param2 != 0)
+            {
+                carry = param1 & param2;
+                param1 = param1 ^ param2;
+                param2 = carry << 1;
+            }
+
+            return param1;
         }
 
-        public void MULTIPLY(int _location)
+        public int SUBTRACT(int lho, int rho) //DONE
         {
-            int multiply = int.Parse(bml.GetInstructionAt(_location));
-            int accumulator = bml.GetAccumulator();
-            accumulator *= multiply;
-            bml.SetAccumulator(accumulator);
+            rho = ~rho;
+            rho += 1; //twos compliment
+
+            int difference = ADDhelper(lho, rho);
+            return difference;
         }
 
-        public void DIVIDE(int _location)
+        public int MULTIPLY(int lho, int rho) //Sometimes handles larger numbers, spacey, definitely needs work.
         {
-            int dividend = int.Parse(bml.GetInstructionAt(_location));
-            int accumulator = bml.GetAccumulator();
-            accumulator /= dividend;
-            bml.SetAccumulator(accumulator);
+            int count = Math.Abs(rho - 1);
+
+            int product = lho;
+            while(count != 0)
+            {
+                product = ADDhelper(product, rho);
+                --count;
+            }
+            return product;
+        }
+
+        public int DIVIDE(int lho, int rho, ref int remainder) //handles negative and postiive division
+        {
+            int remain = 0;
+            int quotient;
+            if(lho < 0 || rho < 0)
+            {
+                lho = Math.Abs(lho);
+                rho = Math.Abs(rho);
+                quotient = DivisonHelp(lho, rho, rho, ref remain);
+                return quotient;
+            }
+            else
+            {
+                quotient = DivisonHelp(lho, rho, rho, ref remain);
+                return quotient;
+            }
+
+
+            //while(dividend >= 0)
+            //{
+            //    dividend = ADDhelper(dividend, (~divisor + 1));
+            //}
+
+
+
+        }
+
+        public int DivisonHelp(int dividend, int divisor, int origdiv, ref int remain)
+        {
+            int quotient = 1;
+            if(dividend == divisor)
+            {
+                remain = 0;
+                return 1;
+            }
+            else if( dividend < divisor)
+            {
+                remain = dividend;
+                return 0;
+            }
+
+
+            while(divisor <= dividend)
+            {
+                divisor <<= 1;
+                quotient <<= 1;
+            }
+
+            if(dividend < divisor)
+            {
+                divisor >>= 1;
+                quotient >>= 1;
+            }
+
+            quotient = quotient + DivisonHelp(dividend - divisor, origdiv, origdiv, ref remain);
+
+            return quotient;
         }
     }
 }

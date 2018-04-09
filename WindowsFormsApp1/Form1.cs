@@ -293,6 +293,7 @@ namespace WindowsFormsApp1
             int opcode = int.Parse(instruction.Substring(0, 2));
             int location = int.Parse(instruction.Substring(2, 2));
 
+
             //initialize row
             row = (DataGridViewRow)Start_DataGridView.Rows[0];
 
@@ -301,17 +302,35 @@ namespace WindowsFormsApp1
             {
                 //READ OPCODE
                 case 10:
-                    //ask user for input
-                    if (Start_DataGridView[2, bml.GetProgramCtr()].Value.ToString() == "")
                     {
-                        Start_DataGridView[2, bml.GetProgramCtr()].Value = "ERROR";
-                        break;
+                        //ask user for input
+                        if (Start_DataGridView[2, bml.GetProgramCtr()].Value.ToString() == "")
+                        {
+                            Start_DataGridView[2, bml.GetProgramCtr()].Value = "ERROR";
+                            break;
+                        }
+                        else
+                        {
+                            user_input = Start_DataGridView[2, bml.GetProgramCtr()].Value.ToString();
+                            //Put user input into the array
+                            memory_unit.Read(user_input, location);
+
+                            //highlight next instruction
+                            bml.IncrementProgramCtr();
+                            UnhighlightRow(row, bml.GetProgramCtr(), false);
+                            break;
+                        }
                     }
-                    else
+
+                //WRITE OPCODE
+                case 11:
                     {
-                        user_input = Start_DataGridView[2, bml.GetProgramCtr()].Value.ToString();
-                        //Put user input into the array
-                        memory_unit.Read(user_input, location);
+                        string number_in_address = "";
+                        number_in_address = memory_unit.Write(location);
+                        Start_DataGridView[2, bml.GetProgramCtr()].Value = number_in_address;
+
+                        //Write to Output box
+                        txtOutput.Text += number_in_address + "\n";
 
                         //highlight next instruction
                         bml.IncrementProgramCtr();
@@ -319,125 +338,150 @@ namespace WindowsFormsApp1
                         break;
                     }
 
-                //WRITE OPCODE
-                case 11:
-                    string number_in_address = "";
-                    number_in_address = memory_unit.Write(location);
-                    Start_DataGridView[2, bml.GetProgramCtr()].Value = number_in_address;
-
-                    //Write to Output box
-                    txtOutput.Text += number_in_address + "\n";
-
-                    //highlight next instruction
-                    bml.IncrementProgramCtr();
-                    UnhighlightRow(row, bml.GetProgramCtr(), false);
-                    break;
-
                 //LOAD OPCODE
                 case 20:
-                    memory_unit.Load(location);
-                    Start_DataGridView[2, bml.GetProgramCtr()].Value = bml.GetInstructionAt(location) + " -> accumulator";
+                    {
+                        memory_unit.Load(location);
+                        Start_DataGridView[2, bml.GetProgramCtr()].Value = bml.GetInstructionAt(location) + " -> accumulator";
 
-                    //highlight next instruction
-                    bml.IncrementProgramCtr();
-                    UnhighlightRow(row, bml.GetProgramCtr(), false);
-                    break;
+                        //highlight next instruction
+                        bml.IncrementProgramCtr();
+                        UnhighlightRow(row, bml.GetProgramCtr(), false);
+                        break;
+                    }
 
                 //STORE OPCODE
                 case 21:
-                    memory_unit.Store(location);
-                    Start_DataGridView[2, bml.GetProgramCtr()].Value = "Stored " + bml.GetInstructionAt(location) + " from accumulator -> " + location;
+                    {
+                        memory_unit.Store(location);
+                        Start_DataGridView[2, bml.GetProgramCtr()].Value = "Stored " + bml.GetInstructionAt(location) + " from accumulator -> " + location;
 
 
-                    //highlight next instruction
-                    bml.IncrementProgramCtr();
-                    UnhighlightRow(row, bml.GetProgramCtr(), false);
-                    break;
+                        //highlight next instruction
+                        bml.IncrementProgramCtr();
+                        UnhighlightRow(row, bml.GetProgramCtr(), false);
+                        break;
+                    }
 
                 //ADD OPCODE
                 case 30:
-                    logic_unit.ADD(location);
-                    Start_DataGridView[2, bml.GetProgramCtr()].Value = bml.GetInstructionAt(location) + " added -> accumulator";
+                    {
+                        int lho = bml.GetAccumulator();
+                        int rho = int.Parse(bml.GetInstructionAt(location));
+                        int sum = logic_unit.ADD(lho, rho);
+                        bml.SetAccumulator(sum);
+                        Start_DataGridView[2, bml.GetProgramCtr()].Value = bml.GetInstructionAt(location) + " added -> accumulator";
 
-                    //highlight next instruction
-                    bml.IncrementProgramCtr();
-                    UnhighlightRow(row, bml.GetProgramCtr(), false);
-                    break;
+
+                        //highlight next instruction
+                        bml.IncrementProgramCtr();
+                        UnhighlightRow(row, bml.GetProgramCtr(), false);
+                        break;
+                    }
 
                 //SUBTRACT OPCODE
                 case 31:
-                    logic_unit.SUBTRACT(location);
-                    Start_DataGridView[2, bml.GetProgramCtr()].Value = bml.GetInstructionAt(location) + " subtracted -> accumulator";
+                    {
+                        int lho = bml.GetAccumulator();
+                        int rho = int.Parse(bml.GetInstructionAt(location));
+                        int difference = logic_unit.SUBTRACT(lho, rho);
+                        bml.SetAccumulator(difference);
+                        Start_DataGridView[2, bml.GetProgramCtr()].Value = bml.GetInstructionAt(location) + " subtracted -> accumulator";
 
-                    //highlight next instruction
-                    bml.IncrementProgramCtr();
-                    UnhighlightRow(row, bml.GetProgramCtr(), false);
-                    break;
+                        //highlight next instruction
+                        bml.IncrementProgramCtr();
+                        UnhighlightRow(row, bml.GetProgramCtr(), false);
+                        break;
+                    }
 
                 //DIVIDE OPCODE
                 case 32:
-                    logic_unit.DIVIDE(location);
-                    Start_DataGridView[2, bml.GetProgramCtr()].Value = bml.GetInstructionAt(location) + " divided -> accumulator";
+                    {
+                        int lho = bml.GetAccumulator();
+                        int rho = int.Parse(bml.GetInstructionAt(location));
+                        if (rho == 0)
+                        {
+                            MessageBox.Show("Cannot divide by zero... exiting...");
+                            Application.Exit();
+                        }
 
-                    //highlight next instruction
-                    bml.IncrementProgramCtr();
-                    UnhighlightRow(row, bml.GetProgramCtr(), false);
-                    break;
+                        int remainder = 0;
+                        int quotient = logic_unit.DIVIDE(lho, rho, ref remainder);
+                        bml.SetAccumulator(quotient);
+                        bml.SetOverflow(remainder);
+                        Start_DataGridView[2, bml.GetProgramCtr()].Value = bml.GetInstructionAt(location) + " divided -> accumulator";
+
+                        //highlight next instruction
+                        bml.IncrementProgramCtr();
+                        UnhighlightRow(row, bml.GetProgramCtr(), false);
+                        break;
+                    }
 
                 //MULTIPLY
                 case 33:
-                    logic_unit.MULTIPLY(location);
-                    Start_DataGridView[2, bml.GetProgramCtr()].Value = bml.GetInstructionAt(location) + " multiply -> accumulator";
+                    {
+                        int lho = bml.GetAccumulator();
+                        int rho = int.Parse(bml.GetInstructionAt(location));
+                        int product = logic_unit.MULTIPLY(lho, rho);
+                        bml.SetAccumulator(product);
+                        Start_DataGridView[2, bml.GetProgramCtr()].Value = bml.GetInstructionAt(location) + " multiply -> accumulator";
 
-                    bml.IncrementProgramCtr();
-                    UnhighlightRow(row, bml.GetProgramCtr(), false);
-                    break;
+                        bml.IncrementProgramCtr();
+                        UnhighlightRow(row, bml.GetProgramCtr(), false);
+                        break;
+                    }
 
                 /*Control Opcodes*/
                 
                 
                 //branch positive
                 case 40:
-                    if (bml.GetAccumulator() > 0)
                     {
-                        UnhighlightRow(row, location, true);
-                        control_unit.Branch_Positive(location);
-                        break;
-                    }
-                    else
-                    {
-                        bml.IncrementProgramCtr();
-                        UnhighlightRow(row, bml.GetProgramCtr(), false);
-                        break;
+                        if (bml.GetAccumulator() > 0)
+                        {
+                            UnhighlightRow(row, location, true);
+                            control_unit.Branch_Positive(location);
+                            break;
+                        }
+                        else
+                        {
+                            bml.IncrementProgramCtr();
+                            UnhighlightRow(row, bml.GetProgramCtr(), false);
+                            break;
+                        }
                     }
                 //branch negative
                 case 41:
-                    if (bml.GetAccumulator() < 0)
                     {
-                        UnhighlightRow(row, location, true);
-                        control_unit.Branch_Positive(location);
-                        break;
-                    }
-                    else
-                    {
-                        bml.IncrementProgramCtr();
-                        UnhighlightRow(row, bml.GetProgramCtr(), false);
-                        break;
+                        if (bml.GetAccumulator() < 0)
+                        {
+                            UnhighlightRow(row, location, true);
+                            control_unit.Branch_Positive(location);
+                            break;
+                        }
+                        else
+                        {
+                            bml.IncrementProgramCtr();
+                            UnhighlightRow(row, bml.GetProgramCtr(), false);
+                            break;
+                        }
                     }
 
                 //branch zero
                 case 42:
-                    if (bml.GetAccumulator() == 0)
                     {
-                        UnhighlightRow(row, location, true);
-                        control_unit.Branch_Positive(location);
-                        break;
-                    }
-                    else
-                    {
-                        bml.IncrementProgramCtr();
-                        UnhighlightRow(row, bml.GetProgramCtr(), false);
-                        break;
+                        if (bml.GetAccumulator() == 0)
+                        {
+                            UnhighlightRow(row, location, true);
+                            control_unit.Branch_Positive(location);
+                            break;
+                        }
+                        else
+                        {
+                            bml.IncrementProgramCtr();
+                            UnhighlightRow(row, bml.GetProgramCtr(), false);
+                            break;
+                        }
                     }
 
         /*Begin Chase's Code*/
@@ -445,30 +489,32 @@ namespace WindowsFormsApp1
                 //halt command
                 //Start of Benny code
                 case 43:
-                    const int MAX_INSTR = 100;
-                    print = "\t0\t1\t2\t3\t4\t5\t6\t7\t8\t9\r\n";
-                    for (int i = 0; i < MAX_INSTR; i++)
                     {
-                        if (0 == i % 10)
+                        const int MAX_INSTR = 100;
+                        print = "\t0\t1\t2\t3\t4\t5\t6\t7\t8\t9\r\n";
+                        for (int i = 0; i < MAX_INSTR; i++)
                         {
-                            print += i + "\t";
+                            if (0 == i % 10)
+                            {
+                                print += i + "\t";
+                            }
+                            if (9 == i % 10)
+                            {
+                                print += bml.GetInstructionAt(i) + "\r\n";
+                            }
+                            else
+                            {
+                                print += bml.GetInstructionAt(i) + "\t";
+                            }
                         }
-                        if(9 == i % 10)
-                        {
-                            print += bml.GetInstructionAt(i) + "\r\n";
-                        }
-                        else
-                        {
-                            print += bml.GetInstructionAt(i) + "\t";
-                        }
+                        //string caption = "Memory Dump";
+                        dump = new WindowsFormsApp.MemDumpFrm();
+                        dump.dumpHere = print;
+                        dump.accumValue = bml.GetAccumulator();
+                        dump.Show();
+                        //MessageBox.Show(print, caption, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                        break;
                     }
-                    //string caption = "Memory Dump";
-                    dump = new WindowsFormsApp.MemDumpFrm();
-                    dump.dumpHere = print;
-                    dump.accumValue = bml.GetAccumulator();
-                    dump.Show();
-                    //MessageBox.Show(print, caption, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                    break;
                 default:
                     break;
             }
