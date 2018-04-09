@@ -404,7 +404,11 @@ namespace WindowsFormsApp1
                             MessageBox.Show("Cannot divide by zero... exiting...");
                             Application.Exit();
                         }
-                        logic_unit.DIVIDE(location);
+
+                        int remainder = 0;
+                        int quotient = logic_unit.DIVIDE(lho, rho, ref remainder);
+                        bml.SetAccumulator(quotient);
+                        bml.SetOverflow(remainder);
                         Start_DataGridView[2, bml.GetProgramCtr()].Value = bml.GetInstructionAt(location) + " divided -> accumulator";
 
                         //highlight next instruction
@@ -416,7 +420,10 @@ namespace WindowsFormsApp1
                 //MULTIPLY
                 case 33:
                     {
-                        logic_unit.MULTIPLY(location);
+                        int lho = bml.GetAccumulator();
+                        int rho = int.Parse(bml.GetInstructionAt(location));
+                        int product = logic_unit.MULTIPLY(lho, rho);
+                        bml.SetAccumulator(product);
                         Start_DataGridView[2, bml.GetProgramCtr()].Value = bml.GetInstructionAt(location) + " multiply -> accumulator";
 
                         bml.IncrementProgramCtr();
