@@ -27,29 +27,8 @@ namespace WindowsFormsApp1
         //START BENNY CODE
         public int ADD(int lho, int rho) //DONE
         {
-<<<<<<< HEAD
-            //int addend = int.Parse(bml.GetInstructionAt(_location));
-            //int accumulator = bml.GetAccumulator();
-            //accumulator += addend;
-            //bml.SetAccumulator(accumulator);
-
-            //New Bitwise way:
-            int addend = int.Parse(bml.GetInstructionAt(_location));
-            int accumulator = bml.GetAccumulator();
-            int carry;
-            while(addend != 0)
-            {
-                carry = accumulator & addend;
-                accumulator = accumulator ^ addend;
-                addend = carry << 1;
-            }
-
-            bml.SetAccumulator(accumulator);
-=======
             int sum = ADDhelper(lho, rho);
-
             return sum;
->>>>>>> master
         }
 
         public int ADDhelper(int param1, int param2) //DONE
@@ -104,15 +83,6 @@ namespace WindowsFormsApp1
                 quotient = DivisonHelp(lho, rho, rho, ref remain);
                 return quotient;
             }
-
-
-            //while(dividend >= 0)
-            //{
-            //    dividend = ADDhelper(dividend, (~divisor + 1));
-            //}
-
-
-
         }
 
         public int DivisonHelp(int dividend, int divisor, int origdiv, ref int remain)
