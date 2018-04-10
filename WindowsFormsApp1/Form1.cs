@@ -78,10 +78,10 @@ namespace WindowsFormsApp1
             if (!branch)
             {
                 //unhighlight current instruction
-                row = (DataGridViewRow)Start_DataGridView.Rows[(bml.GetProgramCtr() - 1)];
+                row = (DataGridViewRow)Start_DataGridView.Rows[(bml.GetProgramCtr())];
                 row.DefaultCellStyle.BackColor = Color.White;
                 //increment instr ctr and highlight next row
-                row = (DataGridViewRow)Start_DataGridView.Rows[bml.GetProgramCtr()];
+                row = (DataGridViewRow)Start_DataGridView.Rows[bml.GetProgramCtr() + 2];
                 row.DefaultCellStyle.BackColor = Color.Yellow;
             }
             //in a branch statement
@@ -291,7 +291,9 @@ namespace WindowsFormsApp1
             string user_input = "";
             string instruction = bml.GetNextInstruction();
             int opcode = int.Parse(instruction.Substring(0, 2));
-            int location = int.Parse(instruction.Substring(2, 2));
+            int location = 0;
+            string str_location = Start_DataGridView[0, (bml.GetProgramCtr() + 1)].Value.ToString();
+            location = int.Parse(str_location); 
 
 
             //initialize row
@@ -316,8 +318,9 @@ namespace WindowsFormsApp1
                             memory_unit.Read(user_input, location);
 
                             //highlight next instruction
-                            bml.IncrementProgramCtr();
                             UnhighlightRow(row, bml.GetProgramCtr(), false);
+                            bml.IncrementProgramCtr(); //skip memory address
+                            bml.IncrementProgramCtr();
                             break;
                         }
                     }
@@ -333,8 +336,9 @@ namespace WindowsFormsApp1
                         txtOutput.Text += number_in_address + "\n";
 
                         //highlight next instruction
-                        bml.IncrementProgramCtr();
                         UnhighlightRow(row, bml.GetProgramCtr(), false);
+                        bml.IncrementProgramCtr();
+                        bml.IncrementProgramCtr();
                         break;
                     }
 
@@ -345,8 +349,9 @@ namespace WindowsFormsApp1
                         Start_DataGridView[2, bml.GetProgramCtr()].Value = bml.GetInstructionAt(location) + " -> accumulator";
 
                         //highlight next instruction
-                        bml.IncrementProgramCtr();
                         UnhighlightRow(row, bml.GetProgramCtr(), false);
+                        bml.IncrementProgramCtr();
+                        bml.IncrementProgramCtr();
                         break;
                     }
 
@@ -358,8 +363,9 @@ namespace WindowsFormsApp1
 
 
                         //highlight next instruction
-                        bml.IncrementProgramCtr();
                         UnhighlightRow(row, bml.GetProgramCtr(), false);
+                        bml.IncrementProgramCtr();
+                        bml.IncrementProgramCtr();
                         break;
                     }
 
@@ -374,8 +380,9 @@ namespace WindowsFormsApp1
 
 
                         //highlight next instruction
-                        bml.IncrementProgramCtr();
                         UnhighlightRow(row, bml.GetProgramCtr(), false);
+                        bml.IncrementProgramCtr();
+                        bml.IncrementProgramCtr();
                         break;
                     }
 
@@ -389,8 +396,9 @@ namespace WindowsFormsApp1
                         Start_DataGridView[2, bml.GetProgramCtr()].Value = bml.GetInstructionAt(location) + " subtracted -> accumulator";
 
                         //highlight next instruction
-                        bml.IncrementProgramCtr();
                         UnhighlightRow(row, bml.GetProgramCtr(), false);
+                        bml.IncrementProgramCtr();
+                        bml.IncrementProgramCtr();
                         break;
                     }
 
@@ -412,8 +420,9 @@ namespace WindowsFormsApp1
                         Start_DataGridView[2, bml.GetProgramCtr()].Value = bml.GetInstructionAt(location) + " divided -> accumulator";
 
                         //highlight next instruction
-                        bml.IncrementProgramCtr();
                         UnhighlightRow(row, bml.GetProgramCtr(), false);
+                        bml.IncrementProgramCtr();
+                        bml.IncrementProgramCtr();
                         break;
                     }
 
@@ -426,8 +435,9 @@ namespace WindowsFormsApp1
                         bml.SetAccumulator(product);
                         Start_DataGridView[2, bml.GetProgramCtr()].Value = bml.GetInstructionAt(location) + " multiply -> accumulator";
 
-                        bml.IncrementProgramCtr();
                         UnhighlightRow(row, bml.GetProgramCtr(), false);
+                        bml.IncrementProgramCtr();
+                        bml.IncrementProgramCtr();
                         break;
                     }
 

@@ -22,7 +22,7 @@ namespace WindowsFormsApp1
         private int overflow;
 
         //CONSTANT VARIABLES
-        public const int MEMORY = 100;
+        public const int MEMORY = 1000;
 
         //CONSTRUCTOR
         public BasicMachineLanguage()
