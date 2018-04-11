@@ -292,9 +292,15 @@ namespace WindowsFormsApp1
             string instruction = bml.GetNextInstruction();
             int opcode = int.Parse(instruction.Substring(0, 2));
             int location = 0;
-            string str_location = Start_DataGridView[0, (bml.GetProgramCtr() + 1)].Value.ToString();
-            location = int.Parse(str_location); 
-
+            if (opcode != 43)
+	        {
+                string str_location = Start_DataGridView[0, (bml.GetProgramCtr() + 1)].Value.ToString();
+                location = int.Parse(str_location); 
+	        }
+            else{
+                //HALT needs no location
+                location = 0;
+            }
 
             //initialize row
             row = (DataGridViewRow)Start_DataGridView.Rows[0];
