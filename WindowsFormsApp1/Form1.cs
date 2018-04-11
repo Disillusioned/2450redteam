@@ -31,12 +31,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WindowsFormsApp;
 
 namespace WindowsFormsApp1
 {
     public partial class frmMain : Form
     {
         //GLOBAL VARIABLES
+        Facade f = new Facade();
         BasicMachineLanguage bml;
         ALU logic_unit;
         Memory memory_unit;
@@ -45,6 +47,7 @@ namespace WindowsFormsApp1
         WindowsFormsApp.MemDumpFrm dump;
         string print; //used for passing info to second form
         StreamReader testData;//test for load function
+        int instrcount = 0;
 
         //CONSTRUCTOR for form class
         public frmMain()
@@ -136,7 +139,8 @@ namespace WindowsFormsApp1
                 //parse line
                 instruction = full_line.Substring(0, 4);
                 //put into memory
-                bml.SetNextInstruction(instruction);
+                f.SetNextInstruction(instruction);
+                //bml.SetNextInstruction(instruction);
                 
                 //PUT into edit form (data grid view)
                 //get next row
@@ -154,7 +158,8 @@ namespace WindowsFormsApp1
             }
 
             //set instruction counter to 0
-            bml.SetProgramCtr(0);
+            //bml.SetProgramCtr(0);
+            f.SetProgramCtr(0);
             input_file_clicked = true;
         }
 
@@ -179,19 +184,23 @@ namespace WindowsFormsApp1
                     //get instruction from next row in edit form (data grid view 1)
                     instruction = InputFile_DataGridView[0, j].Value.ToString();
                     //load instruction into bml memory 
-                    bml.SetNextInstruction(instruction);
+                    //bml.SetNextInstruction(instruction);
+                    f.SetNextInstruction(instruction);
                     //increment row counter
                     ++j;
                 }
                 //set instruction counter to 0
-                bml.SetProgramCtr(0);
+                f.SetProgramCtr(0);
+                //bml.SetProgramCtr(0);
             }
 
             //POPULATE Debugger Pane
             j = 0;
             instruction = "";
-            instruction = bml.GetNextInstruction();
+            instruction = f.GetNextInstruction();
+            //instruction = bml.GetNextInstruction();
             DataGridViewRow row;
+            instrcount = 0;
             while (instruction != "")
             {
                 //create new row
@@ -199,7 +208,8 @@ namespace WindowsFormsApp1
                 row.Cells[0].Value = instruction;
                 //parse opcode from instruction
                 int opcode = int.Parse(instruction.Substring(0, 2));
-                bml.IncrementProgramCtr();
+                //bml.IncrementProgramCtr();
+                f.IncrementProgramCtr();
                 switch (opcode)
                 {
                     //READ OPCODE
@@ -250,9 +260,11 @@ namespace WindowsFormsApp1
                 //add row to debugger pane
                 Start_DataGridView.Rows.Add(row);
                 //read next instruction from BML memory
-                instruction = bml.GetNextInstruction();
+                instruction = f.GetNextInstruction();
+                //instruction = bml.GetNextInstruction();
                 if("0000" == instruction) { break; } // dont need to add all the "0000" to the debugger portion
                 ++j;
+                instrcount++;
             }
         }
 
@@ -266,13 +278,15 @@ namespace WindowsFormsApp1
         //Begin program by initializing program ctr to the first location in memory
         private void Start_Button_Click(object sender, EventArgs e)
         {
-            txtAccumulator.Text = bml.GetAccumulator().ToString();
+            txtAccumulator.Text = f.GetAccumulator().ToString();
+            //txtAccumulator.Text = bml.GetAccumulator().ToString();
             //highlight first instruction
             DataGridViewRow row;
             row = (DataGridViewRow)Start_DataGridView.Rows[0];
             row.DefaultCellStyle.BackColor = Color.Yellow;
             //set program ctr to 0
-            bml.SetProgramCtr(0);
+            f.SetProgramCtr(0);
+            //bml.SetProgramCtr(0);
         }
 
         /*End Chase's Code*/
@@ -285,11 +299,13 @@ namespace WindowsFormsApp1
         //Move to the next instruction
         private void Next_Button_Click(object sender, EventArgs e)
         {
-            txtAccumulator.Text = bml.GetAccumulator().ToString();
+            txtAccumulator.Text = f.GetAccumulator().ToString();
+            //txtAccumulator.Text = bml.GetAccumulator().ToString();
             //declare variables
             DataGridViewRow row;
             string user_input = "";
-            string instruction = bml.GetNextInstruction();
+            string instruction = f.GetNextInstruction();
+            //string instruction = bml.GetNextInstruction();
             int opcode = int.Parse(instruction.Substring(0, 2));
             int location = 0;
             if (opcode != 43)
