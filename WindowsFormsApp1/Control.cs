@@ -38,5 +38,17 @@ namespace WindowsFormsApp1
         {
             bml.SetProgramCtr(_location);
         }
-    }
+		
+		//Start Brielle Code
+		public void HALT()
+		{
+			return;
+		}
+
+		public int CONTINUE(int i)
+		{
+			return i++;
+		}
+		 
+	}
 }

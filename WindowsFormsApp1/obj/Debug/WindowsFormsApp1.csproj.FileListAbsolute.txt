@@ -8,3 +8,10 @@ C:\Users\benny\Documents\CS2450\2450redteam\WindowsFormsApp1\obj\Debug\WindowsFo
 C:\Users\benny\Documents\CS2450\2450redteam\WindowsFormsApp1\obj\Debug\WindowsFormsApp.exe
 C:\Users\benny\Documents\CS2450\2450redteam\WindowsFormsApp1\obj\Debug\WindowsFormsApp.pdb
 C:\Users\benny\Documents\CS2450\2450redteam\WindowsFormsApp1\obj\Debug\WindowsFormsApp.memdumpFrm.resources
+C:\Users\Brielle Hymas\Documents\CS 2450\2450redteam\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.csprojResolveAssemblyReference.cache
+C:\Users\Brielle Hymas\Documents\CS 2450\2450redteam\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.frmMain.resources
+C:\Users\Brielle Hymas\Documents\CS 2450\2450redteam\WindowsFormsApp1\obj\Debug\WindowsFormsApp.MemDumpFrm.resources
+C:\Users\Brielle Hymas\Documents\CS 2450\2450redteam\WindowsFormsApp1\obj\Debug\WindowsFormsApp.Properties.Resources.resources
+C:\Users\Brielle Hymas\Documents\CS 2450\2450redteam\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.csproj.GenerateResource.Cache
+C:\Users\Brielle Hymas\Documents\CS 2450\2450redteam\WindowsFormsApp1\obj\Debug\WindowsFormsApp.exe
+C:\Users\Brielle Hymas\Documents\CS 2450\2450redteam\WindowsFormsApp1\obj\Debug\WindowsFormsApp.pdb
