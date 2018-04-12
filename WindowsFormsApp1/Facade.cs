@@ -119,15 +119,15 @@ namespace WindowsFormsApp
             return logic_unit.DIVIDE(lho, rho, ref remainder);
         }
 
-        public int EXPONENT(int lho, int rho)
-        {
-            return logic_unit.EXPONENT(lho, rho);
-        }
+        //public int EXPONENT(int lho, int rho)
+        //{
+        //    return logic_unit.EXPONENT(lho, rho);
+        //}
 
-        public int REMAINDER(int lho, int rho, ref int remainder)
-        {
-            return logic_unit.REMAINDER(lho, rho, ref remainder);
-        }
+        //public int REMAINDER(int lho, int rho, ref int remainder)
+        //{
+        //    return logic_unit.REMAINDER(lho, rho, ref remainder);
+        //}
         //END of logic_unit facade
 
         //START of control_unit facade
