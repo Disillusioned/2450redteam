@@ -117,6 +117,10 @@ namespace WindowsFormsApp1
             {
                 testData = new StreamReader(file.FileName);
             }
+            else //fized closing out of load menu without selecting file
+            {
+                return;
+            }
             //End Benny Code
 
             //create variables used throughout function

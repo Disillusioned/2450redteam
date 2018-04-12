@@ -117,30 +117,32 @@ namespace WindowsFormsApp1
             return quotient;
         }
 
-		// Start Brielle code
-		public int POW(int accumulator, int location)
-		{
-			if (location != 0)
-				return (accumulator * POW(accumulator, location - 1));
-			else
-				return 1;
-		}
+        // Start Brielle code
+        public int EXPONENT(int lho, int rho)
+        {
+            if (rho != 0)
+                return MULTIPLY(lho, EXPONENT(lho, rho - 1));
+            else
+                return 1;
+        }
 
-		public void EXPONENT(int _location)
-		{
-			int exponent = int.Parse(bml.GetInstructionAt(_location));
-			int accumulator = bml.GetAccumulator();
-			accumulator = POW(accumulator, _location);
-			bml.SetAccumulator(accumulator);
-		}
-
-		public void REMAINDER(int _location)
-		{
-			int dividend = int.Parse(bml.GetInstructionAt(_location));
-			int accumulator = bml.GetAccumulator();
-			accumulator %= dividend;
-			bml.SetAccumulator(accumulator);
-		}
-		// End Brielle Code 
-	}
+        public int REMAINDER(int lho, int rho, ref int remainder)
+        {
+            int quotient;
+            if (lho < 0 || rho < 0)
+            {
+                lho = Math.Abs(lho);
+                rho = Math.Abs(rho);
+                quotient = DivisonHelp(lho, rho, rho, ref remainder);
+                return remainder;
+            }
+            else
+            {
+                quotient = DivisonHelp(lho, rho, rho, ref remainder);
+                return remainder;
+            }
+        }
+        // End Brielle Code 
+    }
 }
+
