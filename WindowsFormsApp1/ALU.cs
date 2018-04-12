@@ -75,12 +75,12 @@ namespace WindowsFormsApp1
             {
                 lho = Math.Abs(lho);
                 rho = Math.Abs(rho);
-                quotient = DivisonHelp(lho, rho, rho, ref remain);
+                quotient = DivisonHelp(lho, rho, rho, ref remainder);
                 return quotient;
             }
             else
             {
-                quotient = DivisonHelp(lho, rho, rho, ref remain);
+                quotient = DivisonHelp(lho, rho, rho, ref remainder);
                 return quotient;
             }
         }

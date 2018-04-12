@@ -39,10 +39,10 @@ namespace WindowsFormsApp1
     {
         //GLOBAL VARIABLES
         Facade f = new Facade();
-        BasicMachineLanguage bml;
-        ALU logic_unit;
-        Memory memory_unit;
-        Control control_unit;
+        //BasicMachineLanguage bml;
+        //ALU f;
+        //Memory f;
+        //Control f;
         bool input_file_clicked;
         WindowsFormsApp.MemDumpFrm dump;
         string print; //used for passing info to second form
@@ -55,10 +55,10 @@ namespace WindowsFormsApp1
             /*Begin Chase's Code*/
 
             //instantiate variables;
-            bml = new BasicMachineLanguage();
-            logic_unit = new ALU(bml);
-            memory_unit = new Memory(bml);
-            control_unit = new Control(bml);
+            //bml = new BasicMachineLanguage();
+            //f = new ALU(bml);
+            //f = new Memory(bml);
+            //f = new Control(bml);
 
             input_file_clicked = false;
 
@@ -81,17 +81,17 @@ namespace WindowsFormsApp1
             if (!branch)
             {
                 //unhighlight current instruction
-                row = (DataGridViewRow)Start_DataGridView.Rows[(bml.GetProgramCtr())];
+                row = (DataGridViewRow)Start_DataGridView.Rows[(f.GetProgramCtr())];
                 row.DefaultCellStyle.BackColor = Color.White;
                 //increment instr ctr and highlight next row
-                row = (DataGridViewRow)Start_DataGridView.Rows[bml.GetProgramCtr() + 2];
+                row = (DataGridViewRow)Start_DataGridView.Rows[f.GetProgramCtr() + 2];
                 row.DefaultCellStyle.BackColor = Color.Yellow;
             }
             //in a branch statement
             else
             {
                 //unhighlight current instruction
-                row = (DataGridViewRow)Start_DataGridView.Rows[bml.GetProgramCtr()];
+                row = (DataGridViewRow)Start_DataGridView.Rows[f.GetProgramCtr()];
                 row.DefaultCellStyle.BackColor = Color.White;
                 //highlight next instruction
                 row = (DataGridViewRow)Start_DataGridView.Rows[location];
@@ -140,7 +140,6 @@ namespace WindowsFormsApp1
                 instruction = full_line.Substring(0, 4);
                 //put into memory
                 f.SetNextInstruction(instruction);
-                //bml.SetNextInstruction(instruction);
                 
                 //PUT into edit form (data grid view)
                 //get next row
@@ -158,7 +157,6 @@ namespace WindowsFormsApp1
             }
 
             //set instruction counter to 0
-            //bml.SetProgramCtr(0);
             f.SetProgramCtr(0);
             input_file_clicked = true;
         }
@@ -183,22 +181,20 @@ namespace WindowsFormsApp1
                 {
                     //get instruction from next row in edit form (data grid view 1)
                     instruction = InputFile_DataGridView[0, j].Value.ToString();
-                    //load instruction into bml memory 
-                    //bml.SetNextInstruction(instruction);
+                    //load instruction into f memory 
                     f.SetNextInstruction(instruction);
+
                     //increment row counter
                     ++j;
                 }
                 //set instruction counter to 0
                 f.SetProgramCtr(0);
-                //bml.SetProgramCtr(0);
             }
 
             //POPULATE Debugger Pane
             j = 0;
             instruction = "";
             instruction = f.GetNextInstruction();
-            //instruction = bml.GetNextInstruction();
             DataGridViewRow row;
             instrcount = 0;
             while (instruction != "")
@@ -208,7 +204,6 @@ namespace WindowsFormsApp1
                 row.Cells[0].Value = instruction;
                 //parse opcode from instruction
                 int opcode = int.Parse(instruction.Substring(0, 2));
-                //bml.IncrementProgramCtr();
                 f.IncrementProgramCtr();
                 switch (opcode)
                 {
@@ -261,7 +256,6 @@ namespace WindowsFormsApp1
                 Start_DataGridView.Rows.Add(row);
                 //read next instruction from BML memory
                 instruction = f.GetNextInstruction();
-                //instruction = bml.GetNextInstruction();
                 if("0000" == instruction) { break; } // dont need to add all the "0000" to the debugger portion
                 ++j;
                 instrcount++;
@@ -278,15 +272,15 @@ namespace WindowsFormsApp1
         //Begin program by initializing program ctr to the first location in memory
         private void Start_Button_Click(object sender, EventArgs e)
         {
+            //txtAccumulator.Text = f.GetAccumulator().ToString();
             txtAccumulator.Text = f.GetAccumulator().ToString();
-            //txtAccumulator.Text = bml.GetAccumulator().ToString();
             //highlight first instruction
             DataGridViewRow row;
             row = (DataGridViewRow)Start_DataGridView.Rows[0];
             row.DefaultCellStyle.BackColor = Color.Yellow;
             //set program ctr to 0
+            //f.SetProgramCtr(0);
             f.SetProgramCtr(0);
-            //bml.SetProgramCtr(0);
         }
 
         /*End Chase's Code*/
@@ -299,18 +293,17 @@ namespace WindowsFormsApp1
         //Move to the next instruction
         private void Next_Button_Click(object sender, EventArgs e)
         {
+            //txtAccumulator.Text = f.GetAccumulator().ToString();
             txtAccumulator.Text = f.GetAccumulator().ToString();
-            //txtAccumulator.Text = bml.GetAccumulator().ToString();
             //declare variables
             DataGridViewRow row;
             string user_input = "";
             string instruction = f.GetNextInstruction();
-            //string instruction = bml.GetNextInstruction();
             int opcode = int.Parse(instruction.Substring(0, 2));
             int location = 0;
             if (opcode != 43)
 	        {
-                string str_location = Start_DataGridView[0, (bml.GetProgramCtr() + 1)].Value.ToString();
+                string str_location = Start_DataGridView[0, (f.GetProgramCtr() + 1)].Value.ToString();
                 location = int.Parse(str_location); 
 	        }
             else{
@@ -328,21 +321,21 @@ namespace WindowsFormsApp1
                 case 10:
                     {
                         //ask user for input
-                        if (Start_DataGridView[2, bml.GetProgramCtr()].Value.ToString() == "")
+                        if (Start_DataGridView[2, f.GetProgramCtr()].Value.ToString() == "")
                         {
-                            Start_DataGridView[2, bml.GetProgramCtr()].Value = "ERROR";
+                            Start_DataGridView[2, f.GetProgramCtr()].Value = "ERROR";
                             break;
                         }
                         else
                         {
-                            user_input = Start_DataGridView[2, bml.GetProgramCtr()].Value.ToString();
+                            user_input = Start_DataGridView[2, f.GetProgramCtr()].Value.ToString();
                             //Put user input into the array
-                            memory_unit.Read(user_input, location);
+                            f.Read(user_input, location);
 
                             //highlight next instruction
-                            UnhighlightRow(row, bml.GetProgramCtr(), false);
-                            bml.IncrementProgramCtr(); //skip memory address
-                            bml.IncrementProgramCtr();
+                            UnhighlightRow(row, f.GetProgramCtr(), false);
+                            f.IncrementProgramCtr(); //skip memory address
+                            f.IncrementProgramCtr();
                             break;
                         }
                     }
@@ -351,84 +344,84 @@ namespace WindowsFormsApp1
                 case 11:
                     {
                         string number_in_address = "";
-                        number_in_address = memory_unit.Write(location);
-                        Start_DataGridView[2, bml.GetProgramCtr()].Value = number_in_address;
+                        number_in_address = f.Write(location);
+                        Start_DataGridView[2, f.GetProgramCtr()].Value = number_in_address;
 
                         //Write to Output box
                         txtOutput.Text += number_in_address + "\n";
 
                         //highlight next instruction
-                        UnhighlightRow(row, bml.GetProgramCtr(), false);
-                        bml.IncrementProgramCtr();
-                        bml.IncrementProgramCtr();
+                        UnhighlightRow(row, f.GetProgramCtr(), false);
+                        f.IncrementProgramCtr();
+                        f.IncrementProgramCtr();
                         break;
                     }
 
                 //LOAD OPCODE
                 case 20:
                     {
-                        memory_unit.Load(location);
-                        Start_DataGridView[2, bml.GetProgramCtr()].Value = bml.GetInstructionAt(location) + " -> accumulator";
+                        f.Load(location);
+                        Start_DataGridView[2, f.GetProgramCtr()].Value = f.GetInstructionAt(location) + " -> accumulator";
 
                         //highlight next instruction
-                        UnhighlightRow(row, bml.GetProgramCtr(), false);
-                        bml.IncrementProgramCtr();
-                        bml.IncrementProgramCtr();
+                        UnhighlightRow(row, f.GetProgramCtr(), false);
+                        f.IncrementProgramCtr();
+                        f.IncrementProgramCtr();
                         break;
                     }
 
                 //STORE OPCODE
                 case 21:
                     {
-                        memory_unit.Store(location);
-                        Start_DataGridView[2, bml.GetProgramCtr()].Value = "Stored " + bml.GetInstructionAt(location) + " from accumulator -> " + location;
+                        f.Store(location);
+                        Start_DataGridView[2, f.GetProgramCtr()].Value = "Stored " + f.GetInstructionAt(location) + " from accumulator -> " + location;
 
 
                         //highlight next instruction
-                        UnhighlightRow(row, bml.GetProgramCtr(), false);
-                        bml.IncrementProgramCtr();
-                        bml.IncrementProgramCtr();
+                        UnhighlightRow(row, f.GetProgramCtr(), false);
+                        f.IncrementProgramCtr();
+                        f.IncrementProgramCtr();
                         break;
                     }
 
                 //ADD OPCODE
                 case 30:
                     {
-                        int lho = bml.GetAccumulator();
-                        int rho = int.Parse(bml.GetInstructionAt(location));
-                        int sum = logic_unit.ADD(lho, rho);
-                        bml.SetAccumulator(sum);
-                        Start_DataGridView[2, bml.GetProgramCtr()].Value = bml.GetInstructionAt(location) + " added -> accumulator";
+                        int lho = f.GetAccumulator();
+                        int rho = int.Parse(f.GetInstructionAt(location));
+                        int sum = f.ADD(lho, rho);
+                        f.SetAccumulator(sum);
+                        Start_DataGridView[2, f.GetProgramCtr()].Value = f.GetInstructionAt(location) + " added -> accumulator";
 
 
                         //highlight next instruction
-                        UnhighlightRow(row, bml.GetProgramCtr(), false);
-                        bml.IncrementProgramCtr();
-                        bml.IncrementProgramCtr();
+                        UnhighlightRow(row, f.GetProgramCtr(), false);
+                        f.IncrementProgramCtr();
+                        f.IncrementProgramCtr();
                         break;
                     }
 
                 //SUBTRACT OPCODE
                 case 31:
                     {
-                        int lho = bml.GetAccumulator();
-                        int rho = int.Parse(bml.GetInstructionAt(location));
-                        int difference = logic_unit.SUBTRACT(lho, rho);
-                        bml.SetAccumulator(difference);
-                        Start_DataGridView[2, bml.GetProgramCtr()].Value = bml.GetInstructionAt(location) + " subtracted -> accumulator";
+                        int lho = f.GetAccumulator();
+                        int rho = int.Parse(f.GetInstructionAt(location));
+                        int difference = f.SUBTRACT(lho, rho);
+                        f.SetAccumulator(difference);
+                        Start_DataGridView[2, f.GetProgramCtr()].Value = f.GetInstructionAt(location) + " subtracted -> accumulator";
 
                         //highlight next instruction
-                        UnhighlightRow(row, bml.GetProgramCtr(), false);
-                        bml.IncrementProgramCtr();
-                        bml.IncrementProgramCtr();
+                        UnhighlightRow(row, f.GetProgramCtr(), false);
+                        f.IncrementProgramCtr();
+                        f.IncrementProgramCtr();
                         break;
                     }
 
                 //DIVIDE OPCODE
                 case 32:
                     {
-                        int lho = bml.GetAccumulator();
-                        int rho = int.Parse(bml.GetInstructionAt(location));
+                        int lho = f.GetAccumulator();
+                        int rho = int.Parse(f.GetInstructionAt(location));
                         if (rho == 0)
                         {
                             MessageBox.Show("Cannot divide by zero... exiting...");
@@ -436,30 +429,30 @@ namespace WindowsFormsApp1
                         }
 
                         int remainder = 0;
-                        int quotient = logic_unit.DIVIDE(lho, rho, ref remainder);
-                        bml.SetAccumulator(quotient);
-                        bml.SetOverflow(remainder);
-                        Start_DataGridView[2, bml.GetProgramCtr()].Value = bml.GetInstructionAt(location) + " divided -> accumulator";
+                        int quotient = f.DIVIDE(lho, rho, ref remainder);
+                        f.SetAccumulator(quotient);
+                        f.SetOverflow(remainder);
+                        Start_DataGridView[2, f.GetProgramCtr()].Value = f.GetInstructionAt(location) + " divided -> accumulator";
 
                         //highlight next instruction
-                        UnhighlightRow(row, bml.GetProgramCtr(), false);
-                        bml.IncrementProgramCtr();
-                        bml.IncrementProgramCtr();
+                        UnhighlightRow(row, f.GetProgramCtr(), false);
+                        f.IncrementProgramCtr();
+                        f.IncrementProgramCtr();
                         break;
                     }
 
                 //MULTIPLY
                 case 33:
                     {
-                        int lho = bml.GetAccumulator();
-                        int rho = int.Parse(bml.GetInstructionAt(location));
-                        int product = logic_unit.MULTIPLY(lho, rho);
-                        bml.SetAccumulator(product);
-                        Start_DataGridView[2, bml.GetProgramCtr()].Value = bml.GetInstructionAt(location) + " multiply -> accumulator";
+                        int lho = f.GetAccumulator();
+                        int rho = int.Parse(f.GetInstructionAt(location));
+                        int product = f.MULTIPLY(lho, rho);
+                        f.SetAccumulator(product);
+                        Start_DataGridView[2, f.GetProgramCtr()].Value = f.GetInstructionAt(location) + " multiply -> accumulator";
 
-                        UnhighlightRow(row, bml.GetProgramCtr(), false);
-                        bml.IncrementProgramCtr();
-                        bml.IncrementProgramCtr();
+                        UnhighlightRow(row, f.GetProgramCtr(), false);
+                        f.IncrementProgramCtr();
+                        f.IncrementProgramCtr();
                         break;
                     }
 
@@ -469,32 +462,32 @@ namespace WindowsFormsApp1
                 //branch positive
                 case 40:
                     {
-                        if (bml.GetAccumulator() > 0)
+                        if (f.GetAccumulator() > 0)
                         {
                             UnhighlightRow(row, location, true);
-                            control_unit.Branch_Positive(location);
+                            f.Branch_Positive(location);
                             break;
                         }
                         else
                         {
-                            bml.IncrementProgramCtr();
-                            UnhighlightRow(row, bml.GetProgramCtr(), false);
+                            f.IncrementProgramCtr();
+                            UnhighlightRow(row, f.GetProgramCtr(), false);
                             break;
                         }
                     }
                 //branch negative
                 case 41:
                     {
-                        if (bml.GetAccumulator() < 0)
+                        if (f.GetAccumulator() < 0)
                         {
                             UnhighlightRow(row, location, true);
-                            control_unit.Branch_Positive(location);
+                            f.Branch_Positive(location);
                             break;
                         }
                         else
                         {
-                            bml.IncrementProgramCtr();
-                            UnhighlightRow(row, bml.GetProgramCtr(), false);
+                            f.IncrementProgramCtr();
+                            UnhighlightRow(row, f.GetProgramCtr(), false);
                             break;
                         }
                     }
@@ -502,16 +495,16 @@ namespace WindowsFormsApp1
                 //branch zero
                 case 42:
                     {
-                        if (bml.GetAccumulator() == 0)
+                        if (f.GetAccumulator() == 0)
                         {
                             UnhighlightRow(row, location, true);
-                            control_unit.Branch_Positive(location);
+                            f.Branch_Positive(location);
                             break;
                         }
                         else
                         {
-                            bml.IncrementProgramCtr();
-                            UnhighlightRow(row, bml.GetProgramCtr(), false);
+                            f.IncrementProgramCtr();
+                            UnhighlightRow(row, f.GetProgramCtr(), false);
                             break;
                         }
                     }
@@ -532,17 +525,17 @@ namespace WindowsFormsApp1
                             }
                             if (9 == i % 10)
                             {
-                                print += bml.GetInstructionAt(i) + "\r\n";
+                                print += f.GetInstructionAt(i) + "\r\n";
                             }
                             else
                             {
-                                print += bml.GetInstructionAt(i) + "\t";
+                                print += f.GetInstructionAt(i) + "\t";
                             }
                         }
                         //string caption = "Memory Dump";
                         dump = new WindowsFormsApp.MemDumpFrm();
                         dump.dumpHere = print;
-                        dump.accumValue = bml.GetAccumulator();
+                        dump.accumValue = f.GetAccumulator();
                         dump.Show();
                         //MessageBox.Show(print, caption, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                         break;
@@ -554,7 +547,7 @@ namespace WindowsFormsApp1
 
         private void resetToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            bml.ResetMachine();
+            f.ResetMachine();
             Start_DataGridView.Rows.Clear();
             InputFile_DataGridView.Rows.Clear();
             Start_DataGridView.Refresh();
