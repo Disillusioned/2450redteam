@@ -504,15 +504,25 @@ namespace WindowsFormsApp1
                 //Start of Benny code
                 case 43:
                     {
-                        const int MAX_INSTR = 100;
-                        print = "\t0\t1\t2\t3\t4\t5\t6\t7\t8\t9\r\n";
+                        const int MAX_INSTR = 1000;
+                        const int MAX_COL = 100;
+
+                        print = "";
+                        //New method for expanded memory
+                        //Gives the top header row for the first 20
+                        for (int i = 0; i < MAX_COL; i++)
+                        {
+                            print += "\t0" + i;
+                        }
+                        print += "\r\n";
+
                         for (int i = 0; i < MAX_INSTR; i++)
                         {
-                            if (0 == i % 10)
+                            if (0 == i % 100)
                             {
                                 print += i + "\t";
                             }
-                            if (9 == i % 10)
+                            if (99 == i % 100)
                             {
                                 print += f.GetInstructionAt(i) + "\r\n";
                             }
@@ -521,12 +531,13 @@ namespace WindowsFormsApp1
                                 print += f.GetInstructionAt(i) + "\t";
                             }
                         }
-                        //string caption = "Memory Dump";
+
+
+                        //Still need this to show new form
                         dump = new WindowsFormsApp.MemDumpFrm();
                         dump.dumpHere = print;
                         dump.accumValue = f.GetAccumulator();
                         dump.Show();
-                        //MessageBox.Show(print, caption, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                         break;
                     }
                 default:
