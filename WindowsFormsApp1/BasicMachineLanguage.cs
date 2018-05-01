@@ -145,6 +145,28 @@ namespace WindowsFormsApp1
             }       
         }
 
+        public string GetInstructionForMemDump(int _location)
+        {
+            return memory_locations[_location];
+            /*if (memory_locations[_location].Substring(0,1) == "?")
+	        {
+                string number = "";
+                //find where number is at
+                string left_loc = memory_locations[_location].Substring(2, 2);
+                //pull first two digits of number
+                number = memory_locations[Int32.Parse(left_loc)];
+                //findwhere rest of number is at
+                string right_loc = number.Substring(2,2);
+                number = number.Substring(0,2);
+                number = number + memory_locations[Int32.Parse(right_loc)];
+                return number;
+            }
+            else
+            {
+                return memory_locations[_location];
+            }*/
+        }
+
         public void SetOverflow(int _value)
         {
             overflow = _value;
