@@ -20,6 +20,21 @@ namespace WindowsFormsApp1
         private int instruction_counter;
         private int accumulator;
         private int overflow;
+        private string find_empty(){
+            int i = 0;
+            const int MAX = 100;
+            string location = "";
+            while(i < MAX){
+                if (memory_locations[i] == "0000"){
+                    location = i.ToString();                 
+                    return location;
+                }
+                else{
+                    i++;
+                }
+            }   
+            return "FULL";
+        }
 
         //CONSTANT VARIABLES
         public const int MEMORY = 1000;
@@ -84,12 +99,50 @@ namespace WindowsFormsApp1
 
         public string GetInstructionAt(int _location)
         {
-            return memory_locations[_location];
+            if (memory_locations[_location].Substring(0,1) == "?")
+	        {
+                string number = "";
+                //find where number is at
+                string left_loc = memory_locations[_location].Substring(2, 2);
+                //pull first two digits of number
+                number = memory_locations[Int32.Parse(left_loc)];
+                //findwhere rest of number is at
+                string right_loc = number.Substring(2,2);
+                number = number.Substring(0,2);
+                number = number + memory_locations[Int32.Parse(right_loc)];
+                return number;
+            }
+            else
+            {
+                return memory_locations[_location];
+            }
         }
 
-        public void SetInstructionAt(int _location, string _instruction)
+        public void SetInstructionAt(int _location, string _number)
         {
-            memory_locations[_location] = _instruction;
+           if(_number.Length > 4){
+                string left = "";
+                string right = "";
+                left = _number.Substring(0,2);
+                right = _number.Substring(2,4);
+                //find empty location between 
+                string empty_loc_left = find_empty();
+                memory_locations[Int32.Parse(empty_loc_left)] = "FULL";
+                string empty_loc_right = find_empty();
+                 memory_locations[Int32.Parse(empty_loc_right)] = "FULL";
+                string empty_loc_left_signal = "";
+                left = left + empty_loc_right;
+                empty_loc_left_signal = "??" + empty_loc_left;
+                //now the given location points to a location(which is flagged as a number > than
+                //four digits with two ?? that holds the first two digits of the number and 
+                //the location of the last four
+                memory_locations[_location] = empty_loc_left_signal;
+                memory_locations[Int32.Parse(empty_loc_left)] = left;
+                memory_locations[Int32.Parse(empty_loc_right)] = right;
+            }
+            else{
+                memory_locations[_location] = _number;
+            }       
         }
 
         public void SetOverflow(int _value)
@@ -107,7 +160,5 @@ namespace WindowsFormsApp1
         {
             ++instruction_counter;
         }
-
-
     }
 }
