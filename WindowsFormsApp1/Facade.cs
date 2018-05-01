@@ -66,6 +66,11 @@ namespace WindowsFormsApp
         {
             return bml.GetInstructionAt(location);
         }
+        
+        public string GetInstructionForMemDump(int location)
+        {
+            return bml.GetInstructionForMemDump(location);
+        }
 
         public void ResetMachine()
         {

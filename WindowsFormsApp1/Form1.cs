@@ -524,11 +524,11 @@ namespace WindowsFormsApp1
                             }
                             if (99 == i % 100)
                             {
-                                print += f.GetInstructionAt(i) + "\r\n";
+                                print += f.GetInstructionForMemDump(i) + "\r\n";
                             }
                             else
                             {
-                                print += f.GetInstructionAt(i) + "\t";
+                                print += f.GetInstructionForMemDump(i) + "\t";
                             }
                         }
 
